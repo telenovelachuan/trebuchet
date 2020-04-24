@@ -42,3 +42,16 @@
 .main_subintro {
     font-size: 15px;
 }
+
+#social_ntwk_area {
+    text-align: center;
+    display: block;
+}
+.sc_ntwk_logo {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    margin: auto;
+    display: inline-block;
+    cursor: pointer;
+}
