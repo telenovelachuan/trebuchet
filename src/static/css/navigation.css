@@ -29,6 +29,16 @@
     padding-left: 10%;
     padding-right: 10%;
 }
+.active_nav_tab {
+    background-color: rgb(229, 228, 228) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    letter-spacing: 4px !important;
+}
+.inactive_nav_tab {
+    background-color: white !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    letter-spacing: 2px !important;
+}
 
 .avatar {
     width: 50px;
@@ -42,7 +52,6 @@
 .main_subintro {
     font-size: 15px;
 }
-
 #social_ntwk_area {
     text-align: center;
     display: block;

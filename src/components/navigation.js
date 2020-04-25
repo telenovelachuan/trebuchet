@@ -75,19 +75,20 @@ function Navigation() {
 
         </div>
         {/* <div className="navigation_bar"> */}
-            <AppBar position="static" color="red" >
-                <Tabs
+            <AppBar position="static" style={{ background: '#FFFFFF' }} >
+                <Tabs 
                     value={value}
                     onChange={navChange}
                     variant="fullWidth"
                     indicatorColor="primary"
                     textColor="primary"
+                    className="nav_tab"
                 >
-                <Tab label="About"  />
-                <Tab label="Regression"  />
-                <Tab label="Classification"  />
-                <Tab label="Data Storytelling"  />
-                <Tab label="Data Engineering"  />
+                <Tab label="About"  className={value === 0 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Regression"  className={value === 1 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Classification"  className={value === 2 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Data Storytelling"  className={value === 3 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Data Engineering"  className={value === 4 ? "active_nav_tab" : "inactive_nav_tab"}/>
 
                 </Tabs>
             </AppBar>
