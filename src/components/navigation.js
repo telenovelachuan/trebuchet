@@ -82,13 +82,12 @@ function Navigation() {
                     variant="fullWidth"
                     indicatorColor="primary"
                     textColor="primary"
-                    className="nav_tab"
                 >
                 <Tab label="About"  className={value === 0 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Regression"  className={value === 1 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Classification"  className={value === 2 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Data Storytelling"  className={value === 3 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Data Engineering"  className={value === 4 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Machine Learning"  className={value === 1 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Visualization & Storytelling"  className={value === 2 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Data Engineering"  className={value === 3 ? "active_nav_tab" : "inactive_nav_tab"}/>
+                <Tab label="Software Engineering"  className={value === 4 ? "active_nav_tab" : "inactive_nav_tab"}/>
 
                 </Tabs>
             </AppBar>
