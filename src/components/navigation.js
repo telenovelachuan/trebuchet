@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import avatar_pic from "../static/images/avatar.jpg";
-import avatar_pic2 from "../static/images/me.jpg";
+// import avatar_pic2 from "../static/images/me.jpg";
 import linkedin_logo from "../static/images/linkedin.png";
 import github_logo from "../static/images/github.png";
 import email_logo from "../static/images/email.png";
@@ -72,7 +72,7 @@ function Navigation() {
         <div className="avatar_panel">
             <div className="avatar_panel_upper">
                 <div className="avatar_area">
-                    <Avatar src={avatar_pic2} className={classes.avatar_size} />
+                    <Avatar src={avatar_pic} className={classes.avatar_size} />
                 </div>
                 <div className="main_intro">
                     <div className="main_name">Chuan Sun</div>
