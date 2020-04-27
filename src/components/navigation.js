@@ -4,14 +4,36 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
+import SwipeableViews from 'react-swipeable-views';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import avatar_pic from "../static/images/avatar.jpg";
 import linkedin_logo from "../static/images/linkedin.png";
 import github_logo from "../static/images/github.png";
 import email_logo from "../static/images/email.png";
+import About from "./about"
 
 import "../static/css/navigation.css";
 
+function TabPanel(props) {
+    const { children, value, index } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        aria-labelledby={`full-width-tab-${index}`}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography component={'span'}>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
 
 function Navigation() {
     const [value, setValue] = React.useState(0);
@@ -38,6 +60,10 @@ function Navigation() {
           else if (logo_name === "email") {
             window.open("mailto:chuansun.sc@gmail.com", '_blank');
           }
+      };
+
+      const handleChangeIndex = (index) => {
+        setValue(index);
       };
     
   return (
@@ -91,6 +117,24 @@ function Navigation() {
 
                 </Tabs>
             </AppBar>
+
+            <SwipeableViews axis={'x'} index={value} onChangeIndex={handleChangeIndex} hysteresis={0.01} >
+                <TabPanel value={value} index={0} dir={"rtl"}>
+                    <About />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={"rtl"}>
+                    Item Two
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={"rtl"}>
+                    Item Three
+                </TabPanel>
+                <TabPanel value={value} index={3} dir={"rtl"}>
+                    Item Four
+                </TabPanel>
+                <TabPanel value={value} index={4} dir={"rtl"}>
+                    Item Five
+                </TabPanel>
+            </SwipeableViews>
         {/* </div> */}
     </div>
   );
