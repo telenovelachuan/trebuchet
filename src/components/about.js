@@ -55,9 +55,9 @@ function About() {
                         'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
     const other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Linux': linux_logo}
     const card_header_style = {
-        fontFamily: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 2px !important;
-    font-weight: bold;
+        fontFamily: "\"Segoe UI\", \"Tahoma\", \"Geneva\", \"Verdana\", sans-serif",
+        letterSpacing: 2,
+        fontWeight: "fontWeightBold"
      }
     return (
         <div className="content">
@@ -129,7 +129,7 @@ function About() {
             <ScrollAnimation animateIn="fadeInUp" animateOut='fadeOutUp' duration={scrollDuration}>
                 <div className="skills_area">
                     <Card className={"skills_card"}>
-                        <CardHeader title="SKILLS & TECHNOLOGY" classes="intro_header intro_head1"/>
+                        <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             {/* <div className="skills_icon_area"> */}
                                 <div className="skills_sub_area">

@@ -35,17 +35,17 @@
 }
 .intro_head1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-    letter-spacing: 2px !important;
-    font-weight: bold;
+    letter-spacing: 3px !important;
+    font-weight: 500 !important;
 }
 /* .intro_head1,span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     letter-spacing: 2px !important;
     font-weight: bold;
 } */
-.education_text,span {
+/* .education_text,span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
+} */
 
 .skills_area {
     height: 700px;
