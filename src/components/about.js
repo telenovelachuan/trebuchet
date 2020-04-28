@@ -24,10 +24,12 @@ import numpy_logo from "../static/images/numpy.png";
 import sklearn_logo from "../static/images/sklearn.png";
 import keras_logo from "../static/images/keras.png";
 import tensorflow_logo from "../static/images/tensorflow.png";
+import matplotlib_logo from "../static/images/matplotlib.png";
 import sql_logo from "../static/images/sql.png";
 import mysql_logo from "../static/images/mysql.jpg";
 import postgresql_logo from "../static/images/postgresql.jpg";
 import sqlite_logo from "../static/images/sqlite.png";
+import teradata_logo from "../static/images/teradata.png";
 import spark_logo from "../static/images/spark.png";
 import hadoop_logo from "../static/images/hadoop.png";
 import hive_logo from "../static/images/hive.jpg";
@@ -46,8 +48,9 @@ import "../static/css/about.css";
 function About() {
     const scrollDuration = 2;
     const python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
-                        'Tensorflow': tensorflow_logo, 'Keras': keras_logo}
-    const sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo}
+                        'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
+    const sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
+                        'Teradata': teradata_logo}
     const data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
                         'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
     const other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Linux': linux_logo}
