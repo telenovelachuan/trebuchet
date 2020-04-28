@@ -3,10 +3,13 @@
 }
 
 #about_content {
-    padding-left: 20%;
+    padding-left: 18%;
     padding-right: 10%;
 }
 
+.self_intro_card {
+    padding-bottom: 2%;
+}
 .self_intro_image_area {
     width: 30%;
     height: 400px;
@@ -37,4 +40,23 @@
 }
 .education_text,span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.skills_area {
+    height: 700px;
+}
+.skills_typg {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.skills_icon_area {
+    width: 100%;
+}
+.skills_sub_area {
+    width: 25% !important;
+    float: left !important;
+}
+.skill_item {
+    padding-left: 25% !important;
+    float: left !important;
+    height: 100%;
 }
