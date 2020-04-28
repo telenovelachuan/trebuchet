@@ -124,7 +124,7 @@ function About() {
             <ScrollAnimation animateIn="fadeInUp" animateOut='fadeOutUp' duration={scrollDuration}>
                 <div className="skills_area">
                     <Card className={"skills_card"}>
-                        <CardHeader title="Skills & Technology"/>
+                        <CardHeader title="SKILLS & TECHNOLOGY" className="intro_header intro_head1"/>
                         <CardContent>
                             {/* <div className="skills_icon_area"> */}
                                 <div className="skills_sub_area">

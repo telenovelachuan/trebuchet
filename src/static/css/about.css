@@ -38,6 +38,11 @@
     letter-spacing: 2px !important;
     font-weight: bold;
 }
+.intro_head1,span {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    letter-spacing: 2px !important;
+    font-weight: bold !important;
+}
 .education_text,span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
