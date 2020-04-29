@@ -46,7 +46,7 @@ import '../static/css/App.css';
 import "../static/css/about.css";
 
 function About() {
-    const scrollDuration = 2;
+    const scrollDuration = 1.5;
     const python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
                         'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
     const sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
@@ -62,7 +62,7 @@ function About() {
     return (
         <div className="content">
             <div id="about_content">
-            <ScrollAnimation animateIn="fadeInUp" animateOut='fadeOutUp' duration={scrollDuration}>
+            <ScrollAnimation animateIn="fadeInUp"  duration={scrollDuration}>
                 <div id="self_intro">
                     
                     <Card className={"self_intro_card"}>
@@ -126,7 +126,7 @@ function About() {
                 
             </ScrollAnimation><br /><br />
 
-            <ScrollAnimation animateIn="fadeInUp" animateOut='fadeOutUp' duration={scrollDuration}>
+            <ScrollAnimation animateIn="fadeInUp"  duration={scrollDuration}>
                 <div className="skills_area">
                     <Card className={"skills_card"}>
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
