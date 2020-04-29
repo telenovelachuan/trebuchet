@@ -14,8 +14,8 @@ import linkedin_logo from "../static/images/linkedin.png";
 import github_logo from "../static/images/github.png";
 import email_logo from "../static/images/email.png";
 import About from "./about"
-//import {get_all_access} from '../db/sqlite.js';
-import sqlite3 from 'sqlite3';
+import axios from 'axios';
+import localIpUrl from 'local-ip-url';
 
 import "../static/css/navigation.css";
 //var get_all_access = require('../db/sqlite').get_all_access;
@@ -69,21 +69,14 @@ function Navigation() {
       const handleChangeIndex = (index) => {
         setValue(index);
       };
+      
+      // add visit entry
+      axios.post(`http://localhost:3001/api/new_access_entry`,{ client_ip: localIpUrl('public')})
+      .then(res => {
+        console.log("add entry api returns: " + res);
+        console.log(res.data);
+      })
     
-      //get_all_access();
-
-      const get_db = () => {
-        console.log("in get_db!!");
-        let sql = "select * from access";
-        // let db = new sqlite3.Database('../db/trebuchet.db', (err) => {
-        //   if (err) {
-        //     console.error(err.message);
-        //   }
-        //   else {
-        //     console.log('Connected to the trebuchet database.');
-        //   }
-        // });
-      }
 
   return (
     <div className="navigation" >
