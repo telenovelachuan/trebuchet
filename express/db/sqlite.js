@@ -28,7 +28,7 @@ function add_access_entry(req, res) {
     // console.log("ip:" + ipInfo.clientIp)
     // var client_ip = req.body.client_ip;
     var client_ip = ipInfo.clientIp;
-    var time = new Date().toISOString();
+    var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
     let sql = `insert into site_access (ipv4, geo, ts) values ('${client_ip}', '', '${time}')`;
     console.log("sql:" + sql);
     let db_path = path.resolve(__dirname, 'trebuchet.db')
