@@ -24,9 +24,10 @@ function get_all_access(req, res) {
 }
 
 function add_access_entry(req, res) {
-    // var ipInfo = getIP(req);
+    var ipInfo = getIP(req);
     // console.log("ip:" + ipInfo.clientIp)
-    var client_ip = req.body.client_ip;
+    // var client_ip = req.body.client_ip;
+    var client_ip = ipInfo.clientIp;
     let sql = `insert into site_access (ipv4, geo) values ('${client_ip}', '')`;
     console.log("sql:" + sql);
     let db_path = path.resolve(__dirname, 'trebuchet.db')
