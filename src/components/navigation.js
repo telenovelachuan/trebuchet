@@ -19,6 +19,7 @@ import localIpUrl from 'local-ip-url';
 
 import "../static/css/navigation.css";
 //var get_all_access = require('../db/sqlite').get_all_access;
+const API_URL = process.env.REACT_APP_API_URL;
 
 function TabPanel(props) {
     const { children, value, index } = props;
@@ -70,11 +71,12 @@ function Navigation() {
         setValue(index);
       };
       
+      console.log("env:" + API_URL);
       // add visit entry
-      axios.post(`http://localhost:3001/api/new_access_entry`,{ client_ip: localIpUrl('public')})
+      axios.post(API_URL, { client_ip: localIpUrl('public')})
       .then(res => {
         //console.log("add entry api returns: " + res);
-        //console.log(res.data);
+        console.log(res.data);
       })
     
 
