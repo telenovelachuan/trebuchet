@@ -15,6 +15,9 @@ import Chip from '@material-ui/core/Chip';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 import "animate.css/animate.min.css";
 import intro_image from "../static/images/st.jpg";
@@ -46,7 +49,8 @@ import '../static/css/App.css';
 import "../static/css/about.css";
 
 function About() {
-    const scrollDuration = 1.5;
+    const scrollDuration = 1;
+    const scrollDelay = 1000;
     const python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
                         'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
     const sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
@@ -59,11 +63,19 @@ function About() {
         letterSpacing: 2,
         fontWeight: "fontWeightBold"
      }
+     AOS.init();
     return (
         <div className="content">
             <div id="about_content">
-            <ScrollAnimation animateIn="fadeInUp"  duration={scrollDuration}>
-                <div id="self_intro">
+            
+                <div id="self_intro" data-aos="fade-in"
+                    data-aos-offset="20"
+                    data-aos-delay="100"
+                    data-aos-duration="500"
+                    data-aos-easing="ease-in-out"
+                    data-aos-mirror="true"
+                    data-aos-once="false"
+                    data-aos-anchor-placement="top-center">
                     
                     <Card className={"self_intro_card"}>
                         <CardContent>
@@ -123,11 +135,17 @@ function About() {
 
                     
                 </div>
-                
-            </ScrollAnimation><br /><br />
 
-            <ScrollAnimation animateIn="fadeInUp"  duration={scrollDuration}>
-                <div className="skills_area">
+
+                <div className="skills_area" data-aos="fade-in"
+                    data-aos-offset="20"
+                    data-aos-delay="100"
+                    data-aos-duration="500"
+                    data-aos-easing="ease-in-out-sine"
+                    data-aos-mirror="true"
+                    data-aos-once="false"
+                    data-aos-anchor-placement="top-center">
+
                     <Card className={"skills_card"}>
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
@@ -249,7 +267,9 @@ function About() {
                         </CardContent>
                     </Card>
                 </div>
-            </ScrollAnimation>
+
+
+            
 
             </div>
         </div>
