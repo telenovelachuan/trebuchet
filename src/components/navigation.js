@@ -73,8 +73,8 @@ function Navigation() {
       // add visit entry
       axios.post(`http://localhost:3001/api/new_access_entry`,{ client_ip: localIpUrl('public')})
       .then(res => {
-        console.log("add entry api returns: " + res);
-        console.log(res.data);
+        //console.log("add entry api returns: " + res);
+        //console.log(res.data);
       })
     
 
