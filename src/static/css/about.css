@@ -82,16 +82,18 @@
     float: left !important;
 }
 .exp_head {
-    height: 100%;
+    height: 50px;
     width: 100%;
 }
 .exp_company_logo {
-    height: 45px !important;
-    width: 100px !important;
+    float: left !important;
+    height: 100% !important;
+    width: 30% !important;
 }
-.exp_company_logo_narrow {
-    height: 50px !important;
-    width: 140px !important;
+.exp_company_logo_long {
+    float: left !important;
+    height: 100% !important;
+    width: 45% !important;
 }
 
 .exp_avatar {
@@ -109,4 +111,23 @@
     padding-left: 10%;
     padding-top: 10%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.exp_role {
+    float: left !important;
+    height: 100% !important;
+    width: 70% !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    display: flex;
+    align-items: center;
+    font-size: large;
+}
+.exp_role_short {
+    float: left !important;
+    height: 100% !important;
+    width: 50% !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    display: flex;
+    align-items: center;
+    font-size: large;
+    padding-left: 5%;
 }

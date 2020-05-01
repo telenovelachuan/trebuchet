@@ -72,7 +72,8 @@ function About() {
      const skills = {'Python':[python_logo, python_libs], 'SQL': [sql_logo, sql_pltfms],
         'Data Engineering': [data_engr_logo, data_engr_pltfms], 'Other Tools': [tools_logo, other_tools]};
     
-    const exps = {'eBay': [ebay_logo], 'IBM': [ibm_logo], 'PayPal': [paypal_logo], 'KU': [ku_logo]};
+    const exps = {'eBay': [ebay_logo, "Marketing Analytics Intern"], 'IBM': [ibm_logo, "Software Engineer"],
+                'PayPal': [paypal_logo, "Senior Risk Engineer"], 'KU': [ku_logo, "Instructor"]};
 
     const load_exp_text = (exp_name) => {
         let exp_desc = exp_text[exp_name];
@@ -208,10 +209,13 @@ function About() {
                                         <Card className={"exp_card"}>
                                             <CardContent>
                                                 <div className="exp_head">
-                                                    <div className={exp === "KU" ? "exp_company_logo_narrow" : "exp_company_logo"}>
+                                                    <div className={exp === "KU" ? "exp_company_logo_long" : "exp_company_logo"}>
                                                     <CardMedia component="img" className="exp_avatar" alt={exp}
                                                         image={exps[exp][0]} title={exp}
                                                     />
+                                                    </div>
+                                                    <div className={exp === "KU" ? "exp_role_short" : "exp_role"}>
+                                                        {exps[exp][1]}
                                                     </div>
                                                 </div>
                                                 {load_exp_text(exp)}
