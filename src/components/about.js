@@ -92,6 +92,10 @@ function About() {
         )
     };
 
+    const get_skill_cat_delay = idx => {
+        return (idx + 1) * 150;
+    }
+
     const get_exp_delay = idx => {
         return ((idx + 1) % 4) * 150;
     }
@@ -174,7 +178,9 @@ function About() {
                         <CardContent> 
                             {
                                 Object.keys(skills).map((skill_name, idx_skill) => (
-                                    <div className="skills_sub_area">
+                                    <div className="skills_sub_area" data-aos="fade-up" data-aos-offset="20" data-aos-delay={get_skill_cat_delay(idx_skill)}
+                                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                                    data-aos-once="false" data-aos-anchor-placement="top-center">
                                         <List component="nav" aria-labelledby="nested-list-subheader" className={"skills_category"} >
                                             <ListItem button className={"skills_category_item"}>
                                             <ListItemIcon>
