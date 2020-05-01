@@ -52,7 +52,12 @@
 /* .education_text,span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 } */
-
+.skill_category {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.skill_item_text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
 .skills_area {
     height: 500px;
 }
@@ -108,26 +113,39 @@
 }
 .exp_desc {
     text-align: left;
+    height: 50px !important;
     padding-left: 10%;
-    padding-top: 10%;
+    padding-top: 5%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .exp_role {
     float: left !important;
     height: 100% !important;
-    width: 70% !important;
+    width: 60% !important;
+    padding-left: 5%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     font-size: large;
 }
 .exp_role_short {
     float: left !important;
     height: 100% !important;
-    width: 50% !important;
+    width: 40% !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     font-size: large;
-    padding-left: 5%;
+    padding-left: 10%;
+}
+.exp_skill_item {
+    float: left !important;
+    width: 50px;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+.exp_skill_icon {
+    margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

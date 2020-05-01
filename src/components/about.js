@@ -30,7 +30,7 @@ import tensorflow_logo from "../static/images/tensorflow.png";
 import matplotlib_logo from "../static/images/matplotlib.png";
 import sql_logo from "../static/images/sql.png";
 import mysql_logo from "../static/images/mysql.jpg";
-import postgresql_logo from "../static/images/postgresql.jpg";
+import postgresql_logo from "../static/images/postgresql.png";
 import sqlite_logo from "../static/images/sqlite.png";
 import teradata_logo from "../static/images/teradata.png";
 import spark_logo from "../static/images/spark.png";
@@ -47,6 +47,12 @@ import ebay_logo from "../static/images/ebay.png";
 import ibm_logo from "../static/images/ibm.jpg";
 import paypal_logo from "../static/images/paypal.png";
 import ku_logo from "../static/images/ku.png";
+import cpp_logo from "../static/images/c++.jpg";
+import spss_logo from "../static/images/spss.png";
+import csharp_logo from "../static/images/csharp.png";
+import celery_logo from "../static/images/celery.jpg";
+import rabbitmq_logo from "../static/images/rabbitmq.png";
+import django_logo from "../static/images/django.png";
 
 
 import '../static/css/App.css';
@@ -72,8 +78,10 @@ function About() {
      const skills = {'Python':[python_logo, python_libs], 'SQL': [sql_logo, sql_pltfms],
         'Data Engineering': [data_engr_logo, data_engr_pltfms], 'Other Tools': [tools_logo, other_tools]};
     
-    const exps = {'eBay': [ebay_logo, "Marketing Analytics Intern"], 'IBM': [ibm_logo, "Software Engineer"],
-                'PayPal': [paypal_logo, "Senior Risk Engineer"], 'KU': [ku_logo, "Instructor"]};
+    const exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
+                'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
+                'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo]],
+                'KU': [ku_logo, "Instructor", [cpp_logo]]};
 
     const load_exp_text = (exp_name) => {
         let exp_desc = exp_text[exp_name];
@@ -171,7 +179,7 @@ function About() {
                                             <ListItemIcon>
                                                 <Avatar src={skills[skill_name][0]} />
                                             </ListItemIcon>
-                                            <ListItemText primary={skill_name} />
+                                            <ListItemText primary={skill_name} classes={{primary: "skill_category"}}/>
                                                 {<ExpandLess />}
                                             </ListItem>
                                             {
@@ -182,7 +190,7 @@ function About() {
                                                             <ListItemIcon>
                                                                 <Avatar src={skills[skill_name][1][key]} />
                                                             </ListItemIcon>
-                                                            <ListItemText primary={key} />
+                                                            <ListItemText primary={key} classes={{primary: "skill_item_text"}}/>
                                                         </ListItem>
                                                         </List>
                                                     </Collapse>
@@ -219,6 +227,13 @@ function About() {
                                                     </div>
                                                 </div>
                                                 {load_exp_text(exp)}
+                                                {
+                                                    exps[exp][2].map((skill_logo, sk_idx) => (
+                                                        <div className="exp_skill_item">
+                                                            <Avatar src={skill_logo} className="exp_skill_icon" />
+                                                        </div>
+                                                    ))
+                                                }
                                             </CardContent>
                                         </Card>
                                     </div>
