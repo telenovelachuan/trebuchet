@@ -20,6 +20,12 @@
     float: left;
     text-align: left;
 }
+.card_general {
+    padding-bottom: 100px;
+}
+.self_intro {
+
+}
 .intro_typg {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
@@ -50,6 +56,9 @@
 .skills_area {
     height: 500px;
 }
+.exp_area {
+    height: 800px;
+}
 .skills_typg {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
@@ -64,4 +73,40 @@
     padding-left: 25% !important;
     float: left !important;
     height: 100%;
+}
+.exps_sub_area {
+    width: 30% !important;
+    padding-left: 1.5% !important;
+    padding-right: 1.5% !important;
+    padding-bottom: 2% !important;
+    float: left !important;
+}
+.exp_head {
+    height: 100%;
+    width: 100%;
+}
+.exp_company_logo {
+    height: 45px !important;
+    width: 100px !important;
+}
+.exp_company_logo_narrow {
+    height: 50px !important;
+    width: 140px !important;
+}
+
+.exp_avatar {
+    height: 100% !important;
+    width: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fill !important;
+}
+.exp_card {
+   height: 200px; 
+}
+.exp_desc {
+    text-align: left;
+    padding-left: 10%;
+    padding-top: 10%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

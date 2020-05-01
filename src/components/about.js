@@ -43,10 +43,16 @@ import tools_logo from "../static/images/tools.png";
 import git_logo from "../static/images/git.png";
 import node_logo from "../static/images/node.png";
 import linux_logo from "../static/images/linux.png";
+import ebay_logo from "../static/images/ebay.png";
+import ibm_logo from "../static/images/ibm.jpg";
+import paypal_logo from "../static/images/paypal.png";
+import ku_logo from "../static/images/ku.png";
 
 
 import '../static/css/App.css';
 import "../static/css/about.css";
+import exp_text from './exp.json';
+
 
 function About() {
     const scrollDuration = 1;
@@ -63,12 +69,26 @@ function About() {
         letterSpacing: 2,
         fontWeight: "fontWeightBold"
      }
+     const skills = {'Python':[python_logo, python_libs], 'SQL': [sql_logo, sql_pltfms],
+        'Data Engineering': [data_engr_logo, data_engr_pltfms], 'Other Tools': [tools_logo, other_tools]};
+    
+    const exps = {'eBay': [ebay_logo], 'IBM': [ibm_logo], 'PayPal': [paypal_logo], 'KU': [ku_logo]};
+
+    const load_exp_text = (exp_name) => {
+        let exp_desc = exp_text[exp_name];
+        return (
+            <div className="exp_desc">
+                {exp_desc}
+            </div>
+        )
+    };
+
      AOS.init();
     return (
         <div className="content">
             <div id="about_content">
             
-                <div id="self_intro" data-aos="fade-in"
+                <div className="self_intro card_general" data-aos="fade-in"
                     data-aos-offset="20"
                     data-aos-delay="100"
                     data-aos-duration="500"
@@ -132,142 +152,77 @@ function About() {
                         <Button size="small">Learn More</Button>
                     </CardActions> */}
                     </Card>
-
-                    
                 </div>
 
 
-                <div className="skills_area" data-aos="fade-in"
-                    data-aos-offset="20"
-                    data-aos-delay="100"
-                    data-aos-duration="500"
-                    data-aos-easing="ease-in-out-sine"
-                    data-aos-mirror="true"
-                    data-aos-once="false"
-                    data-aos-anchor-placement="top-center">
+                <div className="skills_area card_general" data-aos="fade-in" data-aos-offset="20" data-aos-delay="100"
+                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                    data-aos-once="false" data-aos-anchor-placement="top-center">
 
                     <Card className={"skills_card"}>
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
-                        <CardContent>
-                            {/* <div className="skills_icon_area"> */}
-                                <div className="skills_sub_area">
-                                
-                                <List component="nav" aria-labelledby="nested-list-subheader"
-                                    className={"skills_category"}
-                                >
-                                <ListItem button className={"skills_category_item"}>
-                                    <ListItemIcon>
-                                        <Avatar src={python_logo} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Python" />
-                                    {<ExpandLess />}
-                                </ListItem>
-                                {
-                                    Object.keys(python_libs).map((key, index) => (
-                                        <Collapse in={true} timeout="auto" unmountOnExit>
-                                            <List component="nav" disablePadding>
-                                            <ListItem button className={"skill_item"}>
-                                                <ListItemIcon>
-                                                    <Avatar src={python_libs[key]} />
-                                                </ListItemIcon>
-                                                <ListItemText primary={key} />
-                                            </ListItem>
-                                            </List>
-                                        </Collapse>
-                                    ))
-                                }
-                                </List>
-                                </div>
-                                <div className="skills_sub_area">
-                                    <List component="nav" aria-labelledby="nested-list-subheader"
-                                        className={"skills_category"}
-                                    >
-                                    <ListItem button className={"skills_category_item"}>
-                                        <ListItemIcon>
-                                            <Avatar src={sql_logo} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="SQL" />
-                                        {<ExpandLess />}
-                                    </ListItem>
-                                    {
-                                        Object.keys(sql_pltfms).map((key, index) => (
-                                            <Collapse in={true} timeout="auto" unmountOnExit>
-                                                <List component="nav" disablePadding>
-                                                <ListItem button className={"skill_item"}>
-                                                    <ListItemIcon>
-                                                        <Avatar src={sql_pltfms[key]} />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={key} />
-                                                </ListItem>
-                                                </List>
-                                            </Collapse>
-                                        ))
-                                    }
-                                    </List>
-                                </div>
-                                <div className="skills_sub_area">
-                                <List component="nav" aria-labelledby="nested-list-subheader"
-                                        className={"skills_category"}
-                                >
-                                    <ListItem button className={"skills_category_item"}>
-                                        <ListItemIcon>
-                                            <Avatar src={data_engr_logo} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Data Engineering" />
-                                        {<ExpandLess />}
-                                    </ListItem>
-                                    {
-                                        Object.keys(data_engr_pltfms).map((key, index) => (
-                                            <Collapse in={true} timeout="auto" unmountOnExit>
-                                                <List component="nav" disablePadding>
-                                                <ListItem button className={"skill_item"}>
-                                                    <ListItemIcon>
-                                                        <Avatar src={data_engr_pltfms[key]} />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={key} />
-                                                </ListItem>
-                                                </List>
-                                            </Collapse>
-                                        ))
-                                    }
-                                    </List>
-                                </div>
-                                <div className="skills_sub_area">
-                                    <List component="nav" aria-labelledby="nested-list-subheader"
-                                            className={"skills_category"}
-                                    >
-                                        <ListItem button className={"skills_category_item"}>
+                        <CardContent> 
+                            {
+                                Object.keys(skills).map((skill_name, idx_skill) => (
+                                    <div className="skills_sub_area">
+                                        <List component="nav" aria-labelledby="nested-list-subheader" className={"skills_category"} >
+                                            <ListItem button className={"skills_category_item"}>
                                             <ListItemIcon>
-                                                <Avatar src={tools_logo} />
+                                                <Avatar src={skills[skill_name][0]} />
                                             </ListItemIcon>
-                                            <ListItemText primary="Other Tools" />
-                                            {<ExpandLess />}
-                                        </ListItem>
-                                        {
-                                            Object.keys(other_tools).map((key, index) => (
-                                                <Collapse in={true} timeout="auto" unmountOnExit>
-                                                    <List component="nav" disablePadding>
-                                                    <ListItem button className={"skill_item"}>
-                                                        <ListItemIcon>
-                                                            <Avatar src={other_tools[key]} />
-                                                        </ListItemIcon>
-                                                        <ListItemText primary={key} />
-                                                    </ListItem>
-                                                    </List>
-                                                </Collapse>
-                                            ))
-                                        }
-                                        </List>
-                                </div>
-                            {/* <Chip avatar={<Avatar alt="python" src={python_logo} />}
-                                label="Python"
-                                variant="outlined"
-                            /> */}
-                            {/* </div> */}
+                                            <ListItemText primary={skill_name} />
+                                                {<ExpandLess />}
+                                            </ListItem>
+                                            {
+                                                Object.keys(skills[skill_name][1]).map((key, index) => (
+                                                    <Collapse in={true} timeout="auto" unmountOnExit>
+                                                        <List component="nav" disablePadding>
+                                                        <ListItem button className={"skill_item"}>
+                                                            <ListItemIcon>
+                                                                <Avatar src={skills[skill_name][1][key]} />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={key} />
+                                                        </ListItem>
+                                                        </List>
+                                                    </Collapse>
+                                                ))
+                                            }
+                                            </List>
+                                            </div>
+                                        ))
+                            }
                         </CardContent>
                     </Card>
                 </div>
 
+                <div className="exp_area card_general" data-aos="fade-in" data-aos-offset="20" data-aos-delay="100"
+                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                    data-aos-once="false" data-aos-anchor-placement="top-center">
+
+                    <Card className={"exps_card"}>
+                        <CardHeader title="EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
+                        <CardContent>
+                            {
+                                Object.keys(exps).map((exp, idx) => (
+                                    <div className="exps_sub_area">
+                                        <Card className={"exp_card"}>
+                                            <CardContent>
+                                                <div className="exp_head">
+                                                    <div className={exp === "KU" ? "exp_company_logo_narrow" : "exp_company_logo"}>
+                                                    <CardMedia component="img" className="exp_avatar" alt={exp}
+                                                        image={exps[exp][0]} title={exp}
+                                                    />
+                                                    </div>
+                                                </div>
+                                                {load_exp_text(exp)}
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                ))
+                            }
+                        </CardContent>
+                    </Card>
+                </div>
 
             
 
