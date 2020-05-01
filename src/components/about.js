@@ -29,7 +29,7 @@ import keras_logo from "../static/images/keras.png";
 import tensorflow_logo from "../static/images/tensorflow.png";
 import matplotlib_logo from "../static/images/matplotlib.png";
 import sql_logo from "../static/images/sql.png";
-import mysql_logo from "../static/images/mysql.jpg";
+import mysql_logo from "../static/images/mysql.png";
 import postgresql_logo from "../static/images/postgresql.png";
 import sqlite_logo from "../static/images/sqlite.png";
 import teradata_logo from "../static/images/teradata.png";
@@ -80,7 +80,7 @@ function About() {
     
     const exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
                 'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
-                'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo]],
+                'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
                 'KU': [ku_logo, "Instructor", [cpp_logo]]};
 
     const load_exp_text = (exp_name) => {
@@ -92,19 +92,20 @@ function About() {
         )
     };
 
+    const get_exp_delay = idx => {
+        return ((idx + 1) % 4) * 150;
+    }
+
      AOS.init();
     return (
         <div className="content">
             <div id="about_content">
             
-                <div className="self_intro card_general" data-aos="fade-in"
-                    data-aos-offset="20"
-                    data-aos-delay="100"
-                    data-aos-duration="500"
-                    data-aos-easing="ease-in-out"
-                    data-aos-mirror="true"
-                    data-aos-once="false"
-                    data-aos-anchor-placement="top-center">
+                <div className="self_intro card_general"
+                    // data-aos="fade-up" data-aos-offset="20" data-aos-delay="100"
+                    // data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-mirror="true" data-aos-once="false"
+                    // data-aos-anchor-placement="top-center"
+                >
                     
                     <Card className={"self_intro_card"}>
                         <CardContent>
@@ -164,7 +165,7 @@ function About() {
                 </div>
 
 
-                <div className="skills_area card_general" data-aos="fade-in" data-aos-offset="20" data-aos-delay="100"
+                <div className="skills_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                     data-aos-once="false" data-aos-anchor-placement="top-center">
 
@@ -204,7 +205,7 @@ function About() {
                     </Card>
                 </div>
 
-                <div className="exp_area card_general" data-aos="fade-in" data-aos-offset="20" data-aos-delay="100"
+                <div className="exp_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                     data-aos-once="false" data-aos-anchor-placement="top-center">
 
@@ -213,9 +214,11 @@ function About() {
                         <CardContent>
                             {
                                 Object.keys(exps).map((exp, idx) => (
-                                    <div className="exps_sub_area">
+                                    <div className="exps_sub_area" data-aos="fade-up" data-aos-offset="0" data-aos-delay={get_exp_delay(idx)}
+                                    data-aos-duration="600" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                                    data-aos-once="false" data-aos-anchor-placement="top-center">
                                         <Card className={"exp_card"}>
-                                            <CardContent>
+                                            <CardContent className={"exp_card_content"}>
                                                 <div className="exp_head">
                                                     <div className={exp === "KU" ? "exp_company_logo_long" : "exp_company_logo"}>
                                                     <CardMedia component="img" className="exp_avatar" alt={exp}
@@ -227,6 +230,7 @@ function About() {
                                                     </div>
                                                 </div>
                                                 {load_exp_text(exp)}
+                                                <div className="exp_skill_area">
                                                 {
                                                     exps[exp][2].map((skill_logo, sk_idx) => (
                                                         <div className="exp_skill_item">
@@ -234,6 +238,7 @@ function About() {
                                                         </div>
                                                     ))
                                                 }
+                                                </div>
                                             </CardContent>
                                         </Card>
                                     </div>

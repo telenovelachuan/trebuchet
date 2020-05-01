@@ -37,11 +37,6 @@
     padding-right: 10%;
 }
 
-#self_intro {
-    padding-bottom: 100px;
-
-}
-
 .active_nav_tab {
     background-color: rgb(229, 228, 228) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
@@ -76,4 +71,9 @@
     margin: auto;
     display: inline-block;
     cursor: pointer;
+}
+.swipable_views {
+    overflow-y: hidden !important;
+}
+.swipable_views, div {
 }

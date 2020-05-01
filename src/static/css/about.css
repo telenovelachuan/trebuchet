@@ -3,8 +3,8 @@
 }
 
 #about_content {
-    padding-left: 18%;
-    padding-right: 10%;
+    padding-left: 10%;
+    padding-right: 7%;
 }
 
 .self_intro_card {
@@ -27,6 +27,7 @@
 
 }
 .intro_typg {
+    font-size: 16px !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .intro_image {
@@ -36,7 +37,7 @@
 .intro_general {
     padding-left: 5%;
     padding-right: 5%;
-    padding-top: 3%;
+    padding-top: 2%;
     padding-bottom: 2%;
 }
 .intro_head1 {
@@ -87,18 +88,18 @@
     float: left !important;
 }
 .exp_head {
-    height: 50px;
+    height: 16%;
     width: 100%;
 }
 .exp_company_logo {
     float: left !important;
     height: 100% !important;
-    width: 30% !important;
+    width: 25% !important;
 }
 .exp_company_logo_long {
     float: left !important;
     height: 100% !important;
-    width: 45% !important;
+    width: 40% !important;
 }
 
 .exp_avatar {
@@ -109,11 +110,11 @@
     object-fit: fill !important;
 }
 .exp_card {
-   height: 200px; 
+   height: 230px; 
 }
 .exp_desc {
     text-align: left;
-    height: 50px !important;
+    height: 40% !important;
     padding-left: 10%;
     padding-top: 5%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -126,7 +127,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     display: flex;
     align-items: flex-end;
-    font-size: large;
+    font-size: 13px;
 }
 .exp_role_short {
     float: left !important;
@@ -135,7 +136,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     display: flex;
     align-items: flex-end;
-    font-size: large;
+    font-size: 13px;
     padding-left: 10%;
 }
 .exp_skill_item {
@@ -148,4 +149,13 @@
     margin-left: auto;
   margin-right: auto;
   display: block;
+}
+.exps_card {
+    height: 600px;
+}
+.exp_skill_area {
+    padding-left: 10%;
+}
+.exp_card_content {
+    height: 100% !important;
 }

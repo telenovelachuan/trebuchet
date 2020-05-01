@@ -132,8 +132,8 @@ function Navigation() {
                 </Tabs>
             </AppBar>
 
-            <SwipeableViews axis={'x'} index={value} onChangeIndex={handleChangeIndex} hysteresis={0.01} >
-                <TabPanel value={value} index={0} dir={"rtl"}>
+            <SwipeableViews slideStyle={{ overflow: 'hidden'}} axis={'x'} index={value} onChangeIndex={handleChangeIndex} hysteresis={0.01} >
+                <TabPanel className="nav_tab_panel" value={value} index={0} dir={"rtl"} >
                     <About />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={"rtl"}>
