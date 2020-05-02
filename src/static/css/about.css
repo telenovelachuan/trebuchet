@@ -160,3 +160,21 @@
 .exp_card_content {
     height: 100% !important;
 }
+.intro_interest_head {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+.interest_item_text {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana !important;
+}
+.intro_interest_list {
+    width: 100%;
+}
+.intro_interest_list_left {
+    float: left !important;
+    width: 50% !important;
+}
+.intro_interest_list_right {
+    float: left !important;
+    width: 50% !important;
+}

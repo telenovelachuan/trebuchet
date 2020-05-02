@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import AOS from 'aos';
+import StarIcon from '@material-ui/icons/Star';
 import 'aos/dist/aos.css';
 
 
@@ -58,7 +59,8 @@ import django_logo from "../static/images/django.png";
 
 import '../static/css/App.css';
 import "../static/css/about.css";
-import exp_text from './exp.json';
+import json_file from './about.json';
+import { json } from 'body-parser';
 
 class About extends Component {
 
@@ -89,13 +91,23 @@ class About extends Component {
     }
 
     load_exp_text = (exp_name) => {
-        let exp_desc = exp_text[exp_name];
+        let exp_desc = json_file['exp'][exp_name];
         return (
             <div className="exp_desc">
                 {exp_desc}
             </div>
         )
     };
+
+    load_self_intro_text = () => {
+        return json_file['self_intro'];
+    }
+    load_interest_text_left = () => {
+        return json_file['interest'].slice(0, 2);
+    }
+    load_interest_text_right = () => {
+        return json_file['interest'].slice(2, 4);
+    }
 
     get_skill_cat_delay = idx => {
         return (idx + 1) * 150;
@@ -110,6 +122,7 @@ class About extends Component {
             this.props.toggleScrollDownVisibility(false);
         });
         document.addEventListener('aos:out:aos_scroll_to_bottom', ({ detail }) => {
+            //this.props.sd_visible = true;
             this.props.toggleScrollDownVisibility(true);
         });
         AOS.init();
@@ -137,16 +150,52 @@ class About extends Component {
                             </div>
                             <div className="self_intro_text_area">
                                 <div className="intro_general">
-                                    <Typography className={"intro_typg"} variant="h5" component="h2">
-                                I'm a data science enthusiast in the computer science program of the University of Kansas.
-                            My domain of interest covers data science technologies, supervised/unsupervised learning, time series prediction and analysis, data engineering and software engineering.
-                                    </Typography> <br />
-                                    <Typography className={"intro_typg"} variant="h5" component="h2">
-                                I possess over 4 years of working experience in software engineering & data engineering industry, 
-                                with hands-on experience in solving data science and machine learning problems and proficiency on big data platforms.
-                                    </Typography>
-                                    <br /><br />
-                                    <div className="intro_education">
+                                    {
+                                        this.load_self_intro_text().map((txt, idx) => (
+                                            <div>
+                                            <Typography className={"intro_typg"} variant="h5" component="h2">
+                                                {txt}
+                                            </Typography><br />
+                                            </div>
+                                        ))
+                                    }
+                                    <br />
+                                    <div className="intro_interest_area">
+                                        <div className="intro_interest_head">INTEREST</div>
+                                        <div className="intro_interest_list">
+                                            <div className="intro_interest_list_left">
+                                            <List >
+                                                {
+                                                    this.load_interest_text_left().map((interest, idx) => (
+                                                        <ListItem>
+                                                            <ListItemIcon>
+                                                                <StarIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={interest} classes={{primary: "interest_item_text"}}/>
+                                                        </ListItem>
+                                                    )) 
+                                                }
+                                            </List>
+                                            </div>
+                                            <div className="intro_interest_list_right">
+                                            <List >
+                                                {
+                                                    this.load_interest_text_right().map((interest, idx) => (
+                                                        <ListItem>
+                                                            <ListItemIcon>
+                                                                <StarIcon />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={interest} classes={{primary: "interest_item_text"}}/>
+                                                        </ListItem>
+                                                    )) 
+                                                }
+                                            </List>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    {/* <div className="intro_education">
                                         <Typography className={"intro_head1"} variant="h5" component="h1">EDUCATION</Typography> <br />
                                         <div className="intro_education_list">
                                             <List dense={true}>
@@ -162,16 +211,9 @@ class About extends Component {
                                                     </ListItemAvatar>
                                                 <ListItemText className="education_text" primary="M.S in Computer Science" secondary={'Tongji University'} />
                                                 </ListItem>
-                                                {/* <ListItem>
-                                                    <ListItemAvatar>
-                                                        <Avatar> <SchoolIcon /> </Avatar>
-                                                    </ListItemAvatar>
-                                                <ListItemText primary="B.S in Computer Science" secondary={'Tongji University'} />
-                                                </ListItem> */}
-                                            
                                             </List>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 
                             </div>
