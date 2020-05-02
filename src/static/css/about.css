@@ -1,6 +1,6 @@
-.about_me {
-    height: 500px;
-}
+@font-face {font-family: "PayPal Sans Big"; src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot"); src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff") format("woff"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.svg#PayPal Sans Big") format("svg"); }
+@font-face {font-family: "PayPal Sans Big Light"; src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot"); src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff") format("woff"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.svg#PayPal Sans Big Light") format("svg"); }
+
 
 #about_content {
     padding-left: 10%;
@@ -28,7 +28,8 @@
 }
 .intro_typg {
     font-size: 16px !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+
 }
 .intro_image {
     width: 100%;
@@ -41,7 +42,7 @@
     padding-bottom: 2%;
 }
 .intro_head1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     letter-spacing: 3px !important;
     font-weight: 500 !important;
 }
@@ -54,10 +55,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 } */
 .skill_category {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .skill_item_text {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .skills_area {
     height: 500px;
@@ -88,7 +89,7 @@
     float: left !important;
 }
 .exp_head {
-    height: 16%;
+    height: 33px;
     width: 100%;
 }
 .exp_company_logo {
@@ -117,14 +118,14 @@
     height: 40% !important;
     padding-left: 10%;
     padding-top: 5%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .exp_role {
     float: left !important;
     height: 100% !important;
     width: 60% !important;
     padding-left: 5%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     display: flex;
     align-items: flex-end;
     font-size: 13px;

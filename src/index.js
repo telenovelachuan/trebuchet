@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import './static/fonts/josefin-sans/JosefinSans-Regular.ttf'
+import './static/fonts/josefin-sans/JosefinSans-Bold.ttf'
+import './static/fonts/josefin-sans/JosefinSans-Light.ttf'
+import './static/fonts/josefin-sans/JosefinSans-SemiBold.ttf'
+
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
