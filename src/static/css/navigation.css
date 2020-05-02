@@ -3,6 +3,11 @@
     width: 100%;
 }
 
+.main_avatar {
+    width: 150px !important;
+    height: 150px !important;
+}
+
 .avatar_panel {
     height: 80%;
     width: 100%;

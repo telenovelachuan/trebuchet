@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import SchoolIcon from '@material-ui/icons/School';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -59,31 +60,35 @@ import '../static/css/App.css';
 import "../static/css/about.css";
 import exp_text from './exp.json';
 
+class About extends Component {
 
-function About() {
-    const scrollDuration = 1;
-    const scrollDelay = 1000;
-    const python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
+    constructor(props) {
+        super(props);
+        this.scrollDuration = 1
+        this.scrollDelay= 100;
+        this.python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
                         'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
-    const sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
+    this.sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
                         'Teradata': teradata_logo}
-    const data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
+    this.data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
                         'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
-    const other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Linux': linux_logo}
-    const card_header_style = {
+    this.other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Linux': linux_logo}
+    this.card_header_style = {
         fontFamily: "\"Segoe UI\", \"Tahoma\", \"Geneva\", \"Verdana\", sans-serif",
         letterSpacing: 2,
         fontWeight: "fontWeightBold"
      }
-     const skills = {'Python':[python_logo, python_libs], 'SQL': [sql_logo, sql_pltfms],
-        'Data Engineering': [data_engr_logo, data_engr_pltfms], 'Other Tools': [tools_logo, other_tools]};
+     this.skills = {'Python':[python_logo, this.python_libs], 'SQL': [sql_logo, this.sql_pltfms],
+        'Data Engineering': [data_engr_logo, this.data_engr_pltfms], 'Other Tools': [tools_logo, this.other_tools]};
     
-    const exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
+    this.exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
                 'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
                 'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
                 'KU': [ku_logo, "Instructor", [cpp_logo]]};
 
-    const load_exp_text = (exp_name) => {
+    }
+
+    load_exp_text = (exp_name) => {
         let exp_desc = exp_text[exp_name];
         return (
             <div className="exp_desc">
@@ -92,15 +97,25 @@ function About() {
         )
     };
 
-    const get_skill_cat_delay = idx => {
+    get_skill_cat_delay = idx => {
         return (idx + 1) * 150;
     }
 
-    const get_exp_delay = idx => {
+    get_exp_delay = idx => {
         return ((idx + 1) % 4) * 150;
     }
 
-     AOS.init();
+    componentDidMount() {
+        document.addEventListener('aos:in:aos_scroll_to_bottom', ({ detail }) => {
+            this.props.toggleScrollDownVisibility(false);
+        });
+        document.addEventListener('aos:out:aos_scroll_to_bottom', ({ detail }) => {
+            this.props.toggleScrollDownVisibility(true);
+        });
+        AOS.init();
+    }
+
+    render() {
     return (
         <div className="content">
             <div id="about_content">
@@ -170,32 +185,32 @@ function About() {
 
 
                 <div className="skills_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
-                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                    data-aos-once="false" data-aos-anchor-placement="top-center">
+                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
+                    data-aos-once="false" data-aos-anchor-placement="top-center" >
 
                     <Card className={"skills_card"}>
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent> 
                             {
-                                Object.keys(skills).map((skill_name, idx_skill) => (
-                                    <div className="skills_sub_area" data-aos="fade-up" data-aos-offset="20" data-aos-delay={get_skill_cat_delay(idx_skill)}
+                                Object.keys(this.skills).map((skill_name, idx_skill) => (
+                                    <div className="skills_sub_area" data-aos="fade-up" data-aos-offset="20" data-aos-delay={this.get_skill_cat_delay(idx_skill)}
                                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                                     data-aos-once="false" data-aos-anchor-placement="top-center">
                                         <List component="nav" aria-labelledby="nested-list-subheader" className={"skills_category"} >
                                             <ListItem button className={"skills_category_item"}>
                                             <ListItemIcon>
-                                                <Avatar src={skills[skill_name][0]} />
+                                                <Avatar src={this.skills[skill_name][0]} />
                                             </ListItemIcon>
                                             <ListItemText primary={skill_name} classes={{primary: "skill_category"}}/>
                                                 {<ExpandLess />}
                                             </ListItem>
                                             {
-                                                Object.keys(skills[skill_name][1]).map((key, index) => (
+                                                Object.keys(this.skills[skill_name][1]).map((key, index) => (
                                                     <Collapse in={true} timeout="auto" unmountOnExit>
                                                         <List component="nav" disablePadding>
                                                         <ListItem button className={"skill_item"}>
                                                             <ListItemIcon>
-                                                                <Avatar src={skills[skill_name][1][key]} />
+                                                                <Avatar src={this.skills[skill_name][1][key]} />
                                                             </ListItemIcon>
                                                             <ListItemText primary={key} classes={{primary: "skill_item_text"}}/>
                                                         </ListItem>
@@ -219,26 +234,26 @@ function About() {
                         <CardHeader title="EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             {
-                                Object.keys(exps).map((exp, idx) => (
-                                    <div className="exps_sub_area" data-aos="fade-up" data-aos-offset="0" data-aos-delay={get_exp_delay(idx)}
+                                Object.keys(this.exps).map((exp, idx) => (
+                                    <div className="exps_sub_area" data-aos="fade-up" data-aos-offset="0" data-aos-delay={this.get_exp_delay(idx)}
                                     data-aos-duration="600" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                                    data-aos-once="false" data-aos-anchor-placement="top-center">
+                                    data-aos-once="false" data-aos-anchor-placement="top-center" data-aos-id="aos_scroll_to_bottom">
                                         <Card className={"exp_card"}>
                                             <CardContent className={"exp_card_content"}>
                                                 <div className="exp_head">
                                                     <div className={exp === "KU" ? "exp_company_logo_long" : "exp_company_logo"}>
                                                     <CardMedia component="img" className="exp_avatar" alt={exp}
-                                                        image={exps[exp][0]} title={exp}
+                                                        image={this.exps[exp][0]} title={exp}
                                                     />
                                                     </div>
                                                     <div className={exp === "KU" ? "exp_role_short" : "exp_role"}>
-                                                        {exps[exp][1]}
+                                                        {this.exps[exp][1]}
                                                     </div>
                                                 </div>
-                                                {load_exp_text(exp)}
+                                                {this.load_exp_text(exp)}
                                                 <div className="exp_skill_area">
                                                 {
-                                                    exps[exp][2].map((skill_logo, sk_idx) => (
+                                                    this.exps[exp][2].map((skill_logo, sk_idx) => (
                                                         <div className="exp_skill_item">
                                                             <Avatar src={skill_logo} className="exp_skill_icon" />
                                                         </div>
@@ -257,8 +272,10 @@ function About() {
             
 
             </div>
+
+            {/* <ScrollDown /> */}
         </div>
-    );
+    )};
 }
 
 export default About;

@@ -40,3 +40,29 @@
   .content {
     padding-top: 68px;
   }
+
+  .scroll_down_area_visible {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+  }
+  .scroll_down_area_invisible {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    visibility: hidden;
+  }
+  .scroll_down_div {
+
+  }
+  .schroll_down_icon {
+    margin: 0 auto;
+    height: 50px !important;
+    width: 50px !important;
+    cursor: pointer;
+  }
+  .content_bottom {
+    height: 5px;
+  }
