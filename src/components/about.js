@@ -18,6 +18,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import AOS from 'aos';
 import StarIcon from '@material-ui/icons/Star';
+import TextField from '@material-ui/core/TextField';
 import 'aos/dist/aos.css';
 
 
@@ -59,8 +60,7 @@ import django_logo from "../static/images/django.png";
 
 import '../static/css/App.css';
 import "../static/css/about.css";
-import json_file from './about.json';
-import { json } from 'body-parser';
+import json_file from './config/about.json';
 
 class About extends Component {
 
@@ -103,10 +103,14 @@ class About extends Component {
         return json_file['self_intro'];
     }
     load_interest_text_left = () => {
-        return json_file['interest'].slice(0, 2);
+        let interest = json_file['interest'];
+        let mid = Math.ceil(interest.length / 2);
+        return json_file['interest'].slice(0, mid);
     }
     load_interest_text_right = () => {
-        return json_file['interest'].slice(2, 4);
+        let interest = json_file['interest'];
+        let mid = Math.ceil(interest.length / 2);
+        return json_file['interest'].slice(mid);
     }
 
     get_skill_cat_delay = idx => {
@@ -115,6 +119,10 @@ class About extends Component {
 
     get_exp_delay = idx => {
         return ((idx + 1) % 4) * 150;
+    }
+
+    reply_box_focused = (e) => {
+        console.log("focused!");
     }
 
     componentDidMount() {
@@ -195,33 +203,9 @@ class About extends Component {
                                         </div>
                                         
                                     </div>
-                                    {/* <div className="intro_education">
-                                        <Typography className={"intro_head1"} variant="h5" component="h1">EDUCATION</Typography> <br />
-                                        <div className="intro_education_list">
-                                            <List dense={true}>
-                                                <ListItem>
-                                                    <ListItemAvatar>
-                                                        <Avatar> <SchoolIcon /> </Avatar>
-                                                    </ListItemAvatar>
-                                                <ListItemText className="education_text" primary="M.S in Computer Science" secondary={'University of Kansas'} />
-                                                </ListItem>
-                                                <ListItem>
-                                                    <ListItemAvatar>
-                                                        <Avatar> <SchoolIcon /> </Avatar>
-                                                    </ListItemAvatar>
-                                                <ListItemText className="education_text" primary="M.S in Computer Science" secondary={'Tongji University'} />
-                                                </ListItem>
-                                            </List>
-                                        </div>
-                                    </div> */}
                                 </div>
-                                
                             </div>
-                            
                         </CardContent>
-                    {/* <CardActions>
-                        <Button size="small">Learn More</Button>
-                    </CardActions> */}
                     </Card>
                 </div>
 
@@ -307,6 +291,26 @@ class About extends Component {
                                     </div>
                                 ))
                             }
+                        </CardContent>
+                    </Card>
+                </div>
+
+
+                <div className="comment_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
+                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                    data-aos-once="false" data-aos-anchor-placement="top-center">
+
+                    <Card className={"comment_card"}>
+                        <CardHeader title="LEAVE A REPLY" titleTypographyProps={{className:"intro_head1"}} />
+                        <CardContent>
+                            <div className="comment_text_area">
+                                <TextField id="reply_textbox" label="Leave a Reply" multiline
+                                    style = {{width: '80%'}}
+                                    rows={6} defaultValue="" variant="outlined"
+                                    onFocus={this.reply_box_focused}
+                                />
+                            </div>
+
                         </CardContent>
                     </Card>
                 </div>

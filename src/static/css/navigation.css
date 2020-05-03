@@ -106,3 +106,14 @@
 .swipable_views {
     overflow-y: hidden !important;
 }
+.footer_area {
+    height: 100px;
+    width: 100%;
+    /* background-color: green; */
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}

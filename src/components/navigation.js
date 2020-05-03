@@ -19,6 +19,8 @@ import localIpUrl from 'local-ip-url';
 import ScrollDown from "./scroll_down"
 
 import "../static/css/navigation.css";
+import nav_json from './config/nav.json';
+
 //var get_all_access = require('../db/sqlite').get_all_access;
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -73,9 +75,9 @@ class Navigation extends Component {
       this.setState({"scroll_down_visible": newValue});
     }
 
-    // scroll_down = () => {
-    //   $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
-    // }
+    load_nav_tabs = () => {
+      return nav_json["tabs"];
+    }
     
     componentDidMount() {
       // add visit entry
@@ -133,12 +135,12 @@ class Navigation extends Component {
                     indicatorColor="primary"
                     textColor="primary"
                 >
-                <Tab label="About"  className={this.state.tab_value === 0 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Machine Learning"  className={this.state.tab_value === 1 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Visualization & Storytelling"  className={this.state.tab_value === 2 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Data Engineering"  className={this.state.tab_value === 3 ? "active_nav_tab" : "inactive_nav_tab"}/>
-                <Tab label="Software Engineering"  className={this.state.tab_value === 4 ? "active_nav_tab" : "inactive_nav_tab"}/>
 
+                  {
+                    this.load_nav_tabs().map((tab, idx) => (
+                      <Tab label={tab}  className={this.state.tab_value === idx ? "active_nav_tab" : "inactive_nav_tab"}/>
+                    ))
+                  }
                 </Tabs>
             </AppBar>
 
@@ -160,6 +162,10 @@ class Navigation extends Component {
                 </TabPanel>
             </SwipeableViews>
         {/* </div> */}
+
+        <div className="footer_area">
+            Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+        </div>
 
         <ScrollDown visible={this.state.scroll_down_visible} />
     </div>

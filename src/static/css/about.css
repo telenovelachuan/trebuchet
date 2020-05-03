@@ -178,3 +178,12 @@
     float: left !important;
     width: 50% !important;
 }
+.comment_area {
+    height: 300px;
+}
+.comment_card {
+    width: 100% !important;
+}
+#reply_textbox {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
