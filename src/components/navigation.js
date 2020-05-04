@@ -17,6 +17,8 @@ import About from "./about"
 import axios from 'axios';
 import localIpUrl from 'local-ip-url';
 import ScrollDown from "./scroll_down"
+import Divider from '@material-ui/core/Divider';
+
 
 import "../static/css/navigation.css";
 import nav_json from './config/nav.json';
@@ -163,6 +165,7 @@ class Navigation extends Component {
             </SwipeableViews>
         {/* </div> */}
 
+        <Divider light />
         <div className="footer_area">
             Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
         </div>

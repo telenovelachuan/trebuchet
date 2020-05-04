@@ -57,7 +57,7 @@ import celery_logo from "../static/images/celery.jpg";
 import rabbitmq_logo from "../static/images/rabbitmq.png";
 import django_logo from "../static/images/django.png";
 
-
+import LeaveReply from './leave_reply';
 import '../static/css/App.css';
 import "../static/css/about.css";
 import json_file from './config/about.json';
@@ -303,13 +303,14 @@ class About extends Component {
                     <Card className={"comment_card"}>
                         <CardHeader title="LEAVE A REPLY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
-                            <div className="comment_text_area">
-                                <TextField id="reply_textbox" label="Leave a Reply" multiline
+                            <LeaveReply />
+                            {/* <div className="comment_text_area">
+                                <TextField id="reply_textbox" label="leave a reply" multiline
                                     style = {{width: '80%'}}
                                     rows={6} defaultValue="" variant="outlined"
                                     onFocus={this.reply_box_focused}
                                 />
-                            </div>
+                            </div> */}
 
                         </CardContent>
                     </Card>

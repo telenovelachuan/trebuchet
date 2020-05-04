@@ -64,7 +64,7 @@
     height: 500px;
 }
 .exp_area {
-    height: 800px;
+    height: 550px;
 }
 .skills_typg {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
@@ -183,7 +183,6 @@
 }
 .comment_card {
     width: 100% !important;
+    height: 350px !important;
 }
-#reply_textbox {
-    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
+

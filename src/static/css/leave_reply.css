@@ -1,4 +1,3 @@
-@import url(//db.onlinewebfonts.com/c/ff7a83eeca3860fbe4779cb3dd35d4b8?family=PayPal+Sans+Big+Thin);
 @font-face {font-family: "PayPal Sans Big"; src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot"); src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff") format("woff"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.svg#PayPal Sans Big") format("svg"); }
 @font-face {font-family: "PayPal Sans Big Light"; src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot"); src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff") format("woff"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.svg#PayPal Sans Big Light") format("svg"); }
 @font-face {
@@ -22,98 +21,55 @@
     src: local('JosefinSans_SemiBold'), url(../fonts/josefin-sans/JosefinSans-SemiBold.ttf) format('truetype');
 }
 
-.navigation {
-    height: 200px;
-    width: 100%;
+#reply_textbox {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
-
-.main_avatar {
-    width: 150px !important;
-    height: 150px !important;
+.leave_reply_textbox {
 }
-
-.avatar_panel {
-    height: 80%;
-    width: 100%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    /* padding-left: 20%; */
-    /* padding-right: 10%; */
-    background-color: white;
+.comment_text_area {
+    width: 80% !important;
+    margin: 0 auto;
 }
-.avatar_panel_upper {
-    padding-left: 20%;
-    padding-right: 10%;
+.comment_text_area, label {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
-.avatar_area {
-    /* width: 150px;
-    height: 150px; */
-    width: 30%;
-    float: left;
+.more_info_area {
+    width: 80% !important;
+    margin: 0 auto;
+    padding-top: 20px;
 }
-.main_intro {
-    width: 70%;
-    float: left;
-    height: 100%;
-    vertical-align: middle;
+.more_info_area, label {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
-
-.navigation_bar {
-    background-color: darkgray;
-    height: 20%;
-    width: 100%;
-    padding-left: 10%;
-    padding-right: 10%;
+.leave_reply_area, input {
+    font-family: 'JosefinSans_Light', 'Segoe UI' !important;
 }
-
-.active_nav_tab {
-    background-color: rgb(229, 228, 228) !important;
-    font-family: 'JosefinSans_Regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-    letter-spacing: 4px !important;
+.leave_reply_area, textarea {
+    font-family: 'JosefinSans_Light', 'Segoe UI' !important;
 }
-.inactive_nav_tab {
-    background-color: white !important;
-    font-family: 'JosefinSans_Regular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+.more_info_item {
+    float: left !important;
+    width: 30% !important;
+    height: 56px !important;
+}
+.more_info_name {
+    
+}
+.more_info_email {
+    padding-left: 3% !important;
+}
+.reply_submit_button {
+    max-width: 80% !important;
+    max-height: 80% !important;
+    min-width: 80% !important;
+    min-height: 80% !important;
+    font-family: 'JosefinSans_Light', 'Segoe UI' !important;
     letter-spacing: 2px !important;
 }
-
-.avatar {
-    width: 50px;
-    height: 50px;
-}
-
-.main_name {
-    font-size: 30px;
-    height: 30%;
-    font-family: 'PayPal Sans Big', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
-.main_subintro {
-    font-size: 15px;
-    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
-#social_ntwk_area {
-    text-align: center;
-    display: block;
-}
-.sc_ntwk_logo {
-    width: 60px;
-    height: 60px;
-    text-align: center;
-    margin: auto;
-    display: inline-block;
-    cursor: pointer;
-}
-.swipable_views {
-    overflow-y: hidden !important;
-}
-.footer_area {
-    height: 70px;
-    width: 100%;
-    /* background-color: green; */
+.more_info_submit {
+    padding-left: 3% !important;
+    margin: 0 auto !important;
     display: flex;
-    margin: 0;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
