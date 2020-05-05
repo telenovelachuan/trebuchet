@@ -18,6 +18,7 @@ import axios from 'axios';
 import localIpUrl from 'local-ip-url';
 import ScrollDown from "./scroll_down"
 import Divider from '@material-ui/core/Divider';
+import TrackVisibility from 'react-on-screen';
 
 
 import "../static/css/navigation.css";
@@ -45,14 +46,27 @@ function TabPanel(props) {
     );
   }
 
+let current_visibility = false;
+const Footer = ({ isVisible, toggle_scroll_display }) => {
+    if (current_visibility !== isVisible) {
+      toggle_scroll_display(isVisible);
+      current_visibility = isVisible;
+    }
+    return (
+      <div className="footer_area" >
+        Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+      </div>
+    );
+}
+
 class Navigation extends Component {
 
   constructor(props) {
     //const [value, setValue] = React.useState(0);
     super(props);
     this.state =  {
-      scroll_down_visible: true,
       tab_value: 0,
+      scrolled_to_bottom: false,
     };
   }
 
@@ -79,6 +93,16 @@ class Navigation extends Component {
 
     load_nav_tabs = () => {
       return nav_json["tabs"];
+    }
+
+    toggle_scroll_display = (is_footer_visible) => {
+      console.log("hhhhh, " + is_footer_visible);
+      if (is_footer_visible) {
+        this.setState({scrolled_to_bottom: true});
+      }
+      else {
+        this.setState({scrolled_to_bottom: false});
+      }
     }
     
     componentDidMount() {
@@ -164,11 +188,12 @@ class Navigation extends Component {
         {/* </div> */}
 
         <Divider light />
-        <div className="footer_area">
-            Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
-        </div>
 
-        <ScrollDown visible={this.state.scroll_down_visible} />
+        <TrackVisibility>
+          <Footer scrolled_to_bottom={this.state.scrolled_to_bottom} toggle_scroll_display={this.toggle_scroll_display} />
+        </TrackVisibility>
+
+        <ScrollDown visible={!this.state.scrolled_to_bottom} />
     </div>
   )};
 }

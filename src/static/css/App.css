@@ -59,8 +59,13 @@
     height: 50px;
     visibility: hidden;
   }
-  .scroll_down_div {
-
+  #scroll_down_div {
+    width: 10%;
+    float: right;
+    height: 70% !important;
+  }
+  .scroll_down_button {
+    padding: 5px !important;
   }
   .schroll_down_icon {
     margin: 0 auto;

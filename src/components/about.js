@@ -121,9 +121,6 @@ class About extends Component {
         return ((idx + 1) % 4) * 150;
     }
 
-    reply_box_focused = (e) => {
-        console.log("focused!");
-    }
 
     componentDidMount() {
         document.addEventListener('aos:in:aos_scroll_to_bottom', ({ detail }) => {
@@ -141,12 +138,7 @@ class About extends Component {
         <div className="content">
             <div id="about_content">
             
-                <div className="self_intro card_general"
-                    // data-aos="fade-up" data-aos-offset="20" data-aos-delay="100"
-                    // data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-mirror="true" data-aos-once="false"
-                    // data-aos-anchor-placement="top-center"
-                >
-                    
+                <div className="self_intro card_general">
                     <Card className={"self_intro_card"}>
                         <CardContent>
                             <div className="self_intro_image_area">
@@ -210,9 +202,9 @@ class About extends Component {
                 </div>
 
 
-                <div className="skills_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
+                <div className="skills_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="0"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
-                    data-aos-once="false" data-aos-anchor-placement="top-center" >
+                    data-aos-once="true" >
 
                     <Card className={"skills_card"}>
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
@@ -221,7 +213,7 @@ class About extends Component {
                                 Object.keys(this.skills).map((skill_name, idx_skill) => (
                                     <div className="skills_sub_area" data-aos="fade-up" data-aos-offset="20" data-aos-delay={this.get_skill_cat_delay(idx_skill)}
                                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                                    data-aos-once="false" data-aos-anchor-placement="top-center">
+                                    data-aos-once="true" >
                                         <List component="nav" aria-labelledby="nested-list-subheader" className={"skills_category"} >
                                             <ListItem button className={"skills_category_item"}>
                                             <ListItemIcon>
@@ -254,7 +246,7 @@ class About extends Component {
 
                 <div className="exp_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                    data-aos-once="false" data-aos-anchor-placement="top-center">
+                    data-aos-once="true" >
 
                     <Card className={"exps_card"}>
                         <CardHeader title="EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
@@ -263,7 +255,7 @@ class About extends Component {
                                 Object.keys(this.exps).map((exp, idx) => (
                                     <div className="exps_sub_area" data-aos="fade-up" data-aos-offset="0" data-aos-delay={this.get_exp_delay(idx)}
                                     data-aos-duration="600" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                                    data-aos-once="false" data-aos-anchor-placement="top-center" data-aos-id="aos_scroll_to_bottom">
+                                    data-aos-once="true" data-aos-id="aos_scroll_to_bottom">
                                         <Card className={"exp_card"}>
                                             <CardContent className={"exp_card_content"}>
                                                 <div className="exp_head">
@@ -298,20 +290,12 @@ class About extends Component {
 
                 <div className="comment_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
-                    data-aos-once="false" data-aos-anchor-placement="top-center">
+                    data-aos-once="true" >
 
                     <Card className={"comment_card"}>
                         <CardHeader title="LEAVE A REPLY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             <LeaveReply />
-                            {/* <div className="comment_text_area">
-                                <TextField id="reply_textbox" label="leave a reply" multiline
-                                    style = {{width: '80%'}}
-                                    rows={6} defaultValue="" variant="outlined"
-                                    onFocus={this.reply_box_focused}
-                                />
-                            </div> */}
-
                         </CardContent>
                     </Card>
                 </div>
