@@ -103,6 +103,13 @@ class LeaveReply extends Component {
         return "";
     }
 
+    check_submit_valid = () => {
+        if (this.state.reply_name === "" || this.state.reply_text === ""){
+            return false;
+        }
+        return true;
+    }
+
     render () {
     return (
         <div className="leave_reply_area">
@@ -131,7 +138,7 @@ class LeaveReply extends Component {
                     </div>
                     <div className="more_info_submit more_info_item progress_button_wrapper">
                         <Button variant="outlined" color="primary" className={["reply_submit_button", this.get_submit_status_classname()].join(" ")}
-                            onClick={this.reply_submit_click} disabled={this.state.submit_loading} > 
+                            onClick={this.reply_submit_click} disabled={!this.check_submit_valid()} > 
                             SUBMIT
                         </Button>
                         {this.state.submit_loading && <CircularProgress size={24}
