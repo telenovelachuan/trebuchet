@@ -35,7 +35,26 @@ function add_access_entry(req, res) {
     var db = new sqlite3.Database(db_path); 
     db.run(sql, function(err) { 
         if (err) {
-            return res.status(400).send({ message: 'DB insertion failed. ' + err.message });
+            return res.status(400).send({ message: 'DB failed on inserting a visit. ' + err.message });
+        }
+        res.json({message: 'insertion succeeded'}); 
+      
+    });
+    db.close()
+}
+
+function add_comment(req, res) {
+    var name = req.body.name;
+    var email = req.body.email;
+    var comment = req.body.comment;
+    var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+    let sql = `insert into reply (name, email, comment, ts) values ('${name}', '${email}', '${comment}', '${time}')`;
+    console.log("sql:" + sql);
+    let db_path = path.resolve(__dirname, 'trebuchet.db')
+    var db = new sqlite3.Database(db_path); 
+    db.run(sql, function(err) { 
+        if (err) {
+            return res.status(400).send({ message: 'DB failed on inserting a reply. ' + err.message });
         }
         res.json({message: 'insertion succeeded'}); 
       
@@ -46,5 +65,6 @@ function add_access_entry(req, res) {
 module.exports = {
     get_all_access: get_all_access,
     add_access_entry: add_access_entry,
+    add_comment: add_comment,
 };
 

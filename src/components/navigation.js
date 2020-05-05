@@ -83,13 +83,11 @@ class Navigation extends Component {
     
     componentDidMount() {
       // add visit entry
-      axios.post(API_URL, { client_ip: localIpUrl('public')})
+      axios.post(`${API_URL}/new_access_entry`, { client_ip: localIpUrl('public')})
       .then(res => {
         //console.log("add entry api returns: " + res);
         console.log(res.data);
-      })
-
-      
+      })      
     }
 
     

@@ -31,6 +31,9 @@ router.get('/get_all_access', cors(corsOptions), function(req, res) {
 router.post('/new_access_entry', cors(corsOptions), function(req, res) {
     db_tools.add_access_entry(req, res);
 });
+router.post('/new_reply', cors(corsOptions), function(req, res) {
+    db_tools.add_comment(req, res);
+});
 
 
 
