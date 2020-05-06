@@ -5,6 +5,7 @@ import Grow from '@material-ui/core/Grow';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import axios from 'axios';
+import CheckIcon from '@material-ui/icons/Check';
 
 
 import "../static/css/leave_reply.css";
@@ -100,11 +101,19 @@ class LeaveReply extends Component {
         if (this.state.submit_success) {
             return "submit_success";
         }
-        return "";
+        else if (!this.check_submit_valid()) {
+            return "invalid_for_submit";
+        }
+        else {
+            return "not_submitted";
+        }
     }
 
     check_submit_valid = () => {
         if (this.state.reply_name === "" || this.state.reply_text === ""){
+            return false;
+        }
+        if (this.state.submit_success) {
             return false;
         }
         return true;
@@ -139,10 +148,15 @@ class LeaveReply extends Component {
                     <div className="more_info_submit more_info_item progress_button_wrapper">
                         <Button variant="outlined" color="primary" className={["reply_submit_button", this.get_submit_status_classname()].join(" ")}
                             onClick={this.reply_submit_click} disabled={!this.check_submit_valid()} > 
-                            SUBMIT
+                            {
+                                this.state.submit_success ? "SUBMITTED" : "SUBMIT"
+                            }
                         </Button>
-                        {this.state.submit_loading && <CircularProgress size={24}
+                        {   this.state.submit_loading && <CircularProgress size={24}
                             className={"button_progress"} />}
+                        {
+                            this.state.submit_success && <CheckIcon className={"submit_success_check"} />
+                        }
                     </div>
                     
                 </div>

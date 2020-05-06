@@ -65,6 +65,8 @@
     min-height: 80% !important;
     font-family: 'JosefinSans_Light', 'Segoe UI' !important;
     letter-spacing: 2px !important;
+    border: 0 !important;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
 }
 .more_info_submit {
     padding-left: 3% !important;
@@ -90,4 +92,31 @@
 }
 .submit_success:hover {
     background-color: darkgreen;
+}
+.submit_success {
+    background-color: rgb(97, 171, 91) !important;
+    color: white !important;
+  }
+.submit_success:hover {
+    background-color: darkgreen !important;
+  }
+.submit_success_check {
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    margin-top: -12px;
+    margin-left: -12px;
+    color: white;
+}
+.invalid_for_submit {
+    background-color: rgb(221, 221, 221) !important;
+    color: rgb(166, 166, 166) !important;
+}
+.not_submitted {
+    background-color: rgb(40, 119, 204) !important;
+    color: white !important;
+}
+.not_submitted:hover {
+    background-color: rgb(27, 83, 143) !important;
+    color: white !important;
 }
