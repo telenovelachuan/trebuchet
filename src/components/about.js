@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ScrollAnimation from 'react-animate-on-scroll';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -19,9 +18,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import AOS from 'aos';
 import StarIcon from '@material-ui/icons/Star';
 import TextField from '@material-ui/core/TextField';
+
+
 import 'aos/dist/aos.css';
-
-
 import "animate.css/animate.min.css";
 import intro_image from "../static/images/st.jpg";
 import python_logo from "../static/images/python.png";
@@ -206,7 +205,7 @@ class About extends Component {
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
                     data-aos-once="true" >
 
-                    <Card className={"skills_card"}>
+                    {/* <Card className={"skills_card"}> */}
                         <CardHeader title="SKILLS & TECHNOLOGY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent> 
                             {
@@ -241,14 +240,14 @@ class About extends Component {
                                         ))
                             }
                         </CardContent>
-                    </Card>
+                    {/* </Card> */}
                 </div>
 
                 <div className="exp_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                     data-aos-once="true" >
 
-                    <Card className={"exps_card"}>
+                    {/* <Card className={"exps_card"}> */}
                         <CardHeader title="EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             {
@@ -284,7 +283,7 @@ class About extends Component {
                                 ))
                             }
                         </CardContent>
-                    </Card>
+                    {/* </Card> */}
                 </div>
 
 
@@ -292,12 +291,12 @@ class About extends Component {
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                     data-aos-once="true" >
 
-                    <Card className={"comment_card"}>
+                    {/* <Card className={"comment_card"}> */}
                         <CardHeader title="LEAVE A REPLY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             <LeaveReply />
                         </CardContent>
-                    </Card>
+                    {/* </Card> */}
                 </div>
 
             

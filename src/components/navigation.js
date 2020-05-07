@@ -19,6 +19,7 @@ import localIpUrl from 'local-ip-url';
 import ScrollDown from "./scroll_down"
 import Divider from '@material-ui/core/Divider';
 import TrackVisibility from 'react-on-screen';
+import MachineLearning from "./machine_learning";
 
 
 import "../static/css/navigation.css";
@@ -31,10 +32,9 @@ function TabPanel(props) {
     const { children, value, index } = props;
   
     return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
+      <div role="tabpanel" hidden={value !== index}
         id={`full-width-tabpanel-${index}`}
+        className="tab_content"
         aria-labelledby={`full-width-tab-${index}`}
       >
         {value === index && (
@@ -169,11 +169,11 @@ class Navigation extends Component {
             </AppBar>
 
             <SwipeableViews slideStyle={{ overflow: 'hidden'}} axis={'x'} index={this.state.tab_value} onChangeIndex={this.andleChangeIndex} hysteresis={0.01} >
-                <TabPanel className="nav_tab_panel" value={this.state.tab_value} index={0} dir={"rtl"} >
+                <TabPanel classes="nav_tab_panel" value={this.state.tab_value} index={0} dir={"rtl"} >
                     <About toggleScrollDownVisibility={this.toggleScrollDownVisibility} />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={1} dir={"rtl"}>
-                    Item Two
+                    <MachineLearning />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
                     Item Three

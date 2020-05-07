@@ -1,0 +1,11 @@
+{
+    "intro_text": "Proficient in machine learning technologies with hands-on experience in supervised and unsupervised learning",
+    "skills": {
+        "regression": ["Predictive Regression", "Fitting numerics for prediction and cutomizing loss for objective optimization"],
+        "classification": ["Classification Problems", "Multi class classification using traditional ML and neural networks"],
+        "clustering": ["Clustering", "Supervised and unsupervised data clustering for visualization & further analysis"],
+        "time_series": ["Time Series Analysis", "Time sequence based trend & seasonality analysis using ARIMA, Prophet and so on"],
+        "pca": ["Principal Component Analysis", "Visualized dimensionality reduction for feature engineering & data assessment"],
+        "anomaly_detection": ["Anomaly Detection", "Refining data & excluding anomalies for model training and data auditing"]
+    }
+}

@@ -117,3 +117,7 @@
     font-size: 12px;
     font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
+.nav_tab_panel {
+    width: 100%;
+    padding: 0 !important;
+}
