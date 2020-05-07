@@ -2,8 +2,12 @@
 @font-face {font-family: "PayPal Sans Big"; src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot"); src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff") format("woff"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.svg#PayPal Sans Big") format("svg"); }
 @font-face {font-family: "PayPal Sans Big Light"; src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot"); src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff") format("woff"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.svg#PayPal Sans Big Light") format("svg"); }
 @font-face {
-    font-family: 'JosefinSans_Regular';
-    src: local('JosefinSans_Regular'), url(../fonts/josefin-sans/JosefinSans-Regular.ttf) format('truetype');
+    font-family: 'Century_Gothic';
+    src: local('Century_Gothic'), url(../fonts/Century_Gothic_Font_Family/Century_Gothic_400.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Century_Gothic_Bold';
+    src: local('Century_Gothic_Bold'), url(../fonts/911Fonts.com_CenturyGothicBold.ttf) format('truetype');
 }
 @font-face {
     font-family: 'JosefinSans_Light';
@@ -20,6 +24,10 @@
 @font-face {
     font-family: 'JosefinSans_SemiBold';
     src: local('JosefinSans_SemiBold'), url(../fonts/josefin-sans/JosefinSans-SemiBold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_Regular';
+    src: local('JosefinSans_Regular'), url(../fonts/josefin-sans/JosefinSans-Regular.ttf) format('truetype');
 }
 
 .navigation {

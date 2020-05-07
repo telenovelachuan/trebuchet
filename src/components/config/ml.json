@@ -7,5 +7,31 @@
         "time_series": ["Time Series Analysis", "Time sequence based trend & seasonality analysis using ARIMA, Prophet and so on"],
         "pca": ["Principal Component Analysis", "Visualized dimensionality reduction for feature engineering & data assessment"],
         "anomaly_detection": ["Anomaly Detection", "Refining data & excluding anomalies for model training and data auditing"]
+    },
+    "projects": {
+        "widget_maintenance": ["Predictive Widget Maintenance",
+            "https://github.com/telenovelachuan/predictive_widget_maintenance",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "worldwide_products": ["Worldwide Products Trend",
+            "https://github.com/telenovelachuan/worldwide_products",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "the_oscars": ["The Oscars",
+            "https://github.com/telenovelachuan/the_oscars",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "major_leagues": ["Premier League Match Prediction",
+            "https://github.com/telenovelachuan/major_leagues",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "shakespear_plays": ["To Be, or Not to Be",
+            "https://github.com/telenovelachuan/shakespear_plays",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "news_headline": ["News Headline Summarization",
+            "https://github.com/telenovelachuan/Eluvio_DS_Challenge",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "dream_of_anomalies": ["Dreams of Anomalies",
+            "https://github.com/telenovelachuan/dream_of_anomalies",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."],
+        "movie_lens": ["Movie Lens",
+            "https://github.com/telenovelachuan/movie_lens",
+            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail."]
     }
 }
