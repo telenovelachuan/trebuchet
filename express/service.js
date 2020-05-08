@@ -1,6 +1,4 @@
 // import { parse } from 'node-html-parser';
-const parser = require('node-html-parser');
-const jsdom = require("jsdom");
 const axios = require('axios');
 const cheerio = require('cheerio')
 
@@ -16,8 +14,6 @@ const PRJ_URL_DICT = {
     "dream_of_anomalies": "https://github.com/telenovelachuan/dream_of_anomalies",
     "movie_lens": "https://github.com/telenovelachuan/movie_lens",
 }
-const { JSDOM } = jsdom;
-
 
 function get_prj_update_time(req, res) {
     let prj_name = req.query.prj_name;
