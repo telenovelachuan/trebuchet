@@ -8,7 +8,6 @@ const db_path = `${config.db_path}/trebuchet.db`;
 function get_all_access(req, res) {
     let sql = "select * from site_access";
     var db = new sqlite3.Database(db_path); 
-    console.log('Connected to the trebuchet database.');
     
     db.all(sql, function(err, rows) {
         if (err) {
@@ -92,14 +91,11 @@ function get_prj_last_update(req, res, callback) {
     
     db.all(sql, function(err, rows) {
         if (err) {
-            console.log('query db error');
             return callback(false, 'DB query failed');    
         }
         if (rows.length < 1) {
-            console.log('db empty');
             return callback(false, `${prj_name} not found`);  
         }
-        console.log('query db success');
         return callback(true, rows[0].last_update);  
     });
     db.close()

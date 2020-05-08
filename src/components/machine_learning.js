@@ -10,6 +10,7 @@ import AOS from 'aos';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import Chip from '@material-ui/core/Chip';
 
 import regression_logo from "../static/images/ml/regression.png";
 import classification_logo from "../static/images/ml/classification.jpg";
@@ -25,6 +26,12 @@ import shakespeare_play_logo from "../static/images/ml/shakespeare_play.jpg";
 import news_headline from "../static/images/ml/news_headline.jpg";
 import worldwide_product_logo from "../static/images/ml/worldwide_product.jpg";
 import movie_lens_logo from "../static/images/ml/movie_lens.jpg";
+import regression_small_logo from "../static/images/ml/regression_small.png";
+import anomaly_detection_small_logo from "../static/images/ml/anml_detection_small.png";
+import topic_modeling_logo from "../static/images/ml/topic.png";
+import visualiztion_logo from "../static/images/ml/visualization.png";
+import time_series_small_logo from "../static/images/ml/time_series_small.png";
+import classification_small_logo from "../static/images/ml/classification_small.png";
 
 
 import json_file from './config/ml.json';
@@ -68,6 +75,15 @@ class MachineLearning extends Component {
             projects[prj] = projects[prj].concat(json_file["projects"][prj]);
         });
         this.projects = projects;
+        this.skill_palette = {
+            "regression": [regression_small_logo, "#d4fc78", 'black'],
+            "time series": [time_series_small_logo, "#8debff", 'black'],
+            "clustering": [clustering_logo, "#ffff80", 'black'],
+            "classification": [classification_small_logo, "#8f71ff", 'white'],
+            "anomaly detection": [anomaly_detection_small_logo, "#E9007F", 'white'],
+            "topic modeling": [topic_modeling_logo, "#deb0df", 'white'],
+            "visualization": [visualiztion_logo, "#ffcdd8", 'black']
+        }
     }
 
     load_intro_text = () => {
@@ -76,7 +92,9 @@ class MachineLearning extends Component {
 
     get_prj_update_time = (prj_name) => {
         const default_update_time = 'Dec 2019';
-        axios.get(`${API_URL}/get_prj_update_time?prj_name=${prj_name}`)
+        let api_url = `${API_URL}/get_prj_update_time?prj_name=${prj_name}`;
+        console.log(api_url);
+        axios.get(api_url)
         .catch(error => {
             console.log(JSON.stringify(error))
             let prj_updates = this.state.prj_latest_updates;
@@ -85,7 +103,7 @@ class MachineLearning extends Component {
             return;
           })
         .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             let prj_updates = this.state.prj_latest_updates;
             prj_updates[prj_name] = res.data['result']
             this.setState({prj_latest_updates: prj_updates})
@@ -199,10 +217,23 @@ class MachineLearning extends Component {
                                         <div className="ml_prj_intro">{this.projects[prj][3]}</div>
                                         <div className="ml_prj_more_info">
                                             <div className="ml_prj_skills">
-                                                skills
+                                                {
+                                                    this.projects[prj][4].map((skill, idx) => {
+                                                        let chip_avatar = this.skill_palette[skill][0];
+                                                        let bg_color = this.skill_palette[skill][1];
+                                                        let font_color = this.skill_palette[skill][2];
+                                                        return (
+                                                        <div className="ml_prj_chip_area">
+                                                            <Chip label={skill} className={"ml_prj_skill_chip"}
+                                                            avatar={<Avatar src={chip_avatar}/>}
+                                                            style={{color: font_color, borderColor: bg_color, backgroundColor: bg_color}}
+                                                            />
+                                                        </div>)
+                                                    })
+                                                }
                                             </div>
                                             <div className="ml_prj_learn_more">
-                                                <Button size="small" color="primary" className="ml_prj_lm_button"
+                                                <Button size="small" variant="outlined" color="primary" className="ml_prj_lm_button"
                                                     onClick={e => this.ml_prj_click(e, prj)}
                                                 >Learn More</Button>
                                             </div>

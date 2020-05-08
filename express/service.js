@@ -23,16 +23,13 @@ function get_prj_update_time(req, res) {
     db_tools.get_prj_last_update(req, res, (succeeded, response) => {
         let result = default_value;
         if (!succeeded) {
-            console.log('db query returned false, return default');
             res.json({result: result}); 
         }
         else {
             if (response) {
-                console.log('db query succeeded');
                 res.json({result: response}); 
             }
             else {
-                console.log('db query returned empty, return default');
                 res.json({result: result}); 
             }
         }
