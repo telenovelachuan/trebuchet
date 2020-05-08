@@ -97,6 +97,9 @@ function get_prj_last_update(req, res, callback) {
         if (err) {
             return callback(false, 'DB query failed');    
         }
+        if (rows.length < 1) {
+            return callback(false, `${prj_name} not found`);  
+        }
         return callback(true, rows[0].last_update);  
     });
     db.close()
