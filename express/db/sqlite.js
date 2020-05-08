@@ -95,11 +95,14 @@ function get_prj_last_update(req, res, callback) {
     
     db.all(sql, function(err, rows) {
         if (err) {
+            console.log('query db error');
             return callback(false, 'DB query failed');    
         }
         if (rows.length < 1) {
+            console.log('db empty');
             return callback(false, `${prj_name} not found`);  
         }
+        console.log('query db success');
         return callback(true, rows[0].last_update);  
     });
     db.close()
