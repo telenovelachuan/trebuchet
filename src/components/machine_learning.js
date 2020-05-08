@@ -9,6 +9,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AOS from 'aos';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 import regression_logo from "../static/images/ml/regression.png";
 import classification_logo from "../static/images/ml/classification.jpg";
@@ -29,10 +30,15 @@ import movie_lens_logo from "../static/images/ml/movie_lens.jpg";
 import json_file from './config/ml.json';
 import "../static/css/ml.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 class MachineLearning extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            prj_latest_updates: {}
+        };
         let ml_skills = {
             "classification": [classification_logo],
             "clustering": [clustering_logo],
@@ -68,8 +74,32 @@ class MachineLearning extends Component {
         return json_file["intro_text"]
     }
 
+    get_prj_update_time = (prj_name) => {
+        const default_update_time = 'Dec 2019';
+        axios.get(`${API_URL}/get_prj_update_time?prj_name=${prj_name}`)
+        .catch(error => {
+            console.log(JSON.stringify(error))
+            let prj_updates = this.state.prj_latest_updates;
+            prj_updates[prj_name] = default_update_time;
+            this.setState({prj_latest_updates: prj_updates})
+            return;
+          })
+        .then(res => {
+            console.log(res.data);
+            let prj_updates = this.state.prj_latest_updates;
+            prj_updates[prj_name] = res.data['result']
+            this.setState({prj_latest_updates: prj_updates})
+        })
+    }
+
     load_prj_update_time = (prj_name) => {
-        return "Mar 12, 2020"
+        if (!(prj_name in this.state.prj_latest_updates)) {
+            this.get_prj_update_time(prj_name);
+            return "loading..."
+        }
+        else {
+            return this.state.prj_latest_updates[prj_name];
+        }
     }
 
     ml_prj_click = (e, prj_name) => {

@@ -3,6 +3,7 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var db_tools = require('./db/sqlite');
+var service_tools = require('./service');
 
 
 // configure app to use bodyParser()
@@ -34,6 +35,11 @@ router.post('/new_access_entry', cors(corsOptions), function(req, res) {
 router.post('/new_reply', cors(corsOptions), function(req, res) {
     db_tools.add_comment(req, res);
 });
+
+router.get('/get_prj_update_time', cors(corsOptions), function(req, res) {
+    service_tools.get_prj_update_time(req, res);
+    //res.json({ message: 'trebuchet get api' });   
+})
 
 
 

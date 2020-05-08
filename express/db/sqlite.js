@@ -11,14 +11,9 @@ function get_all_access(req, res) {
     
     db.all(sql, function(err, rows) {
         if (err) {
-            return res.status(400).send({ message: 'DB Query failed. ' + err.message });
-            
+            return res.status(400).send({ message: 'DB Query failed. ' + err.message });    
         }
-        res.json(rows); 
-        // rows.forEach(function (row) {
-        //     console.log(row);
-        // })
-      
+        res.json(rows);    
     });
     db.close()
 }
@@ -62,9 +57,55 @@ function add_comment(req, res) {
     db.close()
 }
 
+function update_prj_last_update(req, res, need_return) {
+    let last_update = req.body.last_update;
+    let prj_name = req.body.prj_name;
+    let sql = `update ml_projects set last_update='${last_update}' where name='${prj_name}'`;
+    console.log(sql);
+    let db_path = path.resolve(__dirname, 'trebuchet.db')
+    var db = new sqlite3.Database(db_path); 
+    db.run(sql, function(err) { 
+        if (err) {
+            let err_msg = 'DB failed on update project time. ' + err.message;
+            if (need_return === false) {
+                console.log(err_msg)
+            }
+            else {
+                return res.status(400).send({ message: err_msg });
+            }
+        }
+        else {
+            if (need_return === false) {
+                console.log("updating db succeeded");
+            }
+            else {
+                res.json({message: 'update succeeded'}); 
+            }
+        }
+
+    });
+    db.close()
+}
+
+function get_prj_last_update(req, res, callback) {
+    let sql = "select last_update from ml_projects";
+    let db_path = path.resolve(__dirname, 'trebuchet.db')
+    var db = new sqlite3.Database(db_path); 
+    
+    db.all(sql, function(err, rows) {
+        if (err) {
+            return callback(false, 'DB query failed');    
+        }
+        return callback(rows);  
+    });
+    db.close()
+}
+
 module.exports = {
     get_all_access: get_all_access,
     add_access_entry: add_access_entry,
     add_comment: add_comment,
+    update_prj_last_update: update_prj_last_update,
+    get_prj_last_update: get_prj_last_update,
 };
 
