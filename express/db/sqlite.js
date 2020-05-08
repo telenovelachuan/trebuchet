@@ -88,7 +88,8 @@ function update_prj_last_update(req, res, need_return) {
 }
 
 function get_prj_last_update(req, res, callback) {
-    let sql = "select last_update from ml_projects";
+    let prj_name = req.query.prj_name;
+    let sql = `select last_update from ml_projects where name='${prj_name}'`;
     let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     
@@ -96,7 +97,7 @@ function get_prj_last_update(req, res, callback) {
         if (err) {
             return callback(false, 'DB query failed');    
         }
-        return callback(rows);  
+        return callback(true, rows[0].last_update);  
     });
     db.close()
 }

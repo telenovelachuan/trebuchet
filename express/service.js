@@ -1,6 +1,6 @@
 // import { parse } from 'node-html-parser';
 const axios = require('axios');
-const cheerio = require('cheerio')
+// const cheerio = require('cheerio');
 
 var db_tools = require('./db/sqlite');
 
@@ -19,40 +19,56 @@ function get_prj_update_time(req, res) {
     let prj_name = req.query.prj_name;
     let url = PRJ_URL_DICT[prj_name];
     const default_value = 'Dec 2019';
-    axios.get(`${url}`).then(response => {
-        const $ = cheerio.load(response.data);
-        let result = $('span[itemprop=dateModified]').children().first().html();
-        if (!result) {
-            db_tools.get_prj_last_update(req, res, (succeeded, response) => {
-                if (!succeeded) {
-                    result = default_value;
-                    res.json({result: result}); 
-                }
-                else {
-                    if (response) {
-                        res.json({result: response}); 
-                    }
-                    else {
-                        result = default_value;
-                        res.json({result: result}); 
-                    }
-                }
-            });
-        }
-        else {
-            req.body.last_update = result;
-            req.body.prj_name = prj_name;
-            db_tools.update_prj_last_update(req, res, false);
+
+    db_tools.get_prj_last_update(req, res, (succeeded, response) => {
+        let result = default_value;
+        if (!succeeded) {
             res.json({result: result}); 
         }
+        else {
+            if (response) {
+                res.json({result: response}); 
+            }
+            else {
+                res.json({result: result}); 
+            }
+        }
+    });
+
+    // axios.get(`${url}`).then(response => {
+    //     const $ = cheerio.load(response.data);
+    //     let result = $('span[itemprop=dateModified]').children().first().html();
+    //     if (!result) {
+    //         db_tools.get_prj_last_update(req, res, (succeeded, response) => {
+    //             if (!succeeded) {
+    //                 result = default_value;
+    //                 res.json({result: result}); 
+    //             }
+    //             else {
+    //                 if (response) {
+    //                     res.json({result: response}); 
+    //                 }
+    //                 else {
+    //                     result = default_value;
+    //                     res.json({result: result}); 
+    //                 }
+    //             }
+    //         });
+    //     }
+    //     else {
+    //         req.body.last_update = result;
+    //         req.body.prj_name = prj_name;
+    //         db_tools.update_prj_last_update(req, res, false);
+    //         res.json({result: result}); 
+    //     }
         
-    }).catch(error => {
-        // handle error
-        let err_msg = `Error getting update time for project '${prj_name}'`
-        console.log(err_msg);
-        //res.json({result: default_value}); 
-        res.status(500).send({ message: err_msg })
-      })
+    // }).catch(error => {
+    //     // handle error
+    //     let err_msg = `Error getting update time for project '${prj_name}'`
+    //     console.log(err_msg);
+    //     //res.json({result: default_value}); 
+    //     res.status(500).send({ message: err_msg })
+    //   })
 }
 
 
