@@ -1,11 +1,12 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path'); 
-
+const config = require('./config.json');
 const getIP = require('ipware')().get_ip;
+
+const db_path = `${config.db_path}/trebuchet.db`;
 
 function get_all_access(req, res) {
     let sql = "select * from site_access";
-    let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     console.log('Connected to the trebuchet database.');
     
@@ -26,7 +27,6 @@ function add_access_entry(req, res) {
     var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
     let sql = `insert into site_access (ipv4, geo, ts) values ('${client_ip}', '', '${time}')`;
     console.log("sql:" + sql);
-    let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     db.run(sql, function(err) { 
         if (err) {
@@ -45,7 +45,6 @@ function add_comment(req, res) {
     var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
     let sql = `insert into reply (name, email, comment, ts) values ('${name}', '${email}', '${comment}', '${time}')`;
     console.log("sql:" + sql);
-    let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     db.run(sql, function(err) { 
         if (err) {
@@ -62,7 +61,6 @@ function update_prj_last_update(req, res, need_return) {
     let prj_name = req.body.prj_name;
     let sql = `update ml_projects set last_update='${last_update}' where name='${prj_name}'`;
     console.log(sql);
-    let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     db.run(sql, function(err) { 
         if (err) {
@@ -90,7 +88,6 @@ function update_prj_last_update(req, res, need_return) {
 function get_prj_last_update(req, res, callback) {
     let prj_name = req.query.prj_name;
     let sql = `select last_update from ml_projects where name='${prj_name}'`;
-    let db_path = path.resolve(__dirname, 'trebuchet.db')
     var db = new sqlite3.Database(db_path); 
     
     db.all(sql, function(err, rows) {
