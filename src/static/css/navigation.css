@@ -132,12 +132,16 @@
 }
 .footer_text {
     width: 70% !important;
+    height: 100% !important;
     float: left !important;
     letter-spacing: 1px;
+    padding-top: 2%;
+
 }
 .footer_contact_area {
     float: left;
     width: 30%;
+    padding-top: 1%;
 }
 .footer_contact_button {
     border-color: rgb(84, 158, 236) !important;
@@ -154,4 +158,9 @@
 }
 .footer_contact_fade {
     box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.2) !important;
+}
+.footer_text_div {
+    width: 100% !important;
+    height: 100% !important;
+    
 }

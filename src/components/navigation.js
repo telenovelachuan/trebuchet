@@ -21,10 +21,6 @@ import Divider from '@material-ui/core/Divider';
 import TrackVisibility from 'react-on-screen';
 import MachineLearning from "./machine_learning";
 import Button from '@material-ui/core/Button';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LeaveReply from './leave_reply';
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
@@ -63,17 +59,19 @@ class Footer extends Component {
       expanded: this.props.contact_me_expanded,
       anchorEl: null,
     };
-    this.footer_text = <div><div className="footer_text">Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+    this.footer_text = <div className="footer_text_div">
+      <div className="footer_text">Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
           </div>
           <div className="footer_contact_area">
             <Button variant="outlined" color="primary" className="footer_contact_button"
               onClick={e => this.contact_me_click(e)} >
               CONTACT ME
             </Button>
-          </div></div>
+          </div>
+          </div>
     this.footer_contact = <div className="footer_epd">
-        <LeaveReply />
-      </div>
+            <LeaveReply />
+            </div>
   }
 
   toggle_expansion = (is_expanded) => {
