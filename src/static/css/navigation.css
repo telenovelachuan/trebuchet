@@ -124,8 +124,34 @@
     justify-content: center;
     font-size: 12px;
     font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    border:0px;
 }
 .nav_tab_panel {
     width: 100%;
     padding: 0 !important;
+}
+.footer_text {
+    width: 70% !important;
+    float: left !important;
+    letter-spacing: 1px;
+}
+.footer_contact_area {
+    float: left;
+    width: 30%;
+}
+.footer_contact_button {
+    border-color: rgb(84, 158, 236) !important;
+    color: rgb(84, 158, 236) !important;
+}
+.footer_contact_button:hover {
+    /* background-color: rgb(27, 83, 143) !important; */
+    background-color: rgb(84, 158, 236) !important;
+    color: white !important;
+}
+.footer_contact_popper {
+    width: 100%;
+    /* height: 300px !important; */
+}
+.footer_contact_fade {
+    box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.2) !important;
 }

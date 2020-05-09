@@ -11,6 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Chip from '@material-ui/core/Chip';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Fade from '@material-ui/core/Fade';
 
 import regression_logo from "../static/images/ml/regression.png";
 import classification_logo from "../static/images/ml/classification.jpg";
@@ -28,7 +30,8 @@ import worldwide_product_logo from "../static/images/ml/worldwide_product.jpg";
 import movie_lens_logo from "../static/images/ml/movie_lens.jpg";
 import regression_small_logo from "../static/images/ml/regression_small.png";
 import anomaly_detection_small_logo from "../static/images/ml/anml_detection_small.png";
-import topic_modeling_logo from "../static/images/ml/topic.png";
+import topic_logo from "../static/images/ml/topic.png";
+import topic_small_logo from "../static/images/ml/topic_small.png";
 import visualiztion_logo from "../static/images/ml/visualization.png";
 import time_series_small_logo from "../static/images/ml/time_series_small.png";
 import classification_small_logo from "../static/images/ml/classification_small.png";
@@ -44,7 +47,8 @@ class MachineLearning extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            prj_latest_updates: {}
+            prj_latest_updates: {},
+            display_show_all: false,
         };
         let ml_skills = {
             "classification": [classification_logo],
@@ -52,7 +56,7 @@ class MachineLearning extends Component {
             "time_series": [time_series_logo],
             "regression": [regression_logo],
             "anomaly_detection": [anomaly_detection_logo],
-            "pca": [pca_logo]
+            "topic_modeling": [topic_logo]
         }
         this.ml_skills_list = Object.keys(json_file["skills"]);
         Object.keys(ml_skills).forEach(function(key) {
@@ -81,9 +85,10 @@ class MachineLearning extends Component {
             "clustering": [clustering_logo, "#ffff80", 'black'],
             "classification": [classification_small_logo, "#8f71ff", 'white'],
             "anomaly detection": [anomaly_detection_small_logo, "#E9007F", 'white'],
-            "topic modeling": [topic_modeling_logo, "#deb0df", 'white'],
+            "topic modeling": [topic_small_logo, "#deb0df", 'white'],
             "visualization": [visualiztion_logo, "#ffcdd8", 'black']
         }
+        this.state.projects_on_page = JSON.parse(JSON.stringify(projects));
     }
 
     load_intro_text = () => {
@@ -95,6 +100,13 @@ class MachineLearning extends Component {
         let api_url = `${API_URL}/get_prj_update_time?prj_name=${prj_name}`;
         console.log(api_url);
         axios.get(api_url)
+        .then(res => {
+            console.log("get api returns!");
+            console.log(res.data);
+            let prj_updates = this.state.prj_latest_updates;
+            prj_updates[prj_name] = res.data['result']
+            this.setState({prj_latest_updates: prj_updates})
+        })
         .catch(error => {
             console.log(JSON.stringify(error))
             let prj_updates = this.state.prj_latest_updates;
@@ -102,12 +114,7 @@ class MachineLearning extends Component {
             this.setState({prj_latest_updates: prj_updates})
             return;
           })
-        .then(res => {
-            //console.log(res.data);
-            let prj_updates = this.state.prj_latest_updates;
-            prj_updates[prj_name] = res.data['result']
-            this.setState({prj_latest_updates: prj_updates})
-        })
+        
     }
 
     load_prj_update_time = (prj_name) => {
@@ -125,18 +132,44 @@ class MachineLearning extends Component {
         window.open(link, '_blank');
     }
 
+    skill_card_click = (e, skill_name) => {
+        console.log("card clicked, " + skill_name);
+        let projects_on_page = {};
+        Object.keys(this.projects).map((prj_name, idx) => {
+            let prj_obj = this.projects[prj_name];
+            console.log(prj_obj);
+            console.log(skill_name);
+            console.log(prj_obj[4]);
+            console.log(skill_name in prj_obj[4]);
+            if (prj_obj[4].includes(skill_name.replace('_', ' '))) {
+
+                projects_on_page[prj_name] = prj_obj;
+            }
+        })
+        console.log("projects_on_page");
+        console.log(projects_on_page);
+        console.log("in skill_card_click");
+        console.log(this.state.projects_on_page);
+        this.setState({
+            "projects_on_page": projects_on_page,
+            "display_show_all": true,
+        })
+    }
+
+    show_all_prj_click = (e) => {
+        this.setState({
+            "projects_on_page": this.projects,
+            "display_show_all": false
+        });
+    };
+
     componentDidMount() {
-        // document.addEventListener('aos:in:aos_scroll_to_bottom', ({ detail }) => {
-        //     this.props.toggleScrollDownVisibility(false);
-        // });
-        // document.addEventListener('aos:out:aos_scroll_to_bottom', ({ detail }) => {
-        //     //this.props.sd_visible = true;
-        //     this.props.toggleScrollDownVisibility(true);
-        // });
         AOS.init();
     }
 
     render() {
+        console.log("this.ml_skills:")
+        console.log(this.ml_skills);
         return (
             <div id="ml_content">
 
@@ -159,6 +192,7 @@ class MachineLearning extends Component {
                                         data-aos-once="true" >
                                     <div className="ml_intro_skill">
                                         <Card className={"ml_intro_skill_card"}>
+                                        <CardActionArea onClick={ e => this.skill_card_click(e, skill)}>
                                             <CardHeader className="ml_skill_header" 
                                                 avatar={
                                                 <Avatar src={this.ml_skills[skill][0]} className="ml_skill_avatar" />
@@ -176,6 +210,7 @@ class MachineLearning extends Component {
                                                     {this.ml_skills[skill][2]}
                                                 </div>
                                             </CardContent>
+                                        </CardActionArea>
                                         </Card>
                                     </div>
                                     </div>
@@ -192,33 +227,40 @@ class MachineLearning extends Component {
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
                     data-aos-once="true" >
                     <div className="ml_projects">
-                        <CardHeader title="FEATURED PROJECTS" titleTypographyProps={{className:"ml_projects_header ml_headers"}} />
+                        <CardHeader title="FEATURED PROJECTS" className="ml_projects_header"
+                        titleTypographyProps={{className:"ml_headers"}} 
+                            action={
+                            <Fade in={this.state.display_show_all} timeout={1000}>
+                            <div className="ml_prj_show_all" >
+
+                                <Button variant="outlined" color="primary" className="ml_prj_show_all"
+                                        onClick={this.show_all_prj_click}
+                                    >SHOW ALL</Button>
+                            </div></Fade>}
+                        />
                         <CardContent>
                         {
-                            Object.keys(this.projects).map((prj, idx) => (
-                                <div className="ml_prj" data-aos="fade-up" data-aos-offset="20" data-aos-delay="0"
-                                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
-                                    data-aos-once="true">
+                            Object.keys(this.state.projects_on_page).map((prj, idx) => (
+                                <div className="ml_prj" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
+                                    data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
+                                    data-aos-id="aos_scroll_not_bottom" data-aos-once="true">
                                     <Card className={"ml_prj_card"}>
                                         <CardMedia
                                                 className="ml_prj_img"
-                                                image={this.projects[prj][0]}
+                                                image={this.state.projects_on_page[prj][0]}
                                                 title={prj}
                                         />
-                                        <div className="ml_prj_title">{this.projects[prj][1]}</div>
+                                        <div className="ml_prj_title">{this.state.projects_on_page[prj][1]}</div>
                                         <div className="ml_prj_info_row">
                                             <div className="ml_prj_last_update">
                                                 <div className="ml_prj_last_update_text">Last updated on {this.load_prj_update_time(prj)}</div>
                                             </div>
-                                            {/* <div className="ml_prj_learn_more">
-                                                <Button size="small" color="primary" className="ml_prj_lm_button">Learn More</Button>
-                                            </div> */}
                                         </div>
-                                        <div className="ml_prj_intro">{this.projects[prj][3]}</div>
+                                        <div className="ml_prj_intro">{this.state.projects_on_page[prj][3]}</div>
                                         <div className="ml_prj_more_info">
                                             <div className="ml_prj_skills">
                                                 {
-                                                    this.projects[prj][4].map((skill, idx) => {
+                                                    this.state.projects_on_page[prj][4].map((skill, idx) => {
                                                         let chip_avatar = this.skill_palette[skill][0];
                                                         let bg_color = this.skill_palette[skill][1];
                                                         let font_color = this.skill_palette[skill][2];

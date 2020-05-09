@@ -20,6 +20,15 @@ import ScrollDown from "./scroll_down"
 import Divider from '@material-ui/core/Divider';
 import TrackVisibility from 'react-on-screen';
 import MachineLearning from "./machine_learning";
+import Button from '@material-ui/core/Button';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import LeaveReply from './leave_reply';
+import Popper from '@material-ui/core/Popper';
+import Fade from '@material-ui/core/Fade';
+import Paper from '@material-ui/core/Paper';
 
 
 import "../static/css/navigation.css";
@@ -44,19 +53,90 @@ function TabPanel(props) {
         )}
       </div>
     );
+}
+
+
+class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.state =  {
+      expanded: this.props.contact_me_expanded,
+      anchorEl: null,
+    };
+    this.footer_text = <div><div className="footer_text">Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+          </div>
+          <div className="footer_contact_area">
+            <Button variant="outlined" color="primary" className="footer_contact_button"
+              onClick={e => this.contact_me_click(e)} >
+              CONTACT ME
+            </Button>
+          </div></div>
+    this.footer_contact = <div className="footer_epd">
+        <LeaveReply />
+      </div>
   }
 
-let current_visibility = false;
-const Footer = ({ isVisible, toggle_scroll_display }) => {
-    if (current_visibility !== isVisible) {
-      toggle_scroll_display(isVisible);
-      current_visibility = isVisible;
-    }
+  toggle_expansion = (is_expanded) => {
+    this.setState({expanded: is_expanded});
+    this.props.update_divider(is_expanded);  
+    this.props.toggle_contact_me_expanded(is_expanded);
+  }
+
+  contact_me_click = e => {
+    let current_expanded = this.state.expanded;
+    let entire_footer = document.getElementById("entire_footer");
+    this.setState({expanded: !current_expanded, anchorEl: entire_footer});  
+    this.props.toggle_contact_me_expanded(!current_expanded);
+    this.props.update_divider(!current_expanded);  
+  }  
+
+  componentDidMount() {
+    this.props.setToggle(this.toggle_expansion);
+ }
+    
+  render() {
+    console.log("anchorEL:");
+    console.log(this.state.anchorEl);
     return (
-      <div className="footer_area" >
-        Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+      <div id="entire_footer">
+        <Popper open={this.state.expanded} anchorEl={this.state.anchorEl}
+            className="footer_contact_popper" placement={"top"} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350} className="footer_contact_fade">
+            <Paper>
+              {this.footer_contact}
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+        <div className="footer_area" >
+          {this.footer_text}
+        </div>
       </div>
-    );
+    )
+  }
+}
+
+let scroller_visible = false;
+let contact_me_expanded = false;
+let toggleExpansion = (param) => {
+  //empty
+}
+const toggle_contact_me_expanded = is_expanded => {
+  contact_me_expanded = is_expanded;
+}
+const ComponentToTrack = ({ isVisible, toggle_visibility, toggle_divider }) => {
+  if (isVisible !== scroller_visible) {
+    toggle_visibility(isVisible);
+    scroller_visible = isVisible;
+    if (contact_me_expanded === true) {
+      contact_me_expanded = false;
+      toggleExpansion(false);
+    }
+  }
+  return <Footer update_divider={toggle_divider} toggle_contact_me_expanded={toggle_contact_me_expanded}
+    setToggle={func => toggleExpansion = func}
+  />;
 }
 
 class Navigation extends Component {
@@ -67,6 +147,7 @@ class Navigation extends Component {
     this.state =  {
       tab_value: 0,
       scrolled_to_bottom: false,
+      footer_expanded: false,
     };
   }
 
@@ -104,6 +185,16 @@ class Navigation extends Component {
         this.setState({scrolled_to_bottom: false});
       }
     }
+    toggle_footer_expansion = (is_expanded) => {
+      console.log("in toggle_footer_expansion ", is_expanded);
+      if (is_expanded) {
+        this.setState({footer_expanded: true});
+      }
+      else {
+        this.setState({footer_expanded: false});
+      }
+    }
+
     
     componentDidMount() {
       // add visit entry
@@ -115,7 +206,8 @@ class Navigation extends Component {
     }
 
     
-    render() {
+  render() {
+
   return (
     <div className="navigation" >
         <div className="avatar_panel">
@@ -186,11 +278,17 @@ class Navigation extends Component {
                 </TabPanel>
             </SwipeableViews>
         {/* </div> */}
-
-        <Divider light />
+        
+        {
+            (this.state.footer_expanded === false) && <Divider light />
+        }
 
         <TrackVisibility>
-          <Footer scrolled_to_bottom={this.state.scrolled_to_bottom} toggle_scroll_display={this.toggle_scroll_display} />
+          {/* <Footer scrolled_to_bottom={this.state.scrolled_to_bottom}
+            toggle_scroll_display={this.toggle_scroll_display} isExpanded={this.state.footer_expanded}
+            toggle_expanded={this.toggle_footer_expansion}
+          /> */}
+          <ComponentToTrack toggle_visibility={this.toggle_scroll_display} toggle_divider={this.toggle_footer_expansion}/>
         </TrackVisibility>
 
         <ScrollDown visible={!this.state.scrolled_to_bottom} />

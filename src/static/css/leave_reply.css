@@ -22,11 +22,12 @@
 }
 
 #reply_textbox {
-    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'Century_Gothic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .leave_reply_textbox {
 }
 .comment_text_area {
+    padding-top: 2%;
     width: 80% !important;
     margin: 0 auto;
 }

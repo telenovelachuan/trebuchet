@@ -21,7 +21,7 @@
     height: 43%;
     float: left !important;
     padding-left: 5%;
-    padding-top: 3%;
+    padding-bottom: 7%;
     text-align: left;
 
 }
@@ -124,7 +124,7 @@
     float: left;
     height: 100% !important;
     width: 70%;
-    padding-left: 5%;
+    padding-left: 2%;
 }
 .ml_prj_chip_area {
     float: left !important;
@@ -139,6 +139,7 @@
     width: 25%;
     display: flex ;
     align-self: center ;
+    padding-left: 3%;
 }
 .ml_prj_lm_button {
     max-width: 85% !important;
@@ -167,4 +168,12 @@
     margin: 0 auto !important;
     height: 60% !important;
     font-size: 11px !important;
+    border: 1px solid lightgrey !important;
+}
+.ml_prj_show_all {
+    /* display: flex;
+    align-self: center; */
+}
+.ml_projects_header, .MuiCardHeader-content {
+    padding-left: 10%;
 }

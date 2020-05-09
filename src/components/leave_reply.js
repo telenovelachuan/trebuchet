@@ -124,7 +124,7 @@ class LeaveReply extends Component {
         <div className="leave_reply_area">
             <div className="comment_text_area leave_reply_textbox">
                 <TextField className="reply_textbox" label="leave a reply" multiline style = {{width: '100%'}}
-                    rows={6} defaultValue="" variant="outlined" 
+                    rows={4} defaultValue="" variant="outlined" 
                     onFocus={this.reply_text_focused} onBlur={this.reply_text_blurred}
                     value={this.state.reply_text} onChange={this.handle_reply_text_changed}
                 />

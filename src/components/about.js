@@ -287,17 +287,15 @@ class About extends Component {
                 </div>
 
 
-                <div className="comment_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
+                {/* <div className="comment_area card_general" data-aos="fade-up" data-aos-offset="20" data-aos-delay="20"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true"
                     data-aos-once="true" >
 
-                    {/* <Card className={"comment_card"}> */}
                         <CardHeader title="LEAVE A REPLY" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             <LeaveReply />
                         </CardContent>
-                    {/* </Card> */}
-                </div>
+                </div> */}
 
             
 
