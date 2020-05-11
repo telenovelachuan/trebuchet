@@ -60,8 +60,11 @@ class Footer extends Component {
       anchorEl: null,
     };
     this.footer_text = <div className="footer_text_div">
-      <div className="footer_text">Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
-          </div>
+      <div className="footer_text">
+      {/* <Typography className="footer_text_internal" component={'span'}> */}
+        Copyright © 2020 Chuan Sun. All Rights Reserved | Handcrafted with Node.js
+      {/* </Typography> */}
+      </div>
           <div className="footer_contact_area">
             <Button variant="outlined" color="primary" className="footer_contact_button"
               onClick={e => this.contact_me_click(e)} >
@@ -147,6 +150,51 @@ class Navigation extends Component {
       scrolled_to_bottom: false,
       footer_expanded: false,
     };
+    this.wc_entries = [ 
+      { label: 'Dev Blog', url: 'http://niklasknaack.blogspot.de/', target: '_top', tooltip: 'Lorem ipsum' },
+      { label: 'Flashforum', url: 'http://www.flashforum.de/', target: '_top', tooltip: 'Dolor sit amet' },
+      { label: 'jQueryScript.net', url: 'http://www.jqueryscript.net/', target: '_top', tooltip: 'Consetetur sadipscing' },
+      { label: 'Javascript-Forum', url: 'http://forum.jswelt.de/', target: '_top', tooltip: 'Sed diam' },
+      { label: 'JSFiddle', url: 'https://jsfiddle.net/user/NiklasKnaack/fiddles/', target: '_top' },
+      { label: 'CodePen', url: 'http://codepen.io/', target: '_top', tooltip: 'At vero' },
+      { label: 'three.js', url: 'http://threejs.org/', target: '_top', tooltip: 'Nonumy eirmod' },
+      { label: 'WebGLStudio.js', url: 'http://webglstudio.org/', target: '_top', tooltip: 'Stet clita' },
+      { label: 'JS Compress', url: 'http://jscompress.com/', target: '_top', tooltip: 'Justo duo' },
+      { label: 'TinyPNG', url: 'https://tinypng.com/', target: '_top', tooltip: 'Ut wisi enim' },
+    ];
+    this.wc_settings = {
+      entries: this.wc_entries,
+      width: 480,
+      height: 480,
+      radius: '100%',
+      radiusMin: 75,
+      bgDraw: true,
+      bgColor: 'white',
+      opacityOver: 0.5,
+      opacityOut: 0.05,
+      opacitySpeed: 6,
+      fov: 800,
+      speed: 0.5,
+      fontFamily: 'Oswald, Arial, sans-serif',
+      fontSize: '15',
+      fontColor: 'black',
+      fontWeight: 'normal',//bold
+      fontStyle: 'normal',//italic 
+      fontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+      fontToUpperCase: true,
+      tooltipFontFamily: 'Oswald, Arial, sans-serif',
+      tooltipFontSize: '11',
+      tooltipFontColor: '#fff',
+      tooltipFontWeight: 'normal',//bold
+      tooltipFontStyle: 'normal',//italic 
+      tooltipFontStretch: 'normal',//wider, narrower, ultra-condensed, extra-condensed, condensed, semi-condensed, semi-expanded, expanded, extra-expanded, ultra-expanded
+      tooltipFontToUpperCase: false,
+      tooltipTextAnchor: 'left',
+      tooltipDiffX: 0,
+      tooltipDiffY: 10,
+      animatingSpeed: 0.01,
+      animatingRadiusLimit: 1.3
+    };
   }
 
     navChange = (event, newValue) => {
@@ -195,6 +243,17 @@ class Navigation extends Component {
 
     
     componentDidMount() {
+      // const script = document.createElement("script");
+      // script.async = true;
+      // script.innerHTML = `
+      // document.addEventListener("DOMContentLoaded", function(){
+      //     var wc_entries = ${JSON.stringify(this.wc_entries)};
+      //     var wc_settings = ${JSON.stringify(this.wc_settings)};
+      //   var svg3DTagCloud = new SVG3DTagCloud(document.getElementById('wc_tag_area'), wc_settings);
+      //   console.log("svg3DTagCloud initialized");
+      // });`;
+      // document.body.appendChild(script);
+      
       // add visit entry
       axios.post(`${API_URL}/new_access_entry`, { client_ip: localIpUrl('public')})
       .then(res => {
@@ -208,7 +267,9 @@ class Navigation extends Component {
 
   return (
     <div className="navigation" >
-        <div className="avatar_panel">
+        {/* <div className="avatar_panel" id="wc_tag_area"></div> */}
+        <div className="avatar_panel" id="avatar_panel">
+            
             <div className="avatar_panel_upper">
                 <div className="avatar_area">
                     <Avatar src={avatar_pic} className={"main_avatar"} />

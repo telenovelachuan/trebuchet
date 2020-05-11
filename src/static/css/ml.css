@@ -2,12 +2,12 @@
 .ml_intro {
     padding-left: 10%;
     padding-right: 7%;
-    height: 550px;
+    height: 650px;
 }
 
 .ml_intro_card {
     width: 100% !important;
-    height: 470px;
+    height: 600px;
 }
 .ml_intro_text {
     height: 30%;
@@ -31,11 +31,15 @@
     font-family: 'JosefinSans_Regular', 'Segoe UI' !important;
 }
 .ml_skill_text {
-    font-family: 'PayPal Sans Big Light', 'JosefinSans_Light' !important;
-    font-size: 15px;
+    font-family: 'PayPal Sans Big light', 'JosefinSans_Light' !important;
+    font-size: 14px;
+    text-align: center;
 }
-.ml_skill_text,span {
-    font-family: 'PayPal Sans Big Light', 'JosefinSans_Light' !important;
+.ml_intro_skill_card {
+    height: 140px !important;
+}
+.ml_skill_header,span {
+    font-family: 'PayPal Sans Big', 'JosefinSans_Light' !important;
     /* font-size: 15px; */
 }
 .ml_skill_content {
@@ -175,5 +179,14 @@
     align-self: center; */
 }
 .ml_projects_header, .MuiCardHeader-content {
-    padding-left: 10%;
+    padding-left: 3%;
+}
+.ml_intro_typg {
+    font-size: 16px !important;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    text-align: left;
+    font-size: 13px;
+}
+.ml_intro_paragraph {
+    padding: 2% 2% 0% 2%;
 }

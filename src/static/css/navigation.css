@@ -49,6 +49,25 @@
     /* padding-right: 10%; */
     background-color: white;
 }
+#avatar_panel {
+    /* position: absolute;
+    z-index: 0; */
+}
+#wc_tag_area {
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(255, 255, 255, 0.3);
+}
+#wc_tag_area, svg {
+    height: 80%;
+    width: 100%;
+    fill-opacity: 0.5;
+}
+/*
+#wc_tag_area, svg, rect {
+    height: 100%;
+    width: 100%;
+} */
 .avatar_panel_upper {
     padding-left: 20%;
     padding-right: 10%;
@@ -93,7 +112,7 @@
 .main_name {
     font-size: 30px;
     height: 30%;
-    font-family: 'PayPal Sans Big', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'Century_Gothic', 'PayPal Sans Big', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .main_subintro {
     font-size: 15px;
@@ -132,16 +151,18 @@
 }
 .footer_text {
     width: 70% !important;
-    height: 100% !important;
+    height: 70% !important;
     float: left !important;
     letter-spacing: 1px;
     padding-top: 2%;
+    vertical-align: middle;
 
 }
 .footer_contact_area {
     float: left;
     width: 30%;
-    padding-top: 1%;
+    height: 70% !important; 
+    padding-top: 1.5%;
 }
 .footer_contact_button {
     border-color: rgb(84, 158, 236) !important;
@@ -162,5 +183,8 @@
 .footer_text_div {
     width: 100% !important;
     height: 100% !important;
-    
+}
+.footer_text_internal {
+    width: 100%;
+    height: 100%;
 }

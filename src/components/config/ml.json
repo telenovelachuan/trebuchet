@@ -1,5 +1,7 @@
 {
-    "intro_text": "Proficient in machine learning technologies with hands-on experience in supervised and unsupervised learning",
+    "intro_text": ["Proficient in machine learning technologies with consolidated knowledge in both supervised and unsupervised algorithms, covering a wide range of toolkits including decision trees, support vector machines, gradient descent for loss optimization, isolation forest, and so on.",
+        "Proven capability through hands-on experience in solving real data science problems using Numpy, Scikit-learn, Tensorflow and way more other libraries and platforms, and handling end-to-end machine learning pipelines from data processing, feature engineering, model training to output validation."
+    ],
     "skills": {
         "regression": ["Predictive Regression", "Fitting numerics for prediction and cutomizing loss for objective optimization"],
         "classification": ["Classification Problems", "Multi class classification using traditional ML and neural networks"],
@@ -11,7 +13,7 @@
     "projects": {
         "widget_maintenance": ["Predictive Widget Maintenance",
             "https://github.com/telenovelachuan/predictive_widget_maintenance",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "A data science project on the widget maintenance dataset to explore feature trends of its data generating system and predict the units failure probability and time sequence trends.",
             ["clustering", "regression", "time series"]
         ],
         "worldwide_products": ["Worldwide Products Trend",
@@ -44,10 +46,10 @@
             "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
             ["anomaly detection"]
         ],
-        "movie_lens": ["Movie Lens",
-            "https://github.com/telenovelachuan/movie_lens",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
-            ["clustering"]
+        "dynamic_duo": ["Dynamic Duo",
+            "https://github.com/dynamic-duo-data-science/dynamicduo",
+            "A data science project on the US cross border entry dataset from 1996 to 2019 for US border entry prediction, time series analysis and visualized storytelling.",
+            ["anomaly detection", "regression", "time series", "visualization"]
         ]
     }
 }
