@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import avatar_pic from "../static/images/avatar.jpg";
 // import avatar_pic2 from "../static/images/me.jpg";
+
 import linkedin_logo from "../static/images/linkedin.png";
 import github_logo from "../static/images/github.png";
 import email_logo from "../static/images/email.png";
@@ -25,6 +26,7 @@ import LeaveReply from './leave_reply';
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
+import DataVisualization from "./data_visualization";
 
 
 import "../static/css/navigation.css";
@@ -327,7 +329,7 @@ class Navigation extends Component {
                     <MachineLearning />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
-                    Item Three
+                    <DataVisualization />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={3} dir={"rtl"}>
                     Item Four
@@ -343,10 +345,6 @@ class Navigation extends Component {
         }
 
         <TrackVisibility>
-          {/* <Footer scrolled_to_bottom={this.state.scrolled_to_bottom}
-            toggle_scroll_display={this.toggle_scroll_display} isExpanded={this.state.footer_expanded}
-            toggle_expanded={this.toggle_footer_expansion}
-          /> */}
           <ComponentToTrack toggle_visibility={this.toggle_scroll_display} toggle_divider={this.toggle_footer_expansion}/>
         </TrackVisibility>
 

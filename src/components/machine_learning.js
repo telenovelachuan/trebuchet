@@ -36,6 +36,7 @@ import visualiztion_logo from "../static/images/ml/visualization.png";
 import time_series_small_logo from "../static/images/ml/time_series_small.png";
 import classification_small_logo from "../static/images/ml/classification_small.png";
 import dynamic_duo_logo from "../static/images/ml/dynamic_duo.gif";
+import fm_logo from "../static/images/ml/fm.gif";
 
 
 import json_file from './config/ml.json';
@@ -69,10 +70,10 @@ class MachineLearning extends Component {
         let projects = {
             "widget_maintenance": [widget_mtn_logo],
             "dynamic_duo": [dynamic_duo_logo],
+            "major_leagues": [fm_logo],
+            "shakespear_plays": [shakespeare_play_logo],
             "worldwide_products": [worldwide_product_logo],
             "the_oscars": [the_oscars_logo],
-            "major_leagues": [major_league_logo],
-            "shakespear_plays": [shakespeare_play_logo],
             "news_headline": [news_headline],
             "dream_of_anomalies": [dream_of_anomalies_logo],
         }
