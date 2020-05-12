@@ -27,6 +27,7 @@ import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import Paper from '@material-ui/core/Paper';
 import DataVisualization from "./data_visualization";
+import DataEngineering from "./data_engineering";
 
 
 import "../static/css/navigation.css";
@@ -332,7 +333,7 @@ class Navigation extends Component {
                     <DataVisualization />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={3} dir={"rtl"}>
-                    Item Four
+                    <DataEngineering />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={4} dir={"rtl"}>
                     Item Five

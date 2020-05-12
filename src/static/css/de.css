@@ -1,0 +1,107 @@
+@font-face {font-family: "PayPal Sans Big"; src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot"); src: url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.woff") format("woff"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/44994582bcefd02119158ff8b0d16b75.svg#PayPal Sans Big") format("svg"); }
+@font-face {font-family: "PayPal Sans Big Light"; src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot"); src: url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.woff") format("woff"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/d8040e905cf0216b6e1b4e39b28d519a.svg#PayPal Sans Big Light") format("svg"); }
+@font-face {
+    font-family: 'Century_Gothic';
+    src: local('Century_Gothic'), url(../fonts/Century_Gothic_Font_Family/Century_Gothic_400.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Century_Gothic_Bold';
+    src: local('Century_Gothic_Bold'), url(../fonts/911Fonts.com_CenturyGothicBold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_Light';
+    src: local('JosefinSans_Light'), url(../fonts/josefin-sans/JosefinSans-Light.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_Bold';
+    src: local('JosefinSans_Bold'), url(../fonts/josefin-sans/JosefinSans-Bold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_Thin';
+    src: local('JosefinSans_Thin'), url(../fonts/josefin-sans/JosefinSans-Thin.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_SemiBold';
+    src: local('JosefinSans_SemiBold'), url(../fonts/josefin-sans/JosefinSans-SemiBold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSans_Regular';
+    src: local('JosefinSans_Regular'), url(../fonts/josefin-sans/JosefinSans-Regular.ttf) format('truetype');
+}
+
+.de_intro_typg {
+    font-size: 16px !important;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    text-align: left;
+    font-size: 13px;
+}
+.de_intro_paragraph {
+    padding: 2% 2% 0% 2%;
+}
+.de_intro_header {
+    padding: 4% 2% 0% 0% !important;
+}
+.de_intro {
+    padding-left: 10%;
+    padding-right: 7%;
+    height: 750px;
+}
+
+.de_intro_card {
+    width: 100% !important;
+    height: 680px;
+}
+.de_intro_text {
+    height: 30%;
+}
+.de_intro_skills {
+    width: 100%;
+    height: 70%;
+}
+.de_intro_skill {
+    width: 26%;
+    height: 43%;
+    float: left !important;
+    padding-left: 5%;
+    padding-bottom: 7%;
+    text-align: left;
+}
+.de_headers {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    letter-spacing: 3px !important;
+    font-weight: 500 !important;
+}
+
+.de_intro_skills {
+    width: 100%;
+    height: 70%;
+}
+.de_intro_skill {
+    width: 26%;
+    height: 43%;
+    float: left !important;
+    padding-left: 5%;
+    padding-bottom: 7%;
+    text-align: left;
+}
+.de_skill_header {
+    height: 30% !important;
+    padding: 10px !important;
+    font-family: 'JosefinSans_Regular', 'Segoe UI' !important;
+}
+.de_skill_text {
+    font-family: 'PayPal Sans Big light', 'JosefinSans_Light' !important;
+    font-size: 14px;
+    text-align: center;
+}
+.de_intro_skill_card {
+    height: 140px !important;
+}
+.de_skill_header,span {
+    font-family: 'PayPal Sans Big', 'JosefinSans_Light' !important;
+    /* font-size: 15px; */
+}
+.de_skill_content {
+    padding-top: 2% !important;
+    height: 70% !important;
+}

@@ -1,0 +1,13 @@
+{
+    "intro_text": ["Expertise in data engineering technology ensures proficient data manipulation and transformation within the end-to-end life cycle of machine learning and data science solutions.",
+        "Hands-on experience in system integration with assorted big data platforms such as Hadoop, Spark, Hive, and various SQL platforms, with knowledge in dev-ops techniques for smooth project release & delivery."
+    ],
+    "skills": {
+        "hadoop": ["Hadoop Integration", "Data storage & dev integration with Hadoop for offline applications"],
+        "spark": ["Spark Computation", "Utilize Spark interface and RDD operations for distributed computation on big data"],
+        "sql": ["SQL Platforms", "Proficiency on most common SQL platforms such as MySQL, PostgreSQL, SQL Server, Sqlite, etc."],
+        "cloud": ["Cloud Computing", "Industry level experience in cloud virtualization tech stack and environment setup"],
+        "devops": ["DevOps", "Familiar with DevOps workflow and tools such as Docker, Kubernetes and Jenkins"],
+        "no_sql": ["No-SQLs", "Refining data & excluding anomalies for model training and data auditing"]
+    }
+}
