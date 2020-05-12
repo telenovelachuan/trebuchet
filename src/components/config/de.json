@@ -8,6 +8,6 @@
         "sql": ["SQL Platforms", "Proficiency on most common SQL platforms such as MySQL, PostgreSQL, SQL Server, Sqlite, etc."],
         "cloud": ["Cloud Computing", "Industry level experience in cloud virtualization tech stack and environment setup"],
         "devops": ["DevOps", "Familiar with DevOps workflow and tools such as Docker, Kubernetes and Jenkins"],
-        "no_sql": ["No-SQLs", "Refining data & excluding anomalies for model training and data auditing"]
+        "no_sql": ["No-SQLs", "Use no-sql platforms for key-value pattern data storage & consumption with exprience in MongoDB, Redis and so on"]
     }
 }
