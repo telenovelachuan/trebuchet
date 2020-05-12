@@ -2,12 +2,12 @@
 .ml_intro {
     padding-left: 10%;
     padding-right: 7%;
-    height: 650px;
+    height: 750px;
 }
 
 .ml_intro_card {
     width: 100% !important;
-    height: 600px;
+    height: 680px;
 }
 .ml_intro_text {
     height: 30%;
@@ -178,9 +178,9 @@
     /* display: flex;
     align-self: center; */
 }
-.ml_projects_header, .MuiCardHeader-content {
-    padding-left: 3%;
-}
+/* .ml_projects_header, .MuiCardHeader-content {
+    padding-left: 15%;
+} */
 .ml_intro_typg {
     font-size: 16px !important;
     font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
@@ -190,3 +190,10 @@
 .ml_intro_paragraph {
     padding: 2% 2% 0% 2%;
 }
+.ml_intro_header {
+    padding: 4% 2% 0% 0% !important;
+}
+.ml_projects_header_text {
+    padding-left: 15% !important;
+}
+

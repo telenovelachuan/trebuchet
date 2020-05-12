@@ -18,37 +18,37 @@
         ],
         "worldwide_products": ["Worldwide Products Trend",
             "https://github.com/telenovelachuan/worldwide_products",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "A data science project on the manufacturing product demand dataset to explore the seasonal trend in features and build time series model to predict the product demands.",
             ["time series"]
         ],
         "the_oscars": ["The Oscars",
             "https://github.com/telenovelachuan/the_oscars",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "Conducting topic modeling further on the Shakespeare play dataset, and applying data storytelling for interactive topic visualization.",
             ["topic modeling", "visualization"]
         ],
-        "major_leagues": ["Premier League Match Prediction",
+        "major_leagues": ["European Football Score Prediction",
             "https://github.com/telenovelachuan/major_leagues",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "European football data mining and aggregation on Premier League, Champions League and other tournament data provided by soccer SPI. Full time match score prediction using boosting techniques and regression networks.",
             ["regression"]
         ],
         "shakespear_plays": ["To Be, or Not to Be",
             "https://github.com/telenovelachuan/shakespear_plays",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "Exploring all Shakespeare plays text for recognizing useful features and predicting the player out of the play lines using classification models.",
             ["classification"]
         ],
-        "news_headline": ["News Headline Summarization",
+        "news_headline": ["News Headline Extraction",
             "https://github.com/telenovelachuan/Eluvio_DS_Challenge",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "Topic modeling project on the news title headline dataset to explore title feature information and discover yearly topics using natural language processing models.",
             ["topic modeling"]
         ],
         "dream_of_anomalies": ["Dreams of Anomalies",
             "https://github.com/telenovelachuan/dream_of_anomalies",
-            "A data science project on the widget maintenance dataset of ExampleCo, Inc to explore feature trends of its data generating system and predict the units that are mostly likely to fail.",
+            "A data science project on applying anomaly detection techniques on the website streaming dataset to discover abnormal data samples.",
             ["anomaly detection"]
         ],
         "dynamic_duo": ["Dynamic Duo",
             "https://github.com/dynamic-duo-data-science/dynamicduo",
-            "A data science project on the US cross border entry dataset from 1996 to 2019 for US border entry prediction, time series analysis and visualized storytelling.",
+            "Analyzing & diagnosing US cross border entry data from 1996 to 2019 for US border entry prediction, time series analysis and visualized storytelling.",
             ["anomaly detection", "regression", "time series", "visualization"]
         ]
     }

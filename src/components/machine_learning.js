@@ -37,6 +37,7 @@ import time_series_small_logo from "../static/images/ml/time_series_small.png";
 import classification_small_logo from "../static/images/ml/classification_small.png";
 import dynamic_duo_logo from "../static/images/ml/dynamic_duo.gif";
 import fm_logo from "../static/images/ml/fm.gif";
+import UCL_logo from "../static/images/ml/UCL.gif";
 
 
 import json_file from './config/ml.json';
@@ -70,7 +71,7 @@ class MachineLearning extends Component {
         let projects = {
             "widget_maintenance": [widget_mtn_logo],
             "dynamic_duo": [dynamic_duo_logo],
-            "major_leagues": [fm_logo],
+            "major_leagues": [UCL_logo],
             "shakespear_plays": [shakespeare_play_logo],
             "worldwide_products": [worldwide_product_logo],
             "the_oscars": [the_oscars_logo],
@@ -170,8 +171,6 @@ class MachineLearning extends Component {
     }
 
     render() {
-        console.log("this.ml_skills:")
-        console.log(this.ml_skills);
         return (
             <div id="ml_content">
 
@@ -180,6 +179,13 @@ class MachineLearning extends Component {
                     data-aos-once="true" >
                 <div className="ml_intro">
                 <Card className={"ml_intro_card"}>
+                    <div className="ml_intro_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
+                        data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
+                        data-aos-once="true" >
+                        <CardHeader title="MACHINE LEARNING" className="ml_intro_header"
+                            titleTypographyProps={{className:"ml_headers"}}
+                        />
+                    </div>
                     <CardContent>
                         <div className="ml_intro_text">
                             {this.load_intro_text().map((paragraph, idx) => (
@@ -235,7 +241,7 @@ class MachineLearning extends Component {
                     data-aos-once="true" >
                     <div className="ml_projects">
                         <CardHeader title="FEATURED PROJECTS" className="ml_projects_header"
-                        titleTypographyProps={{className:"ml_headers"}} 
+                        titleTypographyProps={{className:"ml_headers ml_projects_header_text"}} 
                             action={
                             <Fade in={this.state.display_show_all} timeout={1000}>
                             <div className="ml_prj_show_all" >
