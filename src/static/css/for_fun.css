@@ -1,0 +1,72 @@
+.ff_content {
+    width: 100%;
+    height: 800px !important;
+}
+
+#word_puzzle {
+    width: 100%;
+    height: 500px !important;
+    display: flex !important;
+    align-self: center !important;
+}
+.game_intro_card {
+    width: 80% !important;
+    height: 400px;
+    margin: 0 auto !important;
+}
+#wp_info_area {
+    height: 20% !important;
+    text-align: left;
+    font-size: 15px;
+    font-family: 'Century_Gothic';
+}
+#wp_word_area {
+    height: 40% !important;
+}
+#wp_bottom_area {
+    height: 10% !important;
+    text-align: left;
+    font-size: 15px;
+    font-family: 'Century_Gothic';
+}
+.wp_cardcontent {
+    height: 100% !important;
+}
+.wp_letter_box {
+    float: left !important;
+    /* width: 50px !important;
+    height: 50px !important; */
+}
+.wp_letter_square {
+    border: 1px solid darkcyan !important;
+    display: flex;
+    align-self: center;
+}
+.wp_letter_span {
+    /* width: 100%;
+    height: 100%; */
+    font-size: 40px;
+    margin: 0 auto !important;
+}
+.wp_letter_lose {
+    color: darkgrey;
+    font-size: 40px;
+    margin: 0 auto !important;
+}
+.wp_letter_won {
+    color: rgb(25, 209, 49);
+    font-size: 40px;
+    margin: 0 auto !important;
+}
+#wp_key_pressed {
+    float: left;
+    width: 15%;
+}
+#wp_letter_count {
+    float: left;
+    width: 30%;
+}
+#wp_no_letter {
+    float: left;
+    width: 30%;
+}
