@@ -40,7 +40,9 @@ router.get('/get_prj_update_time', cors(corsOptions), function(req, res) {
     service_tools.get_prj_update_time(req, res);
     //res.json({ message: 'trebuchet get api' });   
 })
-
+router.post('/new_game_record', cors(corsOptions), function(req, res) {
+    db_tools.create_game_record(req, res);
+});
 
 
 router.post('/', cors(corsOptions), function(req, res) {

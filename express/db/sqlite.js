@@ -101,11 +101,29 @@ function get_prj_last_update(req, res, callback) {
     db.close()
 }
 
+function create_game_record(req, res) {
+    let result = req.body.result;
+    let game_name = req.body.game_name;
+    var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+    let sql = `insert into for_fun (game_name, result, ts) values ('${game_name}', '${result}', '', '${time}')`;
+    console.log("sql:" + sql);
+    var db = new sqlite3.Database(db_path); 
+    db.run(sql, function(err) { 
+        if (err) {
+            return res.status(400).send({ message: 'DB failed on inserting a game record. ' + err.message });
+        }
+        res.json({message: 'game record insertion succeeded'}); 
+      
+    });
+    db.close()
+}
+
 module.exports = {
     get_all_access: get_all_access,
     add_access_entry: add_access_entry,
     add_comment: add_comment,
     update_prj_last_update: update_prj_last_update,
     get_prj_last_update: get_prj_last_update,
+    create_wp_record: create_wp_record,
 };
 
