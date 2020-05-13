@@ -124,6 +124,6 @@ module.exports = {
     add_comment: add_comment,
     update_prj_last_update: update_prj_last_update,
     get_prj_last_update: get_prj_last_update,
-    create_wp_record: create_wp_record,
+    create_game_record: create_game_record,
 };
 
