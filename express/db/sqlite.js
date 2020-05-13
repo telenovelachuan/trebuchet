@@ -105,7 +105,7 @@ function create_game_record(req, res) {
     let result = req.body.result;
     let game_name = req.body.game_name;
     var time = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
-    let sql = `insert into for_fun (game_name, result, ts) values ('${game_name}', '${result}', '', '${time}')`;
+    let sql = `insert into for_fun (game_name, result, ts) values ('${game_name}', '${result}', '${time}')`;
     console.log("sql:" + sql);
     var db = new sqlite3.Database(db_path); 
     db.run(sql, function(err) { 
