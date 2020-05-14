@@ -118,6 +118,43 @@ function create_game_record(req, res) {
     db.close()
 }
 
+function get_game_success_rate(req, res, callback) {
+    let game_name = req.query.game_name;
+    let sql = `select distinct game_name,result,ts from for_fun where game_name='${game_name}'`;
+    var db = new sqlite3.Database(db_path); 
+    
+    db.all(sql, function(err, rows) {
+        if (err) {
+            return callback(false, 'DB query failed');    
+        }
+        if (rows.length < 1) {
+            return callback(false, `${game_name} not found`);  
+        }
+
+        let success = 0;
+        let failure = 0;
+        let result;
+        for (let i=0; i<rows.length; i++) {
+            if (rows[i].result === 'win') {
+                success += 1;
+            }
+            else if (rows[i].result === 'lose') {
+                failure += 1;
+            }
+        }
+        if ((success + failure) === 0) {
+            result = "No games played yet...";
+        }
+        else {
+            let pct = Math.ceil((success * 100 / (success + failure)));
+            result = pct.toString() + "%";
+        }
+        return callback(true, result);  
+    });
+    db.close()
+}
+
+
 module.exports = {
     get_all_access: get_all_access,
     add_access_entry: add_access_entry,
@@ -125,5 +162,6 @@ module.exports = {
     update_prj_last_update: update_prj_last_update,
     get_prj_last_update: get_prj_last_update,
     create_game_record: create_game_record,
+    get_game_success_rate: get_game_success_rate,
 };
 

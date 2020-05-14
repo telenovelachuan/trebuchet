@@ -48,7 +48,22 @@ router.post('/new_game_record', cors(corsOptions), function(req, res) {
 router.post('/', cors(corsOptions), function(req, res) {
     res.json({ message: 'trebuchet post api' });   
 });
-
+router.get('/get_game_success_rate', cors(corsOptions), function(req, res) {
+    db_tools.get_game_success_rate(req, res, (succeeded, response) => {
+        if (!succeeded) {
+            res.json({result: ""}); 
+        }
+        else {
+            if (response) {
+                res.json({result: response}); 
+            }
+            else {
+                res.json({result: ""}); 
+            }
+        }
+    });
+    //res.json({ message: 'trebuchet get api' });   
+})
 
 app.use('/api', router);
 

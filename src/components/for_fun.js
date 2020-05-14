@@ -4,8 +4,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import WordGenerator from '@ciro.spaciari/word.generator';
+import axios from 'axios';
 
 import "../static/css/for_fun.css";
+const API_URL = process.env.REACT_APP_API_URL;
+let wp_success_rate = "loading success rate...";
 
 class ForFun extends Component {
 
@@ -21,12 +24,23 @@ class ForFun extends Component {
                 all_pressed: [],
                 chances_remain: 10,
                 won: false,
+                success_rate: wp_success_rate,
             }
         }
     }
 
     getOccurrence = (array, value) => {
         return array.filter(x => x === value).length;
+    }
+
+    record_game = (game_name, result) => {
+        axios.post(`${API_URL}/new_game_record`, {
+            game_name: game_name,
+            result: result,
+        })
+        .then(res => {
+            console.log(`new game record api returns: ${res.data}`);
+        })
     }
 
 
@@ -53,9 +67,11 @@ class ForFun extends Component {
         
         if (wp.current.join("") === wp.key) {
             wp.won = true;
+            this.record_game('word puzzle', 'win');
         }
         if (wp.chances_remain <= 0) {
             wp.current = wp.key_array;
+            this.record_game('word puzzle', 'lose');
         }
         this.word_min_length = 7;
         this.setState({wp: wp});
@@ -82,12 +98,37 @@ class ForFun extends Component {
             all_pressed: [],
             chances_remain: 10,
             won: false,
+            success_rate: wp_success_rate,
         }
         let key = random_word;
         wp.key = key;
         wp.key_array = key.split("");
         wp.current = "_".repeat(key.length).split("");
         this.setState({wp: wp});
+    }
+
+    load_success_rate = game_name => {
+        axios.get(`${API_URL}/get_game_success_rate?game_name=${game_name}`)
+        .then(res => {
+            console.log("get game records api returns!");
+            let results = res.data;
+            console.log(results);
+            console.log(results.result);
+            if (results.result) {
+                let result_str = `Overall success rate: ${results.result}`;
+                wp_success_rate = result_str;
+                let wp = this.state.wp;
+                wp.success_rate = wp_success_rate;
+                this.setState({wp: wp});
+            }
+        })
+        .catch(error => {
+            let result_str = "";
+            wp_success_rate = result_str;
+            let wp = this.state.wp;
+            wp.success_rate = wp_success_rate;
+            this.setState({wp: wp});
+        })
     }
 
     componentWillUnmount() {
@@ -101,6 +142,7 @@ class ForFun extends Component {
         this.state.wp.key_array = key.split("");
         this.state.wp.current = "_".repeat(key.length).split("");
         document.addEventListener("keydown", this.handleKeyPress.bind(this));
+        this.load_success_rate('word puzzle');
     }
 
     render () {
@@ -111,6 +153,7 @@ class ForFun extends Component {
                 <Card className={"game_intro_card"}>
                     <CardHeader title="WORD PUZZLE" className="de_intro_header"
                                 titleTypographyProps={{className:"de_headers"}}
+                                subheader={this.state.wp.success_rate}
                             />
                     <CardContent className="wp_cardcontent">
                         <div id="wp_info_area">
