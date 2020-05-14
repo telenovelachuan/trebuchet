@@ -67,11 +67,11 @@ class ForFun extends Component {
         
         if (wp.current.join("") === wp.key) {
             wp.won = true;
-            this.record_game('word puzzle', 'win');
+            this.record_game('word_puzzle', 'win');
         }
         if (wp.chances_remain <= 0) {
             wp.current = wp.key_array;
-            this.record_game('word puzzle', 'lose');
+            this.record_game('word_puzzle', 'lose');
         }
         this.word_min_length = 7;
         this.setState({wp: wp});
@@ -114,13 +114,18 @@ class ForFun extends Component {
             let results = res.data;
             console.log(results);
             console.log(results.result);
+            let result_str;
             if (results.result) {
-                let result_str = `Overall success rate: ${results.result}`;
-                wp_success_rate = result_str;
-                let wp = this.state.wp;
-                wp.success_rate = wp_success_rate;
-                this.setState({wp: wp});
+                result_str = `Overall success rate: ${results.result}`;
+                
             }
+            else {
+                result_str = "";
+            }
+            wp_success_rate = result_str;
+            let wp = this.state.wp;
+            wp.success_rate = wp_success_rate;
+            this.setState({wp: wp});
         })
         .catch(error => {
             let result_str = "";
@@ -142,7 +147,7 @@ class ForFun extends Component {
         this.state.wp.key_array = key.split("");
         this.state.wp.current = "_".repeat(key.length).split("");
         document.addEventListener("keydown", this.handleKeyPress.bind(this));
-        this.load_success_rate('word puzzle');
+        this.load_success_rate('word_puzzle');
     }
 
     render () {
