@@ -77,12 +77,15 @@ class ForFun extends Component {
         this.setState({wp: wp});
     }
 
-    get_letter_class_name = () => {
+    get_letter_class_name = (letter) => {
         if (this.state.wp.chances_remain <= 0) {
             return "wp_letter_lose";
         }
         else if (this.state.wp.won === true) {
             return "wp_letter_won";
+        }
+        if (letter === '_') {
+            return "wp_empty_letter";
         }
         return "wp_letter_span";
     }
@@ -203,8 +206,13 @@ class ForFun extends Component {
                                     return (
                                     <div className="wp_letter_box" style={{height: square_edge, width: width}}>
                                         <div className="wp_letter_square" style={{height: square_edge, width: square_edge, marginLeft: padding_left}}>
-                                            <div className={this.get_letter_class_name()}>{letter}</div>
-                                            
+                                            <div className={this.get_letter_class_name(letter)}>{letter === "_" ? "" : letter}</div>
+                                            {
+                                                letter === '_' && 
+                                                <div className="wp_mask">
+                                                    <div className="wp_mask_text"></div>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 )})

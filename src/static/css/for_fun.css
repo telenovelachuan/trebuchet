@@ -39,13 +39,14 @@
 }
 .wp_letter_square {
     border: 1px solid darkcyan !important;
-    display: flex;
-    align-self: center;
+    /* display: flex;
+    align-self: center; */
 }
 .wp_letter_span {
-    /* width: 100%;
-    height: 100%; */
-    font-size: 40px;
+    width: 100%;
+    height: 100%;
+    /* font-size: 40px; */
+    font-size: 5vw;
     margin: 0 auto !important;
 }
 .wp_letter_lose {
@@ -55,7 +56,8 @@
 }
 .wp_letter_won {
     color: rgb(25, 209, 49);
-    font-size: 40px;
+    font-size: 5vw;
+    height: 100% !important;    
     margin: 0 auto !important;
 }
 #wp_key_pressed {
@@ -69,4 +71,20 @@
 #wp_no_letter {
     float: left;
     width: 30%;
+}
+.wp_empty_letter {
+    height: 80% !important;
+    width: 100% !important;
+    min-width: 100% !important;
+}
+.wp_mask {
+    height: 20% !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    padding-left: 25%;
+}
+.wp_mask_text {
+    border-top: 2px solid darkcyan;
+    width: 50% !important;
+    padding-left: 0% !important;
 }
