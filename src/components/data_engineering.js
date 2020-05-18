@@ -45,7 +45,7 @@ class DataEngineering extends Component {
 
     render () {
     return (
-        <div className={"de_contents"}>
+        <div className={"de_contents content"}>
             
             <div className="de_intro_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
                     data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"

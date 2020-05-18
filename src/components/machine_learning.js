@@ -65,7 +65,6 @@ class MachineLearning extends Component {
         Object.keys(ml_skills).forEach(function(key) {
             ml_skills[key] = ml_skills[key].concat(json_file["skills"][key]);
         });
-        console.log(ml_skills);
         this.ml_skills = ml_skills;
 
         let projects = {
@@ -140,19 +139,11 @@ class MachineLearning extends Component {
         let projects_on_page = {};
         Object.keys(this.projects).map((prj_name, idx) => {
             let prj_obj = this.projects[prj_name];
-            console.log(prj_obj);
-            console.log(skill_name);
-            console.log(prj_obj[4]);
-            console.log(skill_name in prj_obj[4]);
             if (prj_obj[4].includes(skill_name.replace('_', ' '))) {
 
                 projects_on_page[prj_name] = prj_obj;
             }
         })
-        console.log("projects_on_page");
-        console.log(projects_on_page);
-        console.log("in skill_card_click");
-        console.log(this.state.projects_on_page);
         this.setState({
             "projects_on_page": projects_on_page,
             "display_show_all": true,
@@ -172,7 +163,7 @@ class MachineLearning extends Component {
 
     render() {
         return (
-            <div id="ml_content">
+            <div id="ml_content" className="content">
 
                 <div className="ml_intro_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
                     data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"

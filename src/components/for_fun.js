@@ -1,244 +1,87 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import WordGenerator from '@ciro.spaciari/word.generator';
-import axios from 'axios';
 
-import "../static/css/for_fun.css";
-const API_URL = process.env.REACT_APP_API_URL;
-let wp_success_rate = "loading success rate...";
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import SwipeableViews from 'react-swipeable-views';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+import WordPuzzle from "./word_puzzle";
+
+
+const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper'];
+function TabPanel(props) {
+    const { children, value, index } = props;
+  
+    return (
+      <div role="tabpanel" hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        className="tab_content"
+        aria-labelledby={`full-width-tab-${index}`}
+      >
+        {value === index && (
+          <Box p={3} className="tabpanel_box">
+            <Typography component={'span'}>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+}
 
 class ForFun extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            wp: {
-                played: false,
-                key: "",
-                key_array: [],
-                current: [],
-                last_pressed: "",
-                all_pressed: [],
-                chances_remain: 10,
-                won: false,
-                success_rate: wp_success_rate,
-            }
+            tab_value: 0,
+
         }
     }
 
-    getOccurrence = (array, value) => {
-        return array.filter(x => x === value).length;
+    load_nav_tabs = () => {
+        return tabs;
     }
 
-    record_game = (game_name, result) => {
-        axios.post(`${API_URL}/new_game_record`, {
-            game_name: game_name,
-            result: result,
-        })
-        .then(res => {
-            console.log(`new game record api returns: ${res.data}`);
-        })
-    }
+    navChange = (event, newValue) => {
+        console.log("navchange:" + newValue);
+        this.setState({"tab_value": newValue});
+    };
 
-
-    handleKeyPress = e => {
-        let key_pressed = String.fromCharCode(e.keyCode).toLowerCase();
-        if (e.keyCode < 65 || (e.keyCode > 90 && e.keyCode < 97) || e.keyCode > 122 ) {
-            return;
-        }
-        console.log("pressed!" + key_pressed);
-        let wp = this.state.wp;
-        wp.played = true;
-        wp.last_pressed = key_pressed;
-        if (!this.state.wp.key_array.includes(key_pressed) && !wp.all_pressed.includes(key_pressed)) {
-            wp.chances_remain -= 1;
-        }
-        if (!wp.all_pressed.includes(key_pressed)) {
-            wp.all_pressed.push(key_pressed);
-        }
-        for(var i=0; i<this.state.wp.key.length; i++) {
-            if (this.state.wp.key[i] === key_pressed) {
-                wp.current[i] = key_pressed;
-            }
-        }
-        
-        if (wp.current.join("") === wp.key) {
-            wp.won = true;
-            this.record_game('word_puzzle', 'win');
-        }
-        if (wp.chances_remain <= 0) {
-            wp.current = wp.key_array;
-            this.record_game('word_puzzle', 'lose');
-        }
-        this.word_min_length = 7;
-        this.setState({wp: wp});
-    }
-
-    get_letter_class_name = (letter) => {
-        if (this.state.wp.chances_remain <= 0) {
-            return "wp_letter_lose";
-        }
-        else if (this.state.wp.won === true) {
-            return "wp_letter_won";
-        }
-        if (letter === '_') {
-            return "wp_empty_letter";
-        }
-        return "wp_letter_span";
-    }
-
-    new_game_click = e => {
-        let random_word = WordGenerator.generate(1, this.word_min_length).words[0];
-        let wp = {
-            played: false,
-            key: "",
-            key_array: [],
-            current: [],
-            last_pressed: "",
-            all_pressed: [],
-            chances_remain: 10,
-            won: false,
-            success_rate: wp_success_rate,
-        }
-        let key = random_word;
-        wp.key = key;
-        wp.key_array = key.split("");
-        wp.current = "_".repeat(key.length).split("");
-        this.setState({wp: wp});
-    }
-
-    load_success_rate = game_name => {
-        axios.get(`${API_URL}/get_game_success_rate?game_name=${game_name}`)
-        .then(res => {
-            console.log("get game records api returns!");
-            let results = res.data;
-            console.log(results);
-            console.log(results.result);
-            let result_str;
-            if (results.result) {
-                result_str = `Overall success rate: ${results.result}`;
-                
-            }
-            else {
-                result_str = "";
-            }
-            wp_success_rate = result_str;
-            let wp = this.state.wp;
-            wp.success_rate = wp_success_rate;
-            this.setState({wp: wp});
-        })
-        .catch(error => {
-            let result_str = "";
-            wp_success_rate = result_str;
-            let wp = this.state.wp;
-            wp.success_rate = wp_success_rate;
-            this.setState({wp: wp});
-        })
-    }
-
-    get_letter_size = () => {
-        const a = -3.631;
-        const b = 83.75;
-        let length = this.state.wp.key.length;
-        return `${Math.ceil(a * length + b)}px`;
-
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("keydown", this.handleKeyPress.bind(this));
-    }    
-
-    componentWillMount() {
-        let random_word = WordGenerator.generate(1, this.word_min_length).words[0];
-        let key = random_word;
-        this.state.wp.key = key;
-        this.state.wp.key_array = key.split("");
-        this.state.wp.current = "_".repeat(key.length).split("");
-        document.addEventListener("keydown", this.handleKeyPress.bind(this));
-        this.load_success_rate('word_puzzle');
-    }
+    
 
     render () {
     return (
         <div className={"ff_content"} >
-            <div id="word_puzzle" onKeyDown={this.handleKeyPress}>
-            
-                <Card className={"game_intro_card"}>
-                    <CardHeader title="WORD PUZZLE" className="de_intro_header"
-                                titleTypographyProps={{className:"de_headers"}}
-                                subheader={this.state.wp.success_rate}
-                            />
-                    <CardContent className="wp_cardcontent">
-                        <div id="wp_info_area">
-                            <div>
-                                {this.state.wp.chances_remain} chances remaining
-                                {this.state.wp.chances_remain <= 0 && (<span>, you lose :-(</span>)}
-                            </div>
-                            {
-                                (this.state.wp.last_pressed && this.state.wp.chances_remain >= 0 && !this.state.wp.won) &&
-                                (<div id="wp_key_pressed">you pressed: {this.state.wp.last_pressed}</div>)
-                            }
-                            {
-                                this.state.wp.key_array.includes(this.state.wp.last_pressed && !this.state.wp.won) && 
-                                    (<div id="wp_letter_count">There {this.getOccurrence(this.state.wp.key_array, this.state.wp.last_pressed) > 1 ? "are" : "is"} {this.getOccurrence(this.state.wp.key_array, this.state.wp.last_pressed)}
-                                        '{this.state.wp.last_pressed}'
-                                        </div>)
-                                
-                            }
-                            {
-                                (!this.state.wp.key_array.includes(this.state.wp.last_pressed) && this.state.wp.played && this.state.wp.chances_remain > 0 && !this.state.wp.won) &&
-                                (<div id="wp_no_letter">There is no '{this.state.wp.last_pressed}'</div>)
-                            }
 
-                            {
-                                this.state.wp.chances_remain <= 0 && (<span>The answer is: </span>)
-                            }
+            <AppBar position="static" style={{ background: '#FFFFFF' }} >
+                <Tabs 
+                    value={this.state.tab_value}
+                    onChange={this.navChange}
+                    variant="fullWidth"
+                    indicatorColor="primary"
+                    textColor="primary"
+                >
+                  {
+                    this.load_nav_tabs().map((tab, idx) => (
+                      <Tab label={tab}  className={this.state.tab_value === idx ? "active_nav_tab" : "inactive_nav_tab"}/>
+                    ))
+                  }
+                </Tabs>
+            </AppBar>
 
-                            {
-                                this.state.wp.won && (<div>Bingo! The answer is: </div>)
-                            }
-                            
-                        </div>
-                        <div id="wp_word_area">
-                            {
-                                this.state.wp.current.map((letter, idx) => {
-                                    let length = this.state.wp.key.length;
-                                    let total_width = 940;
-                                    let width = total_width / length;
-                                    let ratio = 0.9;
-                                    let square_edge = width * ratio;
-                                    let padding_left = `${(1 - ratio) * 100}%`;
-                                    return (
-                                    <div className="wp_letter_box" style={{height: square_edge, width: width}}>
-                                        <div className="wp_letter_square" style={{height: square_edge, width: square_edge, marginLeft: padding_left}}>
-                                            <div className={this.get_letter_class_name(letter)} style={{fontSize: this.get_letter_size()}}>{letter === "_" ? "" : letter}</div>
-                                            {
-                                                letter === '_' && 
-                                                <div className="wp_mask">
-                                                    <div className="wp_mask_text"></div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                )})
-                            }
-                        </div>
-                        <div id="wp_bottom_area">
+            <SwipeableViews slideStyle={{ overflow: 'hidden'}} axis={'x'} index={this.state.tab_value} onChangeIndex={this.andleChangeIndex} hysteresis={0.01} >
+                <TabPanel classes="nav_tab_panel" value={this.state.tab_value} index={0} dir={"rtl"} >
+                    <WordPuzzle />
+                </TabPanel>
+                <TabPanel value={this.state.tab_value} index={1} dir={"rtl"}>
+                    tic tac toe
+                </TabPanel>
+                <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
+                    mine sweeper
+                </TabPanel>
+            </SwipeableViews>
 
-                            <div className="wp_restart">
-                                    <Button variant="outlined" color="primary" className="wp_restart_button"
-                                        onClick={e => this.new_game_click(e)} >
-                                        NEW GAME
-                                    </Button>
-                            </div>
-                            
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
         </div>
     )}
 }
