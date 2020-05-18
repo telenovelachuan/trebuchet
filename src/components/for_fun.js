@@ -139,6 +139,14 @@ class ForFun extends Component {
         })
     }
 
+    get_letter_size = () => {
+        const a = -3.631;
+        const b = 83.75;
+        let length = this.state.wp.key.length;
+        return `${Math.ceil(a * length + b)}px`;
+
+    }
+
     componentWillUnmount() {
         document.removeEventListener("keydown", this.handleKeyPress.bind(this));
     }    
@@ -206,7 +214,7 @@ class ForFun extends Component {
                                     return (
                                     <div className="wp_letter_box" style={{height: square_edge, width: width}}>
                                         <div className="wp_letter_square" style={{height: square_edge, width: square_edge, marginLeft: padding_left}}>
-                                            <div className={this.get_letter_class_name(letter)}>{letter === "_" ? "" : letter}</div>
+                                            <div className={this.get_letter_class_name(letter)} style={{fontSize: this.get_letter_size()}}>{letter === "_" ? "" : letter}</div>
                                             {
                                                 letter === '_' && 
                                                 <div className="wp_mask">
