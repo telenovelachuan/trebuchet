@@ -102,7 +102,7 @@ class TicTacToe extends Component {
             for(let j=0; j<player_checks.length; j++) {
                 if (i === j) { continue; }
                 let fatal_pos = this.fill_fatality(player_checks[i], player_checks[j]);
-                if( fatal_pos > 0) {
+                if( fatal_pos >= 0) {
                     return fatal_pos;
                 }
             }
