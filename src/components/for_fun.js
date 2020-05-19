@@ -8,15 +8,16 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import WordPuzzle from "./word_puzzle";
+import TicTacToe from "./tic_tac_toe";
 
 
 const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper'];
 function TabPanel(props) {
-    const { children, value, index } = props;
+    const { children, value, index, id } = props;
   
     return (
       <div role="tabpanel" hidden={value !== index}
-        id={`full-width-tabpanel-${index}`}
+        id={id}
         className="tab_content"
         aria-labelledby={`full-width-tab-${index}`}
       >
@@ -74,8 +75,8 @@ class ForFun extends Component {
                 <TabPanel classes="nav_tab_panel" value={this.state.tab_value} index={0} dir={"rtl"} >
                     <WordPuzzle />
                 </TabPanel>
-                <TabPanel value={this.state.tab_value} index={1} dir={"rtl"}>
-                    tic tac toe
+                <TabPanel id="ttt_panel" value={this.state.tab_value} index={1} dir={"rtl"}>
+                    <TicTacToe />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
                     mine sweeper

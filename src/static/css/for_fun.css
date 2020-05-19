@@ -102,3 +102,55 @@
 .MuiBox-root {
     padding: 0px 0 0 0 !important;
 }
+.wp_bingo {
+    padding-left: 5%;
+}
+
+#ttt_area {
+    width: 100%;
+}
+#ttt_square {
+    margin: 0 auto !important;
+    height: 350px;
+    width: 350px;
+}
+.ttt_button {
+    width: 33%;
+    height: 33%;
+    min-width: 33%;
+    min-height: 33%;
+    border: 1px solid darkcyan !important;
+    border-radius: 0px !important;
+    background-size: cover;
+}
+.ttt_button:hover {
+    background-color: darkcyan !important;
+}
+#ttt_card {
+    height: 700px !important;
+}
+.ttt_cardcontent {
+    padding-top: 0px !important;
+    height: 700px !important;
+}
+#ttt_content {
+    padding-top: 30px !important;
+}
+.ttt_header {
+    padding: 10px 0 0px 0 !important;
+
+}
+#ttt_info {
+    width: 100%;
+}
+#ttt_won {
+    padding: 0 10 10 10 !important;
+    color: darkcyan;
+}
+#ttt_lost {
+    padding: 0px;
+    color: black;
+}
+#ttt_restart {
+    padding: 15px !important;
+}

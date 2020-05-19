@@ -217,7 +217,7 @@ class WordPuzzle extends Component {
                             }
 
                             {
-                                this.state.wp.won && (<div>Bingo! The answer is: </div>)
+                                this.state.wp.won && (<div className="wp_bingo">Bingo! The answer is: </div>)
                             }
                             
                         </div>
