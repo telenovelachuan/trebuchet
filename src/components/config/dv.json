@@ -1,0 +1,6 @@
+{
+    "intro_text": ["Visualizing data in a diversified way based on different analysis purposes and storytelling scenarios.",
+        "Proficient at assorted data visualization libraries, analytics charts and customized coding for complicated storytelling."
+    ],
+    "tools": ["Matplotlib", "Seaborn", "D3.js", "Plotly", "Jupyter Notebook", "Matlab"]
+}

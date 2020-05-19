@@ -1,0 +1,56 @@
+.dv_intro {
+    padding-top: 5%;
+    padding-left: 10%;
+    padding-right: 7%;
+    height: 500px;
+}
+.dv_intro_typg {
+    font-size: 16px !important;
+    font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    text-align: center;
+    font-size: 13px;
+}
+.dv_intro_paragraph {
+    padding: 2% 2% 0% 2%;
+}
+.dv_intro_header {
+    padding: 4% 2% 0% 0% !important;
+}
+.dv_intro {
+    padding-left: 10%;
+    padding-right: 7%;
+    height: 750px;
+}
+.dv_intro_card {
+    width: 100% !important;
+    height: 330px;
+}
+.dv_intro_text {
+    height: 30%;
+}
+.dv_intro_skills {
+    width: 100%;
+    height: 70%;
+}
+.dv_intro_skill {
+    width: 26%;
+    height: 43%;
+    float: left !important;
+    padding-left: 5%;
+    padding-bottom: 7%;
+    text-align: left;
+}
+.dv_headers {
+    font-family: 'JosefinSans_Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    letter-spacing: 3px !important;
+    font-weight: 500 !important;
+}
+.dv_tool_chips {
+    padding: 3% 0 0 7%;
+    /* padding-left: 10%; */
+}
+.dv_tool_chip_area {
+    float: left;
+    /* width: 20% !important; */
+    padding-right: 3%;
+}
