@@ -1,8 +1,8 @@
 .dv_intro {
-    padding-top: 5%;
+    padding-top: 3%;
     padding-left: 10%;
     padding-right: 7%;
-    height: 500px;
+    /* height: 500px; */
 }
 .dv_intro_typg {
     font-size: 16px !important;
@@ -14,16 +14,16 @@
     padding: 2% 2% 0% 2%;
 }
 .dv_intro_header {
-    padding: 4% 2% 0% 0% !important;
+    padding: 2% 2% 0% 0% !important;
 }
 .dv_intro {
     padding-left: 10%;
     padding-right: 7%;
-    height: 750px;
+    /* height: 750px; */
 }
 .dv_intro_card {
     width: 100% !important;
-    height: 330px;
+    height: 300px;
 }
 .dv_intro_text {
     height: 30%;
@@ -53,4 +53,91 @@
     float: left;
     /* width: 20% !important; */
     padding-right: 3%;
+}
+
+.dv_static {
+    padding-left: 10%;
+    padding-right: 7%;
+    padding-top: 5%;
+
+}
+.dv_static_header {
+    padding-top: 4% !important;
+}
+.dv_static_card {
+    height: 470px !important;
+}
+.dv_static_area {
+    float: left;
+    width: 27%;
+    height: 10%;
+    padding-left: 5%;
+}
+.dv_static_middle {
+    height: 10%;
+}
+.dv_static_headers {
+    font-family: 'Century_Gothic_Bold' !important;
+    font-size: 18px !important;
+}
+.dv_static_content {
+    height: 200px !important;
+}
+.dv_static_img {
+    object-fit: fill !important;
+    width: 100% !important;
+}
+.dv_static_ts_header {
+    padding-bottom: 2% !important;
+}
+.dv_static_ca_header {
+    padding-bottom: 2% !important;
+}
+.dv_static_wc_header {
+    padding-bottom: 2% !important;
+}
+.dv_static_cc {
+    height: 250px;
+    padding-top: 2% !important;
+}
+.dv_static_ca_img {
+    padding-top: 10%;
+    height: 220px !important;
+}
+.dv_static_ts_img {
+    height: 120px !important;
+}
+.dv_static_wc_img {
+    height: 120px !important;
+}
+.dv_static_ca_cm {
+    /* width: 80% !important;
+    height: 80% !important;
+    padding: 0px !important;
+    margin: 0 !important; */
+    padding: 0 5% 0 5% !important;
+}
+
+
+.dv_interactive {
+    padding-left: 10%;
+    padding-right: 7%;
+    padding-top: 5%;
+
+}
+.dv_interactive_header {
+    padding-top: 4% !important;
+}
+.dv_interactive_area {
+    float: left;
+    width: 35%;
+    height: 30%;
+    padding-left: 10%;
+}
+.dv_interactive_headers {
+    font-family: 'Century_Gothic_Bold' !important;
+    font-size: 18px !important;
+}
+.dv_interactive_content {
+    height: 200px !important;
 }
