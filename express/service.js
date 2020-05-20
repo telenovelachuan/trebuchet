@@ -1,6 +1,6 @@
 // import { parse } from 'node-html-parser';
 const axios = require('axios');
-// const cheerio = require('cheerio');
+const fs = require("fs");
 
 var db_tools = require('./db/sqlite');
 
@@ -34,45 +34,26 @@ function get_prj_update_time(req, res) {
             }
         }
     });
+}
 
-    // axios.get(`${url}`).then(response => {
-    //     const $ = cheerio.load(response.data);
-    //     let result = $('span[itemprop=dateModified]').children().first().html();
-    //     if (!result) {
-    //         db_tools.get_prj_last_update(req, res, (succeeded, response) => {
-    //             if (!succeeded) {
-    //                 result = default_value;
-    //                 res.json({result: result}); 
-    //             }
-    //             else {
-    //                 if (response) {
-    //                     res.json({result: response}); 
-    //                 }
-    //                 else {
-    //                     result = default_value;
-    //                     res.json({result: result}); 
-    //                 }
-    //             }
-    //         });
-    //     }
-    //     else {
-    //         req.body.last_update = result;
-    //         req.body.prj_name = prj_name;
-    //         db_tools.update_prj_last_update(req, res, false);
-    //         res.json({result: result}); 
-    //     }
-        
-    // }).catch(error => {
-    //     // handle error
-    //     let err_msg = `Error getting update time for project '${prj_name}'`
-    //     console.log(err_msg);
-    //     //res.json({result: default_value}); 
-    //     res.status(500).send({ message: err_msg })
-    //   })
+function get_3d_anomaly_js_text(req, res) {
+    //fs.readFile(__dirname + '/htmls/California_subset_by_Isolation_forest_3D.html', 'utf8', function(err, html){
+
+    fs.readFile(__dirname + '/htmls/cc.js', 'utf8', function(err, html){
+        if(err) {
+            res.json({error: err}); 
+        }
+        else {
+            let result = html.replace(/(?:\r\n|\r|\n)/g, '');
+            console.log("js read success!");
+            console.log(result);
+            res.json({"js": result}); 
+        }
+    })
 }
 
 
 module.exports = {
     get_prj_update_time: get_prj_update_time,
-
+    get_3d_anomaly_js_text: get_3d_anomaly_js_text,
 };

@@ -7,6 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import DoneIcon from '@material-ui/icons/Done';
 import CardMedia from '@material-ui/core/CardMedia';
+import axios from 'axios';
 
 import "../static/css/dv.css";
 import json_file from './config/dv.json';
@@ -22,6 +23,8 @@ import ts3_logo from "../static/images/dv/ts3.png";
 import ca1_logo from "../static/images/dv/ca1.png";
 import wc1_logo from "../static/images/dv/wc1.png";
 import wc2_logo from "../static/images/dv/wc2.png";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 class DataVisualization extends Component {
@@ -40,6 +43,7 @@ class DataVisualization extends Component {
             "Jupyter Notebook": [jupyter_logo],
             "Matlab": [matlab_logo],
         };
+
     }
 
     handleDelete = e => {
@@ -48,6 +52,44 @@ class DataVisualization extends Component {
 
     load_intro_text = () => {
         return json_file["intro_text"];
+    }
+
+    componentWillMount() {
+        document.addEventListener('mouseover', function(e){
+            if(e.target && e.target.tagName === 'svg'){
+                console.log("hover!!");
+             }
+         });
+    }
+
+    componentDidMount() {
+
+        let plotlyjs = document.createElement("script");
+        plotlyjs.src = 'https://cdn.plot.ly/plotly-latest.min.js';
+        plotlyjs.async = true;
+        document.body.appendChild(plotlyjs);
+        
+
+        const script = document.createElement("script");
+        axios.get(`${API_URL}/get_3d_anomaly_js`).then(res => {
+            console.log("get api returns!");
+            console.log(res.data);
+            let js = res.data.js.replace(' ', '');
+            console.log(`js:${js}`);
+            //script.src = js;
+            let inlineScript = document.createTextNode(js);
+            script.appendChild(inlineScript);
+            script.async = true;
+            document.body.appendChild(script);
+
+            var modebar = document.getElementsByClassName("modebar-container")[0];
+            modebar.parentNode.removeChild(modebar);
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error))
+            return;
+          })
+        
     }
 
     render () {
@@ -195,8 +237,21 @@ class DataVisualization extends Component {
                         />
                     </div>
                     <CardContent className="dv_interactive_card_content">
-                        <div className="dv_itr_example" id="dv_itr_3d">
-                                3d drag example
+                        <div className="dv_itr_example" id="dv_itr_3d" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
+                            data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
+                            data-aos-once="true">
+                                
+                                <div id="dv_3d_anomaly" >
+                                    <div id="dv_3d_anomaly_desc" className="dv_itr_desc">
+                                        Outliers in California border entry data detected by isolation forest
+                                    </div>
+                                    <div className="dv_itr_instruction">
+                                        Drag and zoom the plot to view details
+                                    </div>
+                                    <div id="ef712f18-82d7-4a21-85e0-8775ce51605d" className="plotly-graph-div" style={{height:600, width:600}}></div>
+                                </div>
+                                    
+                                
                         </div>
                         <div className="dv_itr_example" id="dv_itr_topic">
                                 topic dialog
@@ -204,6 +259,14 @@ class DataVisualization extends Component {
                         <div className="dv_itr_example" id="dv_itr_geo">
                                 geo scattering
                         </div>
+
+                        
+
+
+
+
+
+
 
                     </CardContent>
                 </Card>

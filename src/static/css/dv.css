@@ -141,3 +141,22 @@
 .dv_interactive_content {
     height: 200px !important;
 }
+.modebar-group:hover {
+    background-color: black !important;
+}
+.plotly-graph-div{
+    margin-left: 10%  !important;
+    padding-left: 0 !important;
+}
+.dv_itr_desc {
+    width: 100%;
+    font-family: 'Century_Gothic' !important;
+}
+.dv_interactive_card_content {
+    padding-top: 0 !important;
+}
+.dv_itr_instruction {
+    font-family: 'Century_Gothic' !important;
+    font-size: 12px;
+    padding-top: 10px !important;
+}
