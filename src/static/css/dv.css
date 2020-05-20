@@ -120,10 +120,7 @@
 
 
 .dv_interactive {
-    padding-left: 10%;
-    padding-right: 7%;
-    padding-top: 5%;
-
+    padding: 5%;
 }
 .dv_interactive_header {
     padding-top: 4% !important;
@@ -145,18 +142,28 @@
     background-color: black !important;
 }
 .plotly-graph-div{
-    margin-left: 10%  !important;
+    margin-left: 12%  !important;
     padding-left: 0 !important;
 }
 .dv_itr_desc {
     width: 100%;
-    font-family: 'Century_Gothic' !important;
+    font-family: 'Century_Gothic_Bold' !important;
 }
 .dv_interactive_card_content {
     padding-top: 0 !important;
+    margin-bottom: 2% !important;
 }
 .dv_itr_instruction {
     font-family: 'Century_Gothic' !important;
     font-size: 12px;
     padding-top: 10px !important;
+}
+#dv_3d_anomaly {
+    padding-bottom: 3%;
+}
+#dv_itr_topic_desc {
+    padding: 2%;
+}
+.dv_itr_example {
+    padding-bottom: 5%;
 }

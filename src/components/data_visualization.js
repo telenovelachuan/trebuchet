@@ -64,23 +64,21 @@ class DataVisualization extends Component {
 
     componentDidMount() {
 
+        // loading anomaly 3d js
         let plotlyjs = document.createElement("script");
         plotlyjs.src = 'https://cdn.plot.ly/plotly-latest.min.js';
         plotlyjs.async = true;
         document.body.appendChild(plotlyjs);
-        
 
-        const script = document.createElement("script");
-        axios.get(`${API_URL}/get_3d_anomaly_js`).then(res => {
-            console.log("get api returns!");
-            console.log(res.data);
+        const script_3d = document.createElement("script");
+        axios.get(`${API_URL}/get_itr_js?js_name=California_subset_by_Isolation_forest_3D`)
+        .then(res => {
             let js = res.data.js.replace(' ', '');
-            console.log(`js:${js}`);
             //script.src = js;
             let inlineScript = document.createTextNode(js);
-            script.appendChild(inlineScript);
-            script.async = true;
-            document.body.appendChild(script);
+            script_3d.appendChild(inlineScript);
+            script_3d.async = true;
+            document.body.appendChild(script_3d);
 
             var modebar = document.getElementsByClassName("modebar-container")[0];
             modebar.parentNode.removeChild(modebar);
@@ -88,7 +86,48 @@ class DataVisualization extends Component {
         .catch(error => {
             console.log(JSON.stringify(error))
             return;
-          })
+        })
+
+        // loading interactive lda
+        var link_ref = document.createElement("link")
+        link_ref.setAttribute("rel", "stylesheet")
+        link_ref.setAttribute("type", "text/css")
+        link_ref.setAttribute("href", "https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css")
+        document.head.appendChild(link_ref)
+
+        const script_lda = document.createElement("script");
+        axios.get(`${API_URL}/get_itr_js?js_name=hamlet_tsne_pyLDAvis`)
+        .then(res => {
+            let js = res.data.js;
+            let inlineScript = document.createTextNode(js);
+            script_lda.appendChild(inlineScript);
+            script_lda.async = true;
+            console.log(script_lda);
+            document.body.appendChild(script_lda);
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error))
+            return;
+        })
+
+        // loading interactive geo
+        const script_geo = document.createElement("script");
+        axios.get(`${API_URL}/get_itr_js?js_name=geo`)
+        .then(res => {
+            let js = res.data.js;
+            let inlineScript = document.createTextNode(js);
+            script_geo.appendChild(inlineScript);
+            script_geo.async = true;
+            console.log(script_geo);
+            document.body.appendChild(script_geo);
+
+            var modebar = document.getElementsByClassName("modebar-container")[0];
+            modebar.parentNode.removeChild(modebar);
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error))
+            return;
+        })
         
     }
 
@@ -254,10 +293,19 @@ class DataVisualization extends Component {
                                 
                         </div>
                         <div className="dv_itr_example" id="dv_itr_topic">
-                                topic dialog
+                            <div className="dv_itr_desc" id="dv_itr_topic_desc">
+                                Hamlet LDA topic interactive visualization compressed using tSNE
+                            </div>
+                            <div id="ldavis_el249904744967376978390512" className="dv_itr_lda"></div>
                         </div>
                         <div className="dv_itr_example" id="dv_itr_geo">
-                                geo scattering
+                            <div id="dv_itr_geo_desc" className="dv_itr_desc">
+                                US cross border entry data aggregated on yearly basis
+                            </div>
+
+                            <div id="eba8ee49-1cad-4224-823c-ddbdc3913949" className="dv_itr_geo_div" style={{height:400, width:1000}}>
+
+                            </div>
                         </div>
 
                         

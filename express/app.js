@@ -64,8 +64,8 @@ router.get('/get_game_success_rate', cors(corsOptions), function(req, res) {
     });
     //res.json({ message: 'trebuchet get api' });   
 })
-router.get('/get_3d_anomaly_js', cors(corsOptions), function(req, res) {
-    service_tools.get_3d_anomaly_js_text(req, res);
+router.get('/get_itr_js', cors(corsOptions), function(req, res) {
+    service_tools.get_itr_js_text(req, res);
 });
 
 app.use('/api', router);

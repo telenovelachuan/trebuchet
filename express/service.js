@@ -36,10 +36,10 @@ function get_prj_update_time(req, res) {
     });
 }
 
-function get_3d_anomaly_js_text(req, res) {
+function get_itr_js_text(req, res) {
     //fs.readFile(__dirname + '/htmls/California_subset_by_Isolation_forest_3D.html', 'utf8', function(err, html){
-
-    fs.readFile(__dirname + '/htmls/cc.js', 'utf8', function(err, html){
+    let file_name = req.query.js_name;
+    fs.readFile(__dirname + `/htmls/${file_name}.js`, 'utf8', function(err, html){
         if(err) {
             res.json({error: err}); 
         }
@@ -55,5 +55,5 @@ function get_3d_anomaly_js_text(req, res) {
 
 module.exports = {
     get_prj_update_time: get_prj_update_time,
-    get_3d_anomaly_js_text: get_3d_anomaly_js_text,
+    get_itr_js_text: get_itr_js_text,
 };
