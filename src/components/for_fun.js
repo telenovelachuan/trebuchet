@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import WordPuzzle from "./word_puzzle";
 import TicTacToe from "./tic_tac_toe";
+import MineSweeper from "./mine_sweeper";
 
 
 const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper'];
@@ -79,7 +80,7 @@ class ForFun extends Component {
                     <TicTacToe />
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
-                    mine sweeper
+                    <MineSweeper />
                 </TabPanel>
             </SwipeableViews>
 
