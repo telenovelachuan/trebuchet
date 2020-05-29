@@ -1,6 +1,7 @@
 // import { parse } from 'node-html-parser';
 const axios = require('axios');
 const fs = require("fs");
+const config = require('./db/config.json');
 
 var db_tools = require('./db/sqlite');
 
@@ -55,7 +56,7 @@ function get_itr_js_text(req, res) {
 function get_dl_demo_image(req, res) {
     let step = req.query.step || 0;
     console.log("img request, received:" + step);
-    res.sendFile(`/Users/chuansun/Documents/git/trebuchet/express/images/3_${step}_oil3.jpg`);
+    res.sendFile(`${config.img_path}/3_${step}_oil3.jpg`);
     //res.json({"test": "test"}); 
 }
 
