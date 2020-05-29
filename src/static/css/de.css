@@ -42,14 +42,13 @@
     padding: 4% 2% 0% 0% !important;
 }
 .de_intro {
-    padding-left: 10%;
-    padding-right: 7%;
+    padding: 0 7% 5% 10%;
     height: 750px;
 }
 
 .de_intro_card {
     width: 100% !important;
-    height: 680px;
+    height: 750px;
 }
 .de_intro_text {
     height: 30%;
@@ -92,7 +91,8 @@
 .de_skill_text {
     font-family: 'PayPal Sans Big light', 'JosefinSans_Light' !important;
     font-size: 14px;
-    text-align: center;
+    text-align: left;
+    padding-left: 3%;
 }
 .de_intro_skill_card {
     height: 170px !important;

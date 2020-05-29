@@ -159,7 +159,10 @@ class WordPuzzle extends Component {
     }    
 
     componentWillMount() {
-        let random_word = WordGenerator.generate(1, this.word_min_length).words[0];
+        let random_word = "";
+        while(random_word.length < 7) {
+            random_word = WordGenerator.generate(1, this.word_min_length).words[0];
+        }
         let key = random_word;
         this.state.wp.key = key;
         this.state.wp.key_array = key.split("");

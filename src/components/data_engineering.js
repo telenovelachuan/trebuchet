@@ -50,7 +50,7 @@ class DataEngineering extends Component {
             <div className="de_intro_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
                     data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
                     data-aos-once="true" >
-                <div className="ml_intro">
+                <div className="de_intro">
                 <Card className={"de_intro_card"}>
                     <div className="de_intro_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="500"
                         data-aos-duration="1000" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"

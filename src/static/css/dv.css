@@ -46,13 +46,16 @@
     font-weight: 500 !important;
 }
 .dv_tool_chips {
-    padding: 3% 0 0 7%;
+    padding-top: 1%;
     /* padding-left: 10%; */
+    margin: auto !important;
+    text-align: center;
 }
 .dv_tool_chip_area {
-    float: left;
+    /* float: left; */
     /* width: 20% !important; */
     padding-right: 3%;
+    display:inline-block;
 }
 
 .dv_static {
@@ -65,7 +68,7 @@
     padding-top: 4% !important;
 }
 .dv_static_card {
-    height: 470px !important;
+    height: 650px !important;
 }
 .dv_static_area {
     float: left;
@@ -81,7 +84,8 @@
     font-size: 18px !important;
 }
 .dv_static_content {
-    height: 200px !important;
+    /* height: 200px !important; */
+    height: 100% !important;
 }
 .dv_static_img {
     object-fit: fill !important;
@@ -97,18 +101,18 @@
     padding-bottom: 2% !important;
 }
 .dv_static_cc {
-    height: 250px;
+    height: 380px;
     padding-top: 2% !important;
 }
 .dv_static_ca_img {
     padding-top: 10%;
-    height: 220px !important;
+    height: 350px !important;
 }
 .dv_static_ts_img {
-    height: 120px !important;
+    height: 180px !important;
 }
 .dv_static_wc_img {
-    height: 120px !important;
+    height: 180px !important;
 }
 .dv_static_ca_cm {
     /* width: 80% !important;
@@ -116,6 +120,9 @@
     padding: 0px !important;
     margin: 0 !important; */
     padding: 0 5% 0 5% !important;
+}
+.dv_static_ts_cm {
+    padding-bottom: 2% !important;
 }
 
 

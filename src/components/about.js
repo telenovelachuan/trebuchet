@@ -55,6 +55,8 @@ import csharp_logo from "../static/images/csharp.png";
 import celery_logo from "../static/images/celery.jpg";
 import rabbitmq_logo from "../static/images/rabbitmq.png";
 import django_logo from "../static/images/django.png";
+import instructor_logo from "../static/images/instructor.png";
+
 
 import LeaveReply from './leave_reply';
 import '../static/css/App.css';
@@ -85,7 +87,7 @@ class About extends Component {
     this.exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
                 'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
                 'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
-                'KU': [ku_logo, "Instructor", [cpp_logo]]};
+                'KU': [ku_logo, "Instructor", [cpp_logo, instructor_logo]]};
 
     }
 
