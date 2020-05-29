@@ -1,6 +1,11 @@
 {
-    "intro_text": ["Proficient in machine learning technologies with consolidated knowledge in both supervised and unsupervised algorithms, covering a wide range of toolkits including decision trees, support vector machines, gradient descent for loss optimization, isolation forest, and so on.",
+    "intro_text": [
+        "Proficient in machine learning technologies with consolidated knowledge in both supervised and unsupervised algorithms, covering a wide range of toolkits including decision trees, support vector machines, gradient descent for loss optimization, isolation forest, and so on.",
         "Proven capability through hands-on experience in solving real data science problems using Numpy, Scikit-learn, Tensorflow and way more other libraries and platforms, and handling end-to-end machine learning pipelines from data processing, feature engineering, model training to output validation."
+    ],
+    "dl_intro_text": [
+        "Solving predictive problems by constructing neural networks of customized types. Proficient at using Scikit-Learn and Keras API with Tensorflow for building neural networks for deep learning scenarios such as image processing.",
+        "Interested in network mechanisms and paramter comprehension & tuning, and managed to implement a neural network from scratch using Python."
     ],
     "skills": {
         "regression": ["Predictive Regression", "Fitting numerics for prediction and cutomizing loss for objective optimization"],

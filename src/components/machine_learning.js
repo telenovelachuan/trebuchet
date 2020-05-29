@@ -13,6 +13,7 @@ import axios from 'axios';
 import Chip from '@material-ui/core/Chip';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Fade from '@material-ui/core/Fade';
+import Slider from '@material-ui/core/Slider';
 
 import regression_logo from "../static/images/ml/regression.png";
 import classification_logo from "../static/images/ml/classification.jpg";
@@ -44,6 +45,7 @@ import json_file from './config/ml.json';
 import "../static/css/ml.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const DL_IMG_PREFIX = `${API_URL}/get_dl_demo_image.jpg`;
 
 class MachineLearning extends Component {
 
@@ -52,6 +54,8 @@ class MachineLearning extends Component {
         this.state = {
             prj_latest_updates: {},
             display_show_all: false,
+            slider_value: 0,
+            dl_img: `${DL_IMG_PREFIX}?step=0`,
         };
         let ml_skills = {
             "classification": [classification_logo],
@@ -95,6 +99,9 @@ class MachineLearning extends Component {
 
     load_intro_text = () => {
         return json_file["intro_text"]
+    }
+    load_dl_intro_text = () => {
+        return json_file["dl_intro_text"]
     }
 
     get_prj_update_time = (prj_name) => {
@@ -156,6 +163,17 @@ class MachineLearning extends Component {
             "display_show_all": false
         });
     };
+
+    handleSliderChange = (event, newValue) => {
+        this.setState({slider_value: newValue});
+    };
+
+    handleSliderChangeCommitted = (event, newValue) => {
+        console.log(`slides to ${newValue}`);
+        let api_url = `${API_URL}/get_dl_demo_image.jpg?step=${newValue}`;
+        this.setState({dl_img: api_url});
+    }
+
 
     componentDidMount() {
         AOS.init();
@@ -226,6 +244,46 @@ class MachineLearning extends Component {
 
                 </div>
                 </div>
+
+
+                <div className="ml_dl_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="0"
+                    data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"
+                    data-aos-once="true" >
+                    <div className="ml_dl">
+                    <Card className={"ml_dl_card"}>
+                        <CardHeader title="NEURAL NETWORK & DEEP LEARNING" className="ml_intro_header"
+                            titleTypographyProps={{className:"ml_headers"}}
+                        />
+                        <CardContent>
+                            <div className="ml_intro_text">
+                                {this.load_dl_intro_text().map((paragraph, idx) => (
+                                    <div className="ml_intro_paragraph">
+                                        <Typography className={"ml_intro_typg"} variant="h5" component="h2">
+                                            {paragraph}
+                                        </Typography>
+                                    </div>
+                                ))}
+                                <br />
+                            </div>
+                            <div id="ml_dl_demo">
+                                <div id="ml_dl_slider">
+                                    <Slider value={this.state.slider_value} onChange={this.handleSliderChange} onChangeCommitted={this.handleSliderChangeCommitted} aria-labelledby="continuous-slider" />
+                                    <div className="ml_inst">
+                                        {"Drag the slider to transform image into an oil painting".toUpperCase()}
+                                    </div>
+                                </div>
+                                <div id="ml_dl_image_area">
+                                    <img src={this.state.dl_img} id="ml_dl_image"></img>
+                                </div>
+
+                            </div>
+                        </CardContent>
+                    </Card>
+                    </div>
+
+                </div>
+
+
 
                 <div className="ml_project_aos" data-aos="fade-up" data-aos-offset="20" data-aos-delay="0"
                     data-aos-duration="500" data-aos-easing="ease-in-out-sine" data-aos-mirror="true" data-aos-id="aos_scroll_not_bottom"

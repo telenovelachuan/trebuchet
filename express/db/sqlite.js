@@ -4,6 +4,7 @@ const config = require('./config.json');
 const getIP = require('ipware')().get_ip;
 
 const db_path = `${config.db_path}/trebuchet.db`;
+console.log(`db_path:${db_path}`);
 
 function get_all_access(req, res) {
     let sql = "select * from site_access";

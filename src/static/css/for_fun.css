@@ -181,3 +181,8 @@
 #ms_content {
     height: 500px !important;
 }
+.ff_nav {
+    background-color: #ffffff;
+    border-top: 1px solid rgb(200, 200, 200);
+
+}

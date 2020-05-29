@@ -56,7 +56,7 @@ class ForFun extends Component {
     return (
         <div className={"ff_content"} >
 
-            <AppBar position="static" style={{ background: '#FFFFFF' }} >
+            <AppBar position="static" className="ff_nav" >
                 <Tabs 
                     value={this.state.tab_value}
                     onChange={this.navChange}

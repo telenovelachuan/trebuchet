@@ -68,6 +68,10 @@ router.get('/get_itr_js', cors(corsOptions), function(req, res) {
     service_tools.get_itr_js_text(req, res);
 });
 
+router.get('/get_dl_demo_image.jpg', cors(corsOptions), function(req, res) {
+    service_tools.get_dl_demo_image(req, res);
+});
+
 app.use('/api', router);
 
 app.listen(port);

@@ -52,8 +52,15 @@ function get_itr_js_text(req, res) {
     })
 }
 
+function get_dl_demo_image(req, res) {
+    let step = req.query.step || 0;
+    console.log("img request, received:" + step);
+    res.sendFile(`/Users/chuansun/Documents/git/trebuchet/express/images/3_${step}_oil3.jpg`);
+    //res.json({"test": "test"}); 
+}
 
 module.exports = {
     get_prj_update_time: get_prj_update_time,
     get_itr_js_text: get_itr_js_text,
+    get_dl_demo_image: get_dl_demo_image,
 };
