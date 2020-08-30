@@ -56,6 +56,11 @@ import celery_logo from "../static/images/celery.jpg";
 import rabbitmq_logo from "../static/images/rabbitmq.png";
 import django_logo from "../static/images/django.png";
 import instructor_logo from "../static/images/instructor.png";
+import ripple_logo from "../static/images/ripple.png";
+import ripple_logo2 from "../static/images/ripple2.png";
+import bq_logo from "../static/images/bigquery.png";
+import tableau_logo from "../static/images/tableau.png";
+import cloud_composer_logo from "../static/images/cloud_composer.png";
 
 
 import LeaveReply from './leave_reply';
@@ -71,24 +76,28 @@ class About extends Component {
         this.scrollDelay= 100;
         this.python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
                         'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
-    this.sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'SQLite': sqlite_logo,
-                        'Teradata': teradata_logo}
-    this.data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
-                        'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
-    this.other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Linux': linux_logo}
-    this.card_header_style = {
-        fontFamily: "\"Segoe UI\", \"Tahoma\", \"Geneva\", \"Verdana\", sans-serif",
-        letterSpacing: 2,
-        fontWeight: "fontWeightBold"
-     }
-     this.skills = {'Python':[python_logo, this.python_libs], 'SQL': [sql_logo, this.sql_pltfms],
-        'Data Engineering': [data_engr_logo, this.data_engr_pltfms], 'Other Tools': [tools_logo, this.other_tools]};
-    
-    this.exps = {'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
-                'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
-                'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
-                'KU': [ku_logo, "Instructor", [cpp_logo, instructor_logo]]};
-
+        this.sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'Google BigQuery': bq_logo,
+                        'SQLite': sqlite_logo, 'Teradata': teradata_logo}
+        this.data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
+                        'Google Cloud Composer': cloud_composer_logo, 'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
+        this.other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Tableau': tableau_logo, 'Linux': linux_logo}
+        this.card_header_style = {
+            fontFamily: "\"Segoe UI\", \"Tahoma\", \"Geneva\", \"Verdana\", sans-serif",
+            letterSpacing: 2,
+            fontWeight: "fontWeightBold"
+        }
+        this.skills = {
+            'Python':[python_logo, this.python_libs], 'SQL': [sql_logo, this.sql_pltfms],
+            'Data Engineering': [data_engr_logo, this.data_engr_pltfms], 'Other Tools': [tools_logo, this.other_tools]
+        };
+        
+        this.exps = {
+            'Ripple': [ripple_logo2, "Data Science Research Intern", [bq_logo, python_logo, tableau_logo]],
+            'KU': [ku_logo, "Instructor", [cpp_logo, instructor_logo]],
+            'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
+            'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
+            'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
+        };
     }
 
     load_exp_text = (exp_name) => {
