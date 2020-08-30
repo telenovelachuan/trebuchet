@@ -23,6 +23,8 @@ import ts3_logo from "../static/images/dv/ts3.png";
 import ca1_logo from "../static/images/dv/ca1.png";
 import wc1_logo from "../static/images/dv/wc1.png";
 import wc2_logo from "../static/images/dv/wc2.png";
+import tableau_logo from "../static/images/tableau.png";
+
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -40,7 +42,7 @@ class DataVisualization extends Component {
             "Seaborn": [seaborn_logo],
             "D3.js": [d3js_logo],
             "Plotly": [plotly_logo],
-            "Jupyter Notebook": [jupyter_logo],
+            "Tableau": [tableau_logo],
             "Matlab": [matlab_logo],
         };
 
