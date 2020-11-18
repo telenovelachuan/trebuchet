@@ -56,7 +56,7 @@ function get_itr_js_text(req, res) {
 function get_dl_demo_image(req, res) {
     let step = req.query.step || 0;
     console.log("img request, received:" + step);
-    rounded_step = Math.round(step/2/5) *5
+    let rounded_step = Math.round(step/2/5) *5
     res.sendFile(`${config.img_path}/3_${rounded_step}_oil3.jpg`);
     //res.json({"test": "test"}); 
 }
