@@ -236,9 +236,11 @@
     height: 100%;
     width: 70%;
     margin: 0 auto;
+    background-position: unset;
 }
 #ml_dl_demo_self_nn_canvas{
     height: 500px;
+    /* width: 70%; */
 }
 #ml_dl_demo_al_3d {
     height: 700px;
