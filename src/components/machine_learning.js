@@ -39,6 +39,7 @@ import classification_small_logo from "../static/images/ml/classification_small.
 import dynamic_duo_logo from "../static/images/ml/dynamic_duo.gif";
 import fm_logo from "../static/images/ml/fm.gif";
 import UCL_logo from "../static/images/ml/UCL.gif";
+import active_learning_logo from "../static/images/ml/active_learning.png"
 
 
 import json_file from './config/ml.json';
@@ -63,7 +64,7 @@ class MachineLearning extends Component {
             "time_series": [time_series_logo],
             "regression": [regression_logo],
             "anomaly_detection": [anomaly_detection_logo],
-            "topic_modeling": [topic_logo]
+            "active_learning": [active_learning_logo]
         }
         this.ml_skills_list = Object.keys(json_file["skills"]);
         Object.keys(ml_skills).forEach(function(key) {
