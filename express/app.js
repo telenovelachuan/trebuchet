@@ -6,6 +6,7 @@ var db_tools = require('./db/sqlite');
 var service_tools = require('./service');
 
 
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -73,6 +74,10 @@ router.get('/get_dl_demo_image.jpg', cors(corsOptions), function(req, res) {
 });
 
 app.use('/api', router);
+
+var cors = require('cors')
+
+app.use(cors())
 
 app.listen(port);
 console.log('Starting trebuchet backend on port ' + port);

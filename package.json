@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ciro.spaciari/word.generator": "^1.0.4",
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -33,7 +34,9 @@
     "react-native": "^0.62.2",
     "react-native-cli": "^2.0.1",
     "react-native-sqlite-storage": "^5.0.0",
+    "react-on-screen": "^2.1.1",
     "react-scripts": "3.4.1",
+    "react-scroll": "^1.7.16",
     "react-swipeable-views": "^0.13.9",
     "sqlite": "^4.0.7",
     "sqlite3": "^4.2.0"

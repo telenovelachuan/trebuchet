@@ -149,8 +149,14 @@
     background-color: black !important;
 }
 .plotly-graph-div{
-    margin-left: 12%  !important;
+    margin-left: 25%  !important;
     padding-left: 0 !important;
+}
+#ldavis_el249904744967376978390512 {
+    margin-left: 15%;
+}
+#eba8ee49-1cad-4224-823c-ddbdc3913949 {
+    margin-left: 20%;
 }
 .dv_itr_desc {
     width: 100%;
