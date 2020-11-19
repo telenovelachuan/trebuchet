@@ -4,8 +4,12 @@
         "Proven capability through hands-on experience in solving real data science problems using Numpy, Scikit-learn, Tensorflow and way more other libraries and platforms, and handling end-to-end machine learning pipelines from data processing, feature engineering, model training to output validation."
     ],
     "dl_intro_text": [
+        [
         "Solving predictive problems by constructing neural networks of customized types. Proficient at using Scikit-Learn and Keras API with Tensorflow for building neural networks for deep learning scenarios such as image processing.",
         "Interested in network mechanisms and paramter comprehension & tuning, and managed to implement a neural network from scratch using Python."
+        ],
+        ["Building active learning solutions on top of deep learning regressive problems in order to achieve fancy performance using less high-cost labels, and integrating semi-supervised learning to learn knowledge from unlabeled data as well."],
+        ["Solid hands-on experience on building deep learning networks and applying Tensorflow/Keras models into solving real data science problems. Built the \"oil\" painting filter based on deep learning network, playable as below."]
     ],
     "skills": {
         "regression": ["Predictive Regression", "Fitting numerics for prediction and cutomizing loss for objective optimization"],

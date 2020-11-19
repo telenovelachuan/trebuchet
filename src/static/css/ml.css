@@ -33,11 +33,11 @@
 .ml_dl {
     padding-left: 10%;
     padding-right: 7%;
-    height: 950px;
+    height: 2550px;
 }
 .ml_dl_card {
     width: 100% !important;
-    height: 900px;
+    height: 2500px;
 }
 .ml_skill_header {
     height: 30% !important;
@@ -229,4 +229,20 @@
 .ml_inst {
     font-family: 'JosefinSans-LightItalic';
 }
-
+.ml_dl_demo_section {
+    height: 400px;
+}
+#ml_dl_self_nn_gif {
+    height: 100%;
+    width: 70%;
+    margin: 0 auto;
+}
+#ml_dl_demo_self_nn_canvas{
+    height: 500px;
+}
+#ml_dl_demo_al_3d {
+    height: 700px;
+}
+.al_3d_plot{
+    margin-left: 30% !important;
+}

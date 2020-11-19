@@ -40,7 +40,7 @@ import dynamic_duo_logo from "../static/images/ml/dynamic_duo.gif";
 import fm_logo from "../static/images/ml/fm.gif";
 import UCL_logo from "../static/images/ml/UCL.gif";
 import active_learning_logo from "../static/images/ml/active_learning.png"
-
+import self_nn_logo from "../static/images/ml/self_nn.gif"
 
 import json_file from './config/ml.json';
 import "../static/css/ml.css";
@@ -101,18 +101,15 @@ class MachineLearning extends Component {
     load_intro_text = () => {
         return json_file["intro_text"]
     }
-    load_dl_intro_text = () => {
-        return json_file["dl_intro_text"]
+    load_dl_intro_text = (step) => {
+        return json_file["dl_intro_text"][step]
     }
 
     get_prj_update_time = (prj_name) => {
         const default_update_time = 'Dec 2019';
         let api_url = `${API_URL}/get_prj_update_time?prj_name=${prj_name}`;
-        console.log(api_url);
         axios.get(api_url)
         .then(res => {
-            console.log("get api returns!");
-            console.log(res.data);
             let prj_updates = this.state.prj_latest_updates;
             prj_updates[prj_name] = res.data['result']
             this.setState({prj_latest_updates: prj_updates})
@@ -178,6 +175,31 @@ class MachineLearning extends Component {
 
     componentDidMount() {
         AOS.init();
+
+        // loading active learning 3d js
+        let plotlyjs = document.createElement("script");
+        plotlyjs.src = 'https://cdn.plot.ly/plotly-latest.min.js';
+        plotlyjs.async = true;
+        document.body.appendChild(plotlyjs);
+
+        const script_3d = document.createElement("script");
+        axios.get(`${API_URL}/get_itr_js?js_name=al_3d`)
+        .then(res => {
+            let js = res.data.js.replace(' ', '');
+            //script.src = js;
+            let inlineScript = document.createTextNode(js);
+            script_3d.appendChild(inlineScript);
+            script_3d.async = true;
+            document.body.appendChild(script_3d);
+            console.log("3d script loaded!")
+            var modebar = document.getElementsByClassName("modebar-container")[0];
+            modebar.parentNode.removeChild(modebar);
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error))
+            return;
+        })
+
     }
 
     render() {
@@ -257,7 +279,7 @@ class MachineLearning extends Component {
                         />
                         <CardContent>
                             <div className="ml_intro_text">
-                                {this.load_dl_intro_text().map((paragraph, idx) => (
+                                {this.load_dl_intro_text(0).map((paragraph, idx) => (
                                     <div className="ml_intro_paragraph">
                                         <Typography className={"ml_intro_typg"} variant="h5" component="h2">
                                             {paragraph}
@@ -266,7 +288,52 @@ class MachineLearning extends Component {
                                 ))}
                                 <br />
                             </div>
-                            <div id="ml_dl_demo">
+
+                            <div className="ml_dl_demo">
+                                <div className="ml_inst">{"Self implemented neural network from scratch using Python".toUpperCase()}</div><br />
+                                <div id="ml_dl_demo_self_nn_canvas" >
+                                    <CardMedia
+                                        id="ml_dl_self_nn_gif"
+                                        // className="ml_prj_img"
+                                        image={self_nn_logo}
+                                        title="ml_dl_self_nn"
+                                    />
+                                </div>
+                            </div>
+
+
+                            <div className="ml_intro_text">
+                                {this.load_dl_intro_text(1).map((paragraph, idx) => (
+                                    <div className="ml_intro_paragraph">
+                                        <Typography className={"ml_intro_typg"} variant="h5" component="h2">
+                                            {paragraph}
+                                        </Typography>
+                                    </div>
+                                ))}
+                                <br />
+                            </div>
+                            <div className="ml_dl_demo_">
+                                <div className="ml_inst">{"User location prediction using depp active learning and autoencoder.".toUpperCase()}</div>
+                                <div className="ml_inst">{"Drag & zoom to view".toUpperCase()}</div>
+                                <br />
+                                <div id="ml_dl_demo_al_3d">
+                                    {/* <div id="test" className="plotly-graph-div"></div> */}
+                                    <div id="0766a13c-bf0e-46ef-a126-566b94b0a989" className=" al_3d_plot" style={{height:800, width:800}} ></div>
+                                </div>
+                            </div>
+
+                                
+                            <div className="ml_intro_text">
+                                {this.load_dl_intro_text(2).map((paragraph, idx) => (
+                                    <div className="ml_intro_paragraph">
+                                        <Typography className={"ml_intro_typg"} variant="h5" component="h2">
+                                            {paragraph}
+                                        </Typography>
+                                    </div>
+                                ))}
+                                <br />
+                            </div>
+                            <div className="ml_dl_demo">
                                 <div id="ml_dl_slider">
                                     <Slider value={this.state.slider_value} onChange={this.handleSliderChange} onChangeCommitted={this.handleSliderChangeCommitted} aria-labelledby="continuous-slider" />
                                     <div className="ml_inst">
