@@ -47,7 +47,6 @@ function get_itr_js_text(req, res) {
         else {
             let result = html.replace(/(?:\r\n|\r|\n)/g, '');
             console.log("js read success!");
-            console.log(result);
             res.json({"js": result}); 
         }
     })
