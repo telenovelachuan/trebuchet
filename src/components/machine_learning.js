@@ -318,7 +318,7 @@ class MachineLearning extends Component {
                                 <br />
                                 <div id="ml_dl_demo_al_3d">
                                     {/* <div id="test" className="plotly-graph-div"></div> */}
-                                    <div id="0766a13c-bf0e-46ef-a126-566b94b0a989" className=" al_3d_plot" style={{height:800, width:800}} ></div>
+                                    <div id="adba5020-d4e9-4e40-965e-d6aa226ff603" className=" al_3d_plot" style={{height:800, width:800}} ></div>
                                 </div>
                             </div>
 
