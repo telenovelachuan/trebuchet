@@ -30,6 +30,11 @@
             "A data science project on the manufacturing product demand dataset to explore the seasonal trend in features and build time series model to predict the product demands.",
             ["time series"]
         ],
+        "nn_implm": ["Neural Network Implementation",
+            "https://github.com/telenovelachuan/data_science/tree/master/neural_netowrk_impl",
+            "Implementation of the neural network architecture, forward & back propagation and weight update using Python.",
+            ["neural network"]
+        ],
         "the_oscars": ["The Oscars",
             "https://github.com/telenovelachuan/the_oscars",
             "Conducting topic modeling further on the Shakespeare play dataset, and applying data storytelling for interactive topic visualization.",

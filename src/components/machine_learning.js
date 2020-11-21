@@ -41,6 +41,7 @@ import fm_logo from "../static/images/ml/fm.gif";
 import UCL_logo from "../static/images/ml/UCL.gif";
 import active_learning_logo from "../static/images/ml/active_learning.png"
 import self_nn_logo from "../static/images/ml/self_nn.gif"
+import nn_logo from "../static/images/ml/nn.png"
 
 import json_file from './config/ml.json';
 import "../static/css/ml.css";
@@ -75,11 +76,11 @@ class MachineLearning extends Component {
         let projects = {
             "widget_maintenance": [widget_mtn_logo],
             "dynamic_duo": [dynamic_duo_logo],
+            "nn_implm": [self_nn_logo],
             "major_leagues": [UCL_logo],
             "shakespear_plays": [shakespeare_play_logo],
             "worldwide_products": [worldwide_product_logo],
             "the_oscars": [the_oscars_logo],
-            "news_headline": [news_headline],
             "dream_of_anomalies": [dream_of_anomalies_logo],
         }
         Object.keys(projects).forEach(function(prj) {
@@ -93,7 +94,8 @@ class MachineLearning extends Component {
             "classification": [classification_small_logo, "#8f71ff", 'white'],
             "anomaly detection": [anomaly_detection_small_logo, "#E9007F", 'white'],
             "topic modeling": [topic_small_logo, "#deb0df", 'white'],
-            "visualization": [visualiztion_logo, "#ffcdd8", 'black']
+            "visualization": [visualiztion_logo, "#ffcdd8", 'black'],
+            "neural network": [nn_logo, "#fc5603", 'white']
         }
         this.state.projects_on_page = JSON.parse(JSON.stringify(projects));
     }
