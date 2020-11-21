@@ -27,6 +27,7 @@ class WordPuzzle extends Component {
                 chances_remain: 10,
                 won: false,
                 lost: false,
+                game_ended: false,
                 success_rate: wp_success_rate,
             }
         }
@@ -53,14 +54,16 @@ class WordPuzzle extends Component {
             return;
         }
         console.log("pressed!" + key_pressed);
+        let new_letter = false;
         let wp = this.state.wp;
         wp.played = true;
         wp.last_pressed = key_pressed;
         if (!this.state.wp.key_array.includes(key_pressed) && !wp.all_pressed.includes(key_pressed)) {
             wp.chances_remain -= 1;
         }
-        if (!wp.all_pressed.includes(key_pressed)) {
+        if (!this.state.wp.game_ended && !wp.all_pressed.includes(key_pressed)) {
             wp.all_pressed.push(key_pressed);
+            new_letter = true;
         }
         for(var i=0; i<this.state.wp.key.length; i++) {
             if (this.state.wp.key[i] === key_pressed) {
@@ -68,13 +71,16 @@ class WordPuzzle extends Component {
             }
         }
         
-        if (wp.current.join("") === wp.key) {
+        if (!wp.game_ended && wp.current.join("") === wp.key) {
+            console.log("won detected. " + wp.current.join("") + "," + wp.key)
             wp.won = true;
+            wp.game_ended = true;
             this.record_game('word_puzzle', 'win');
         }
-        if (wp.chances_remain <= 0) {
+        if (!wp.game_ended && wp.chances_remain <= 0 ) {
             // wp.current = wp.key_array;
             wp.lost = true;
+            wp.game_ended = true;
             this.record_game('word_puzzle', 'lose');
         }
         this.word_min_length = 7;
@@ -82,12 +88,13 @@ class WordPuzzle extends Component {
     }
 
     get_letter_class_name = (letter) => {
-        if (this.state.wp.chances_remain <= 0) {
-            return "wp_letter_lose";
-        }
-        else if (this.state.wp.won === true) {
+        if (this.state.wp.won === true) {
             return "wp_letter_won";
         }
+        else if (this.state.wp.chances_remain <= 0) {
+            return "wp_letter_lose";
+        }
+        
         if (letter === '_') {
             return "wp_empty_letter";
         }
@@ -183,8 +190,8 @@ class WordPuzzle extends Component {
                     <CardContent className="wp_cardcontent">
                         <div id="wp_info_area">
                             <div id="wp_chance_remaining">
-                                {this.state.wp.chances_remain} chances remaining
-                                {this.state.wp.chances_remain <= 0 && (<span>, you lose :-(</span>)}
+                                {!this.state.wp.game_ended && (<span>{this.state.wp.chances_remain} chances remaining</span>)}
+                                {(this.state.wp.lost) && (this.state.wp.chances_remain <= 0) && (<span> you lose :-(</span>)}
                                 {this.state.wp.last_pressed &&
                                 (<div id="wp_guessed_letters">Letters guessed: &nbsp;&nbsp;&nbsp;
                                     {
@@ -196,7 +203,7 @@ class WordPuzzle extends Component {
                                 )}
                             </div>
                             {
-                                (this.state.wp.last_pressed && this.state.wp.chances_remain >= 0 && !this.state.wp.won) &&
+                                (this.state.wp.last_pressed && this.state.wp.chances_remain >= 0 && !this.state.wp.game_ended) &&
                                 (<div id="wp_key_pressed">you pressed: {this.state.wp.last_pressed}</div>)
                             }
                             {
@@ -216,7 +223,7 @@ class WordPuzzle extends Component {
                             }
 
                             {
-                                this.state.wp.chances_remain <= 0 && (<span>The answer is: </span>)
+                                (this.state.wp.lost) && (<span>The answer is: </span>)
                             }
 
                             {
