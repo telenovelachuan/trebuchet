@@ -14,6 +14,7 @@ import avatar_pic from "../static/images/avatar.jpg";
 import linkedin_logo from "../static/images/linkedin.png";
 import github_logo from "../static/images/github.png";
 import email_logo from "../static/images/email.png";
+import ins_logo from "../static/images/ins.png";
 import About from "./about"
 import axios from 'axios';
 import localIpUrl from 'local-ip-url';
@@ -213,6 +214,9 @@ class Navigation extends Component {
       else if (logo_name === "github") {
         window.open("https://github.com/telenovelachuan", '_blank');
       }
+      else if (logo_name == "ins") {
+        window.open("https://www.instagram.com/kc_coloration/", "_blank");
+      }
       else if (logo_name === "email") {
         window.open("mailto:chuansun.sc@gmail.com", '_blank');
       }
@@ -293,6 +297,11 @@ class Navigation extends Component {
                         <div className="sc_ntwk_logo">
                             <IconButton onClick={()=>this.sc_ntwk_logo_click("github")}>
                                 <Avatar src={github_logo} style={{alignSelf: 'center'}} />
+                            </IconButton>
+                        </div>
+                        <div className="sc_ntwk_logo">
+                            <IconButton onClick={()=>this.sc_ntwk_logo_click("ins")}>
+                                <Avatar src={ins_logo} style={{alignSelf: 'center'}} />
                             </IconButton>
                         </div>
                         <div className="sc_ntwk_logo">
