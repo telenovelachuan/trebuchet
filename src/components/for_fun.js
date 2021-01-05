@@ -10,9 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import WordPuzzle from "./word_puzzle";
 import TicTacToe from "./tic_tac_toe";
 import MineSweeper from "./mine_sweeper";
+import Tetris from "./tetris";
 
-
-const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper'];
+const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper', 'Tetris'];
 function TabPanel(props) {
     const { children, value, index, id } = props;
   
@@ -81,6 +81,9 @@ class ForFun extends Component {
                 </TabPanel>
                 <TabPanel value={this.state.tab_value} index={2} dir={"rtl"}>
                     <MineSweeper />
+                </TabPanel>
+                <TabPanel value={this.state.tab_value} index={3} dir={"rtl"}>
+                    <Tetris />
                 </TabPanel>
             </SwipeableViews>
 
