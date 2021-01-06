@@ -106,7 +106,7 @@ class Shape {
             let comp = bottom_comps[i];
             let y_id = comp.loc_y / comp.edge + 1;  // check the cell beneath the bottom comp
             let x_id = comp.loc_x / comp.edge;
-            if (y_id == (base.length) || base[y_id][x_id] == true) {return true;}
+            if (y_id === base.length || base[y_id][x_id] === true) { console.log("landed"); return true;}
         }
         return false;
     }
@@ -161,13 +161,18 @@ class Shape {
         return result + this.edge;
     }
     get_bottom_comp = () => {
-        let bottom = this.get_bottom();
-        let results = [];
+        let results = {};
         for (let i=0; i<this.components.length; i++) {
-            if ((this.components[i].loc_y + this.edge) == bottom)
-                results.push(this.components[i]);
+            let comp = this.components[i];
+            let x_id = comp.loc_x / comp.edge;
+            if (!(x_id in results)) {
+                results[x_id] = comp;
+            }
+            else if (comp.loc_y > results[x_id].loc_y) {
+                results[x_id] = comp;
+            }
         }
-        return results;
+        return Object.values(results);
     }
     budge = (direction, ctx) => {
         if (direction == "left" && this.get_left() <= 0) return;
@@ -394,13 +399,14 @@ class Tetris extends Component {
 
     update_base = (shape) => {
         if (shape.base_updated) return;
-        let shape_base = shape.get_base();
+        //let shape_base = shape.get_base();
         for (let i=0; i<shape.components.length; i++) {
             let comp = shape.components[i];
             let x_id = comp.loc_x / comp.edge;
             let y_id = comp.loc_y / comp.edge;
             this.base[y_id][x_id] = true;
         }
+        console.log("full cnt:" + this.get_full_row_cnt())
         shape.base_updated = true;
     }
 
@@ -417,7 +423,8 @@ class Tetris extends Component {
     }
 
     init_new_shape = () => {
-        let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        //let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        let shape_type = T;
         let new_shape;
         if (shape_type == Z || shape_type == L) {
             new_shape = new shape_type(100, 0, {rotation: "left"});
@@ -438,6 +445,36 @@ class Tetris extends Component {
         return false;
     }
 
+    get_full_rows = () => {
+        let full_rows = [];
+        for (let i=this.base.length - 1; i>=0; i--) {
+            let _row_full = true;
+            for (let j=0; j<this.base[i].length; j++) {
+                if (this.base[i][j] === false) {
+                    _row_full = false;
+                    break;
+                }
+            }
+            if (_row_full === true) full_rows.append(i);
+        }
+        return full_rows;
+    }
+
+    get_shapes_by_yid = (y_id) => {
+        return this.shapes.filter(_s => ((_s.loc_y / _s.edge) === y_id))
+    }
+
+    remove_full_rows = () => {
+        let full_rows = this.get_full_rows();
+        for (let i=0; i<full_rows.length; i++) {
+            let y_id = full_rows[i];
+            let _shapes = this.get_shapes_by_yid(y_id);
+            // remove the corresponding components from these shapes
+            // descend all the above components
+            // update global base
+        }
+    }
+
     timer_tick = () => {
         this.shape_in_play.clear(this.ctx);
         this.state.tick += this.edge;
@@ -451,7 +488,6 @@ class Tetris extends Component {
             console.log("lost!!");
             clearInterval(this.interval);
         }
-
     }
 
     componentWillMount() {
