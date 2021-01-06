@@ -102,13 +102,10 @@ class Shape {
     has_landed = (base) => {
         // check if any component hits the ground
         let bottom_comps = this.get_bottom_comp();
-        console.log(base);
         for (let i=0; i<bottom_comps.length; i++) {
             let comp = bottom_comps[i];
             let y_id = comp.loc_y / comp.edge + 1;  // check the cell beneath the bottom comp
             let x_id = comp.loc_x / comp.edge;
-            console.log("y_id:" + y_id + ", x_id:" + x_id);
-            console.log(base[y_id])
             if (y_id == (base.length) || base[y_id][x_id] == true) {return true;}
         }
         return false;
@@ -145,6 +142,24 @@ class Shape {
         }
         return result;
     }
+    get_left = () => {
+        let result = Infinity;
+        for (let i=0; i<this.components.length; i++) {
+            if (this.components[i].loc_x < result) {
+                result = this.components[i].loc_x;
+            }
+        }
+        return result;
+    }
+    get_right = () => {
+        let result = -1;
+        for (let i=0; i<this.components.length; i++) {
+            if (this.components[i].loc_x > result) {
+                result = this.components[i].loc_x;
+            }
+        }
+        return result + this.edge;
+    }
     get_bottom_comp = () => {
         let bottom = this.get_bottom();
         let results = [];
@@ -155,6 +170,9 @@ class Shape {
         return results;
     }
     budge = (direction, ctx) => {
+        if (direction == "left" && this.get_left() <= 0) return;
+        console.log("current:" + this.get_right() + ", width:" + ctx.width)
+        if (direction == "right" && this.get_right() >= ctx.canvas.width) return;
         this.clear(ctx);
         for (let i=0; i<this.all_components.length; i++) {
             this.all_components[i].budge(direction)
@@ -384,11 +402,9 @@ class Tetris extends Component {
             this.base[y_id][x_id] = true;
         }
         shape.base_updated = true;
-        console.log(this.base)
     }
 
     handleKeyPress = e => {
-        console.log(e.keyCode);
         if (e.keyCode == 38) {  // up keydown
             this.shape_in_play.change_morph();
         }
