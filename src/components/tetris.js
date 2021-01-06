@@ -32,6 +32,7 @@ class Rect {
         this.loc_y = loc_y;
         this.edge = edge;
         this.border = 1;
+        this.id = "c" + Date.now() + Math.random();
     }
 
     set_loc = (x, y) => {
@@ -62,6 +63,9 @@ class Rect {
             this.set_loc(this.loc_x + this.edge, this.loc_y);
         }
     }
+    toString = () => {
+        return "(" + this.loc_x / this.edge + "," + this.loc_y / this.edge + ")";
+    }
 
 }
 
@@ -71,6 +75,7 @@ class Shape {
         this.landed = false;
         this.edge = edge;
         this.base_updated = false;
+        this.id = "s" + Date.now() + Math.random();
     }
     draw = (ctx) => {
         for (let i=0; i<this.components.length; i++) {
@@ -176,12 +181,31 @@ class Shape {
     }
     budge = (direction, ctx) => {
         if (direction == "left" && this.get_left() <= 0) return;
-        console.log("current:" + this.get_right() + ", width:" + ctx.width)
         if (direction == "right" && this.get_right() >= ctx.canvas.width) return;
         this.clear(ctx);
         for (let i=0; i<this.all_components.length; i++) {
             this.all_components[i].budge(direction)
         }
+    }
+    get_comp_by_id = (id) => {
+        return this.components.filter(c => c.id == id)[0];
+    }
+    remove_components = (id_list, ctx) => {
+        for (let i=0; i<id_list.length; i++) {
+            let comp = this.get_comp_by_id(id_list[i]);
+            comp.clear(ctx);
+        }
+
+        this.components = this.components.filter(c => !id_list.includes(c.id));
+        this.all_components = this.all_components.filter(c => !id_list.includes(c.id));
+    }
+    toString = () => {
+        let str = "Shape" + this.id + ": ";
+        if (this.components.length == 0) return str + "(empty)"
+        for (let i=0; i<this.components.length; i++) {
+            str += " " + this.components[i].toString();
+        }
+        return str;
     }
 }
 
@@ -368,15 +392,9 @@ class Tetris extends Component {
         this.canvas = null;
         this.ctx = null;
         this.edge = DEFAULT_EDGE;
-        this.height = 20
+        this.height = 10
         this.width = 10;
-        this.base = [];
-        for (let i=0; i<this.height; i++) {
-            let _row = [];
-            for (let j=0; j<this.width; j++)
-                _row.push(false);
-            this.base[i] = _row;
-        }
+        this.base = this.init_base();
         
         this.state = {
             tick: 0,
@@ -386,12 +404,23 @@ class Tetris extends Component {
         this.shape_in_play = first_shape;
     }
 
+    init_base = () => {
+        let result = [];
+        for (let i=0; i<this.height; i++) {
+            let _row = [];
+            for (let j=0; j<this.width; j++)
+                _row.push(false);
+            result[i] = _row;
+        }
+        return result;
+    }
+
     clear_all_shapes = () => {
         for (let i=0; i<this.shapes.length; i++) {
             this.shapes[i].clear(this.ctx);
         }
     }
-    drwa_all_shapes = () => {
+    draw_all_shapes = () => {
         for (let i=0; i<this.shapes.length; i++) {
             this.shapes[i].draw(this.ctx);
         }
@@ -406,7 +435,7 @@ class Tetris extends Component {
             let y_id = comp.loc_y / comp.edge;
             this.base[y_id][x_id] = true;
         }
-        console.log("full cnt:" + this.get_full_row_cnt())
+        //console.log("full cnt:" + this.get_full_row_cnt())
         shape.base_updated = true;
     }
 
@@ -445,6 +474,19 @@ class Tetris extends Component {
         return false;
     }
 
+    rebuild_base = () => {
+        let base = this.init_base();
+        for (let i=0; i<this.shapes.length; i++) {
+            for (let j=0; j<this.shapes[i].components.length; j++) {
+                let comp = this.shapes[i].components[j];
+                let x_id = comp.loc_x / comp.edge;
+                let y_id = comp.loc_y / comp.edge;
+                base[y_id][x_id] = true;
+            }
+        }
+        this.base = base;
+    }
+
     get_full_rows = () => {
         let full_rows = [];
         for (let i=this.base.length - 1; i>=0; i--) {
@@ -455,23 +497,54 @@ class Tetris extends Component {
                     break;
                 }
             }
-            if (_row_full === true) full_rows.append(i);
+            if (_row_full === true) full_rows.push(i);
         }
         return full_rows;
     }
 
-    get_shapes_by_yid = (y_id) => {
-        return this.shapes.filter(_s => ((_s.loc_y / _s.edge) === y_id))
+    tidy_up_shapes = () => {
+        // remove shapes that contain empty components
+        for(let i=0;i<this.shapes.length;i++) console.log(this.shapes[i].toString())
+        this.shapes = this.shapes.filter(s => s.components.length > 0);
+        for(let i=0;i<this.shapes.length;i++) console.log(this.shapes[i].toString())
+    }
+
+    remove_comps_n_descend_above = (y_id) => {
+        // remove all components on a given y id from corresponding shapes
+        // descend all above components
+        console.log("in remove_comps_from_shapes, shapes:" + this.shapes.length)
+        for (let i=0; i<this.shapes.length; i++) {
+            let _shape = this.shapes[i];
+            let comp_to_remove = [];
+            for (let j=0; j<_shape.components.length; j++) {
+                let _comp = _shape.components[j];
+                if ((_comp.loc_y / _comp.edge) == y_id) {
+                    comp_to_remove.push(_comp.id);
+                }
+                else if ((_comp.loc_y / _comp.edge) < y_id) {
+                    if (_shape.id == this.shape_in_play.id) continue;
+                    console.log("descend comp:" + _comp.toString())
+                    _comp.clear(this.ctx);
+                    _comp.descend();
+                }
+            }
+            this.shapes[i].remove_components(comp_to_remove, this.ctx);
+        }
+        this.tidy_up_shapes();
+        console.log("after tidy: " + this.shapes.length + " shapes")
     }
 
     remove_full_rows = () => {
         let full_rows = this.get_full_rows();
+        console.log("full_rows:" + full_rows);
         for (let i=0; i<full_rows.length; i++) {
             let y_id = full_rows[i];
-            let _shapes = this.get_shapes_by_yid(y_id);
-            // remove the corresponding components from these shapes
-            // descend all the above components
+            // remove the corresponding components from these shapes and descend all the above components
+            this.remove_comps_n_descend_above(y_id);
+            // 
+
             // update global base
+            this.rebuild_base();
         }
     }
 
@@ -483,11 +556,18 @@ class Tetris extends Component {
             this.update_base(this.shape_in_play);
             this.init_new_shape();
         }
-        this.drwa_all_shapes();
+        this.draw_all_shapes();
+
+        // check and remove full rows
+        this.remove_full_rows();
+
         if (this.check_lose()) {
             console.log("lost!!");
             clearInterval(this.interval);
         }
+        
+        
+
     }
 
     componentWillMount() {
