@@ -15,7 +15,16 @@ const L_RIGHT_SHAPE = [
     [0, 1, 4, 7],
     [3, 4, 5, 6],
     [1, 4, 7, 8]
-]
+];
+const Z_LEFT_SHAPE = [
+    [0, 1, 4, 5],
+    [2, 4, 5, 7]
+];
+const Z_RIGHT_SHAPE = [
+    [1, 2, 3, 4],
+    [1, 4, 5, 8]
+];
+const DEFAULT_EDGE = 20;
 
 class Rect {
     constructor(loc_x, loc_y, edge) {
@@ -57,9 +66,10 @@ class Rect {
 }
 
 class Shape {
-    constructor(comps) {
+    constructor(comps, edge=DEFAULT_EDGE) {
         this.components = comps;
         this.landed = false;
+        this.edge = edge;
         this.base_updated = false;
     }
     draw = (ctx) => {
@@ -74,8 +84,8 @@ class Shape {
         }
         ctx.stroke();
     }
-    descend = (base_dict) => {
-        if (this.has_landed(base_dict)) {
+    descend = (base) => {
+        if (this.has_landed(base)) {
             if (this.landed) return;
             this.landed = true;
             return;
@@ -85,21 +95,32 @@ class Shape {
             let comp = this.all_components[i];  // descend all components!
             comp.descend();
         }
-        if (this.has_landed(base_dict)) {
+        if (this.has_landed(base)) {
             if (this.landed) return;
             this.landed = true;
         }
     }
-    has_landed = (base_dict) => {
+    has_landed = (base) => {
         // check if any component hits the ground
-        let str = ""
-        for (let i=0; i<this.components.length; i++) {
-            let comp = this.components[i]
+        let bottom_comps = this.get_bottom_comp();
+        console.log(base);
+        for (let i=0; i<bottom_comps.length; i++) {
+            let comp = bottom_comps[i];
+            let y_id = comp.loc_y / comp.edge + 1;  // check the cell beneath the bottom comp
             let x_id = comp.loc_x / comp.edge;
-            let ground = base_dict[x_id];
-            if ((comp.loc_y + comp.edge) >= ground) { return true; }
+            console.log("y_id:" + y_id + ", x_id:" + x_id);
+            console.log(base[y_id])
+            if (y_id == (base.length) || base[y_id][x_id] == true) {return true;}
         }
         return false;
+
+        // for (let i=0; i<this.components.length; i++) {
+        //     let comp = this.components[i]
+        //     let x_id = comp.loc_x / comp.edge;
+        //     let ground = base_dict[x_id];
+        //     if ((comp.loc_y + comp.edge) >= ground) { return true; }
+        // }
+        // return false;
     }
     get_base = () => {
         let results = {};
@@ -115,6 +136,33 @@ class Shape {
         }
         return results;
     }
+    get_bottom = () => {
+        let result = -1;
+        for (let i=0; i<this.components.length; i++) {
+            if (this.components[i].loc_y > result) {
+                result = this.components[i].loc_y;
+            }
+        }
+        return result + this.edge;
+    }
+    get_top = () => {
+        let result = Infinity;
+        for (let i=0; i<this.components.length; i++) {
+            if (this.components[i].loc_y < result) {
+                result = this.components[i].loc_y;
+            }
+        }
+        return result;
+    }
+    get_bottom_comp = () => {
+        let bottom = this.get_bottom();
+        let results = [];
+        for (let i=0; i<this.components.length; i++) {
+            if ((this.components[i].loc_y + this.edge) == bottom)
+                results.push(this.components[i]);
+        }
+        return results;
+    }
     budge = (direction, ctx) => {
         this.clear(ctx);
         for (let i=0; i<this.all_components.length; i++) {
@@ -124,7 +172,7 @@ class Shape {
 }
 
 class T extends Shape {
-    constructor(loc_x, loc_y, edge=20) {
+    constructor(loc_x, loc_y, edge=DEFAULT_EDGE) {
         let top = new Rect(loc_x, loc_y, edge);
         let left = new Rect(loc_x - edge, loc_y + edge, edge);
         let mid = new Rect(loc_x, loc_y + edge, edge);
@@ -160,7 +208,7 @@ class T extends Shape {
 }
 
 class L extends Shape {
-    constructor(loc_x, loc_y, {rotation="left", edge=20}) {
+    constructor(loc_x, loc_y, {rotation="left", edge=DEFAULT_EDGE}) {
         let all_components = [];
         for (let j=0; j<3; j++)
             for (let i=-1; i<2; i++) {
@@ -196,7 +244,101 @@ class L extends Shape {
 
     change_morph = () => {
         this.current_morph += 1;
-        this.components = this.morphs["m" + (this.current_morph % 4).toString()];
+        this.components = this.morphs["m" + (this.current_morph % L_LEFT_SHAPE.length).toString()];
+    }
+}
+
+class Square extends Shape {
+    constructor(loc_x, loc_y, edge=DEFAULT_EDGE) {
+        let components = [
+            new Rect(loc_x, loc_y, edge),
+            new Rect(loc_x + edge, loc_y, edge),
+            new Rect(loc_x, loc_y + edge, edge),
+            new Rect(loc_x + edge, loc_y + edge, edge)
+        ];
+        super(components);
+        this.components = components;
+        this.all_components = components;
+        this.morphs = {"m0": components};
+        this.current_morph = 0;
+    }
+    change_morph = () => {};
+}
+
+class Z extends Shape {
+    constructor(loc_x, loc_y, {rotation="left", edge=DEFAULT_EDGE}) {
+        let all_components = [];
+        for (let j=0; j<3; j++)
+            for (let i=-1; i<2; i++) {
+                let cell = new Rect(loc_x + i * edge, loc_y + j * edge, edge);
+                all_components.push(cell);
+            }
+        let components;
+        if (rotation == "left") 
+            components = [all_components[0], all_components[1], all_components[4], all_components[5]];
+        else
+            components = [all_components[1], all_components[2], all_components[3], all_components[4]];
+        super(components);
+        this.components = components;
+        this.rotation = rotation;
+        this.all_components = all_components;
+        this.morphs = this.construct_morph();
+        this.current_morph = 0;
+    }
+
+    construct_morph = () => {
+        let morph_indices = this.rotation == "left" ? Z_LEFT_SHAPE : Z_RIGHT_SHAPE;
+        let morphs = {};
+        for (let i=0; i<morph_indices.length; i++) {
+            let morph_arr = [];
+            for (let j=0; j<morph_indices[i].length; j++) {
+                let idx = morph_indices[i][j];
+                morph_arr.push(this.all_components[idx]);
+            }
+            morphs["m" + i.toString()] = morph_arr;
+        }
+        return morphs;
+    }
+
+    change_morph = () => {
+        this.current_morph += 1;
+        this.components = this.morphs["m" + (this.current_morph % Z_LEFT_SHAPE.length).toString()];
+    }
+}
+
+class I extends Shape {
+    constructor(loc_x, loc_y, edge=DEFAULT_EDGE) {
+        let c1 = new Rect(loc_x, loc_y, edge);
+        let c2 = new Rect(loc_x + edge, loc_y, edge);
+        let c3 = new Rect(loc_x - edge, loc_y, edge);
+        let c4 = new Rect(loc_x + edge * 2, loc_y, edge);
+        let c1_ = new Rect(loc_x, loc_y - edge, edge);
+        let c3_ = new Rect(loc_x, loc_y + edge, edge);
+        let c4_ = new Rect(loc_x, loc_y + 2 * edge, edge);
+        let components = [c1, c2, c3, c4];
+        super(components);
+        this.components = components;
+        this.all_components = [c1, c2, c3, c4, c1_, c3_, c4_];
+        this.morphs = {"m0": components};
+        this.c1 = c1;
+        this.c1_ = c1_;
+        this.c3_ = c3_;
+        this.c4_ = c4_;
+        this.loc_x = loc_x;
+        this.loc_y = loc_y;
+        this.edge = edge;
+        this.construct_morph();
+        this.current_morph = 0;
+
+    }
+
+    construct_morph = () => {
+        this.morphs["m1"] = [this.c1_, this.c1, this.c3_, this.c4_];
+    }
+
+    change_morph = () => {
+        this.current_morph += 1;
+        this.components = this.morphs["m" + (this.current_morph % 2).toString()];
     }
 }
 
@@ -207,17 +349,21 @@ class Tetris extends Component {
         super(props);
         this.canvas = null;
         this.ctx = null;
-        this.edge = 20;
-        this.height = 20
+        this.edge = DEFAULT_EDGE;
+        this.height = 10
         this.width = 10;
-        this.base = {};
-        for (let i=0; i<this.width; i++) {
-            this.base[i] = this.height * this.edge;
+        this.base = [];
+        for (let i=0; i<this.height; i++) {
+            let _row = [];
+            for (let j=0; j<this.width; j++)
+                _row.push(false);
+            this.base[i] = _row;
         }
+        
         this.state = {
             tick: 0,
         };
-        let first_shape = new L(100, 0, {rotation: "right"});
+        let first_shape = new I(this.width * this.edge / 2, 0);
         this.shapes = [first_shape];
         this.shape_in_play = first_shape;
     }
@@ -239,7 +385,8 @@ class Tetris extends Component {
         for (let i=0; i<shape.components.length; i++) {
             let comp = shape.components[i];
             let x_id = comp.loc_x / comp.edge;
-            this.base[x_id] = shape_base[x_id];
+            let y_id = comp.loc_y / comp.edge;
+            this.base[y_id][x_id] = true;
         }
         shape.base_updated = true;
         console.log(this.base)
@@ -259,14 +406,14 @@ class Tetris extends Component {
     }
 
     init_new_shape = () => {
-        let new_shape = new L(100, 0, {rotation: "right"});
+        let new_shape = new I(100, 0);
         this.shapes.push(new_shape);
         this.shape_in_play = new_shape;
     }
 
     check_lose = () => {
-        for (let x_id in this.base) {
-            if (this.base[x_id] <= 0) return true;
+        for (let i=0; i<this.shapes.length; i++) {
+            if (this.shapes[i].get_top() <= 0) return true;
         }
         return false;
     }
