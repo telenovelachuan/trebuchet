@@ -90,7 +90,6 @@ class Shape {
             this.landed = true;
             return;
         }
-        console.log("descending");
         for (let i=0; i<this.all_components.length; i++) {
             let comp = this.all_components[i];  // descend all components!
             comp.descend();
@@ -113,14 +112,6 @@ class Shape {
             if (y_id == (base.length) || base[y_id][x_id] == true) {return true;}
         }
         return false;
-
-        // for (let i=0; i<this.components.length; i++) {
-        //     let comp = this.components[i]
-        //     let x_id = comp.loc_x / comp.edge;
-        //     let ground = base_dict[x_id];
-        //     if ((comp.loc_y + comp.edge) >= ground) { return true; }
-        // }
-        // return false;
     }
     get_base = () => {
         let results = {};
@@ -189,6 +180,7 @@ class T extends Shape {
         this.bot = bot;
         this.morphs = this.construct_morph();
         this.current_morph = 0;
+        this.type = "T";
     }
 
     construct_morph = () => {
@@ -226,6 +218,7 @@ class L extends Shape {
         this.all_components = all_components;
         this.morphs = this.construct_morph();
         this.current_morph = 0;
+        this.type = "L";
     }
 
     construct_morph = () => {
@@ -261,6 +254,7 @@ class Square extends Shape {
         this.all_components = components;
         this.morphs = {"m0": components};
         this.current_morph = 0;
+        this.type = "square";
     }
     change_morph = () => {};
 }
@@ -284,6 +278,7 @@ class Z extends Shape {
         this.all_components = all_components;
         this.morphs = this.construct_morph();
         this.current_morph = 0;
+        this.type = "Z";
     }
 
     construct_morph = () => {
@@ -329,7 +324,7 @@ class I extends Shape {
         this.edge = edge;
         this.construct_morph();
         this.current_morph = 0;
-
+        this.type = "I";
     }
 
     construct_morph = () => {
@@ -342,7 +337,7 @@ class I extends Shape {
     }
 }
 
-
+const SHAPE_OPTIONS = [T, Square, L, Z, I];
 class Tetris extends Component {
 
     constructor(props) {
@@ -350,7 +345,7 @@ class Tetris extends Component {
         this.canvas = null;
         this.ctx = null;
         this.edge = DEFAULT_EDGE;
-        this.height = 10
+        this.height = 20
         this.width = 10;
         this.base = [];
         for (let i=0; i<this.height; i++) {
@@ -406,14 +401,23 @@ class Tetris extends Component {
     }
 
     init_new_shape = () => {
-        let new_shape = new I(100, 0);
+        let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        let new_shape;
+        if (shape_type == Z || shape_type == L) {
+            new_shape = new shape_type(100, 0, {rotation: "left"});
+        }
+        else {
+            new_shape = new shape_type(100, 0);
+        }
+        
         this.shapes.push(new_shape);
         this.shape_in_play = new_shape;
     }
 
     check_lose = () => {
         for (let i=0; i<this.shapes.length; i++) {
-            if (this.shapes[i].get_top() <= 0) return true;
+            let _shape = this.shapes[i];
+            if (_shape.get_top() <= 0 && _shape.base_updated == true) return true;
         }
         return false;
     }
@@ -443,8 +447,6 @@ class Tetris extends Component {
         this.ctx = this.canvas.getContext("2d");
         this.ctx.font = "40px Courier";
         this.ctx.beginPath();
-        this.ctx.fillStyle = '#000';
-        this.ctx.fillRect(0, 0, 50, 50)
 
         this.ctx.moveTo(0, this.height * this.edge);
         this.ctx.lineTo(this.width * this.edge, this.height * this.edge);
