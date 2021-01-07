@@ -460,7 +460,7 @@ class Tetris extends Component {
     }
 
     handleKeyPress = e => {
-        if (e.keyCode == 32) {  // space keydown
+        if (e.keyCode == 38) {  // up keydown
             this.shape_in_play.change_morph();
             e.preventDefault();
         }
@@ -702,7 +702,7 @@ class Tetris extends Component {
     render () {
     return (
         <div className="content" id="tetris_content">
-            <div id="ttt_game_result">(press space to rotate)</div>
+            <div id="ttt_game_result">(press up key to rotate)</div>
             <div id="ttt_game_result">Current Score: {this.state.score}</div>
             {
                 this.state.lost && <div id="ttt_game_result">Sorry, you've lost :-(</div>

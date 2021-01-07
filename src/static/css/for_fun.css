@@ -184,5 +184,13 @@
 .ff_nav {
     background-color: #ffffff;
     border-top: 1px solid rgb(200, 200, 200);
-
+}
+#tetris_canvas_div {
+    width: 30%;
+    height: 400px;
+    margin: 0 auto;
+    border-bottom: 1px solid lightgray;
+}
+#tetris_canvas {
+    height: 100% !important;
 }
