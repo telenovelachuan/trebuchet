@@ -25,6 +25,9 @@ const Z_RIGHT_SHAPE = [
     [1, 4, 5, 8]
 ];
 const DEFAULT_EDGE = 20;
+const CELL_COLOR1 = "#4698c2"
+const CELL_COLOR2 = "white"
+const BORDER_COLOR = "#193645"
 
 class Rect {
     constructor(loc_x, loc_y, edge) {
@@ -43,9 +46,14 @@ class Rect {
         return [this.loc_x, this.loc_y];
     }
     draw = (ctx) => {
-        ctx.fillStyle = '#000';
+        let grd = ctx.createLinearGradient(
+            this.loc_x + this.border, this.loc_y + this.border,
+            this.loc_x + this.edge - this.border, this.loc_y + this.edge - this.border);
+        grd.addColorStop(0, CELL_COLOR1);
+        grd.addColorStop(1, CELL_COLOR2);
+        ctx.fillStyle = BORDER_COLOR;
         ctx.fillRect(this.loc_x, this.loc_y, this.edge, this.edge);
-        ctx.fillStyle = '#FFF';
+        ctx.fillStyle = grd;
         ctx.fillRect(this.loc_x + this.border, this.loc_y + this.border, this.edge - 2 * this.border, this.edge - 2 * this.border);
     }
     clear = (ctx) => {
@@ -385,6 +393,8 @@ class I extends Shape {
 }
 
 const SHAPE_OPTIONS = [T, Square, L, Z, I];
+const ROTATE_OPTIONS = ["left", "right"];
+const FLICKER_CNT = 2;
 class Tetris extends Component {
 
     constructor(props) {
@@ -392,7 +402,7 @@ class Tetris extends Component {
         this.canvas = null;
         this.ctx = null;
         this.edge = DEFAULT_EDGE;
-        this.height = 10
+        this.height = 20
         this.width = 10;
         this.base = this.init_base();
         
@@ -402,6 +412,9 @@ class Tetris extends Component {
         let first_shape = new I(this.width * this.edge / 2, 0);
         this.shapes = [first_shape];
         this.shape_in_play = first_shape;
+        this.comps_to_remove = [];
+        this.flicker_cnt = 0;
+        this.full_rows = [];
     }
 
     init_base = () => {
@@ -449,14 +462,20 @@ class Tetris extends Component {
         else if (e.keyCode == 39) {
             this.shape_in_play.budge("right", this.ctx);
         }
+        else if (e.keyCode == 40) {
+            this.shape_in_play.clear(this.ctx);
+            this.shape_in_play.descend(this.base);
+            this.shape_in_play.draw(this.ctx);
+        }
     }
 
     init_new_shape = () => {
-        //let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
-        let shape_type = T;
+        let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        //let shape_type = I;
         let new_shape;
         if (shape_type == Z || shape_type == L) {
-            new_shape = new shape_type(100, 0, {rotation: "left"});
+            let _rotation = ROTATE_OPTIONS[Math.floor(Math.random() * ROTATE_OPTIONS.length)]
+            new_shape = new shape_type(100, 0, {rotation: _rotation});
         }
         else {
             new_shape = new shape_type(100, 0);
@@ -509,10 +528,23 @@ class Tetris extends Component {
         for(let i=0;i<this.shapes.length;i++) console.log(this.shapes[i].toString())
     }
 
+    descend_comps_above = (y_id) => {
+        // descend all components above the y id
+        for (let i=0; i<this.shapes.length; i++) {
+            let _shape = this.shapes[i];
+            for (let j=0; j<_shape.components.length; j++) {
+                let _comp = _shape.components[j];
+                if ((_comp.loc_y / _comp.edge) < y_id) {
+                    console.log("descend comp:" + _comp.toString())
+                    _comp.clear(this.ctx);
+                    _comp.descend();
+                }
+            }
+        }
+    }
+
     remove_comps_n_descend_above = (y_id) => {
         // remove all components on a given y id from corresponding shapes
-        // descend all above components
-        console.log("in remove_comps_from_shapes, shapes:" + this.shapes.length)
         for (let i=0; i<this.shapes.length; i++) {
             let _shape = this.shapes[i];
             let comp_to_remove = [];
@@ -520,28 +552,28 @@ class Tetris extends Component {
                 let _comp = _shape.components[j];
                 if ((_comp.loc_y / _comp.edge) == y_id) {
                     comp_to_remove.push(_comp.id);
-                }
-                else if ((_comp.loc_y / _comp.edge) < y_id) {
-                    if (_shape.id == this.shape_in_play.id) continue;
-                    console.log("descend comp:" + _comp.toString())
-                    _comp.clear(this.ctx);
-                    _comp.descend();
+                    this.comps_to_remove.push(_comp);
                 }
             }
             this.shapes[i].remove_components(comp_to_remove, this.ctx);
         }
         this.tidy_up_shapes();
-        console.log("after tidy: " + this.shapes.length + " shapes")
+        //console.log("after tidy: " + this.shapes.length + " shapes")
     }
 
     remove_full_rows = () => {
-        let full_rows = this.get_full_rows();
+        let full_rows = this.get_full_rows().sort();
+        this.full_rows = full_rows;
+        this.comps_to_remove = [];
         console.log("full_rows:" + full_rows);
         for (let i=0; i<full_rows.length; i++) {
             let y_id = full_rows[i];
             // remove the corresponding components from these shapes and descend all the above components
             this.remove_comps_n_descend_above(y_id);
-            // 
+            if (this.comps_to_remove.length > 0) {
+                // flicker to remove
+                this.flicker_cnt = FLICKER_CNT;
+            }
 
             // update global base
             this.rebuild_base();
@@ -549,17 +581,49 @@ class Tetris extends Component {
     }
 
     timer_tick = () => {
+        // flicker mode
+        console.log("flicker:" + this.flicker_cnt);
+        if (this.flicker_cnt > 0) {
+            if (this.flicker_cnt % 2 == 0) {
+                for (let i=0; i<this.comps_to_remove.length; i++) {
+                    this.comps_to_remove[i].draw(this.ctx);
+                }
+            }
+            else {
+                for (let i=0; i<this.comps_to_remove.length; i++) {
+                    this.comps_to_remove[i].clear(this.ctx);
+                }
+            }
+            this.flicker_cnt -= 1;
+            return;
+        }
+        // descend cells after flicker
+        if (this.full_rows.length > 0) {
+            console.log("descend cells beneath");
+            for (let i=0; i<this.full_rows.length; i++) {
+                this.descend_comps_above(this.full_rows[i]);
+            }
+            this.rebuild_base();
+            this.full_rows = [];
+            this.init_new_shape();
+            return;
+        }
+
         this.shape_in_play.clear(this.ctx);
         this.state.tick += this.edge;
         this.shape_in_play.descend(this.base);
         if (this.shape_in_play.landed == true && this.shape_in_play.base_updated == false) {
             this.update_base(this.shape_in_play);
-            this.init_new_shape();
+            // this.init_new_shape();
         }
         this.draw_all_shapes();
 
         // check and remove full rows
         this.remove_full_rows();
+        if (this.comps_to_remove.length == 0 && this.shape_in_play.landed == true && this.shape_in_play.base_updated == true) {
+            // no comps to remove
+            this.init_new_shape();
+        }
 
         if (this.check_lose()) {
             console.log("lost!!");
