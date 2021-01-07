@@ -396,7 +396,7 @@ const SHAPE_OPTIONS = [T, Square, L, Z, I];
 const ROTATE_OPTIONS = ["left", "right"];
 const FLICKER_CNT = 2;
 const SINGLE_ROW_SCORE = 10;
-const GAME_SPEED = 500;
+const GAME_SPEED = 100;
 class Tetris extends Component {
 
     constructor(props) {
@@ -461,15 +461,21 @@ class Tetris extends Component {
 
     handleKeyPress = e => {
         if (e.keyCode == 38) {  // up keydown
+            this.shape_in_play.clear(this.ctx);
             this.shape_in_play.change_morph();
+            this.shape_in_play.draw(this.ctx);
             e.preventDefault();
         }
         else if (e.keyCode == 37) {
+            this.shape_in_play.clear(this.ctx);
             this.shape_in_play.budge("left", this.ctx);
+            this.shape_in_play.draw(this.ctx);
             e.preventDefault();
         }
         else if (e.keyCode == 39) {
+            this.shape_in_play.clear(this.ctx);
             this.shape_in_play.budge("right", this.ctx);
+            this.shape_in_play.draw(this.ctx);
             e.preventDefault();
         }
         else if (e.keyCode == 40) {
@@ -597,6 +603,9 @@ class Tetris extends Component {
     }
 
     timer_tick = () => {
+        let tick = this.state.tick + 1;
+        this.state.tick = tick;
+        
         // flicker mode
         console.log("flicker:" + this.flicker_cnt);
         if (this.flicker_cnt > 0) {
@@ -626,29 +635,36 @@ class Tetris extends Component {
             this.init_new_shape();
             return;
         }
+        
+        if (tick % 5 == 0) {
+            
+            
 
-        this.shape_in_play.clear(this.ctx);
-        this.state.tick += this.edge;
-        this.shape_in_play.descend(this.base);
-        if (this.shape_in_play.landed == true && this.shape_in_play.base_updated == false) {
-            this.update_base(this.shape_in_play);
-            // this.init_new_shape();
-        }
-        this.draw_all_shapes();
+            this.shape_in_play.clear(this.ctx);
 
-        // check and remove full rows
-        this.remove_full_rows();
-        if (this.comps_to_remove.length == 0 && this.shape_in_play.landed == true && this.shape_in_play.base_updated == true) {
-            // no comps to remove
-            this.init_new_shape();
+            this.shape_in_play.descend(this.base);
+            if (this.shape_in_play.landed == true && this.shape_in_play.base_updated == false) {
+                this.update_base(this.shape_in_play);
+                // this.init_new_shape();
+            }
+            this.draw_all_shapes();
+
+            // check and remove full rows
+            this.remove_full_rows();
+            if (this.comps_to_remove.length == 0 && this.shape_in_play.landed == true && this.shape_in_play.base_updated == true) {
+                // no comps to remove
+                this.init_new_shape();
+            }
+            if (this.check_lose()) {
+                console.log("lost!!");
+                this.setState({lost: true});
+                document.removeEventListener("keydown", this.handleKeyPress.bind(this));
+                clearInterval(this.interval);
+                this.events_bound = false;
+            }
         }
-        if (this.check_lose()) {
-            console.log("lost!!");
-            this.setState({lost: true});
-            document.removeEventListener("keydown", this.handleKeyPress.bind(this));
-            clearInterval(this.interval);
-            this.events_bound = false;
-        }
+
+        
     }
 
     draw_border = () => {
