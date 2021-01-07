@@ -478,6 +478,7 @@ class Tetris extends Component {
             this.shape_in_play.draw(this.ctx);
             e.preventDefault();
         }
+        e.preventDefault();
     }
 
     generate_new_shape = () => {
@@ -662,6 +663,7 @@ class Tetris extends Component {
     }
 
     new_game_click = e => {
+        this.clear_all_shapes();
         this.base = this.init_base();
         this.setState({tick: 0, score: 0});
 
@@ -681,6 +683,7 @@ class Tetris extends Component {
             this.interval = setInterval(this.timer_tick, GAME_SPEED);
             this.events_bound = true;
         }
+        
     }
 
     componentWillMount() {
