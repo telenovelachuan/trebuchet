@@ -27,7 +27,7 @@ const Z_RIGHT_SHAPE = [
 const DEFAULT_EDGE = 20;
 const CELL_COLOR1 = "#4698c2"
 const CELL_COLOR2 = "white"
-const BORDER_COLOR = "#193645"
+const BORDER_COLOR = "black"
 
 class Rect {
     constructor(loc_x, loc_y, edge) {
@@ -395,6 +395,8 @@ class I extends Shape {
 const SHAPE_OPTIONS = [T, Square, L, Z, I];
 const ROTATE_OPTIONS = ["left", "right"];
 const FLICKER_CNT = 2;
+const SINGLE_ROW_SCORE = 10;
+const GAME_SPEED = 500;
 class Tetris extends Component {
 
     constructor(props) {
@@ -408,13 +410,18 @@ class Tetris extends Component {
         
         this.state = {
             tick: 0,
+            score: 0
         };
-        let first_shape = new I(this.width * this.edge / 2, 0);
-        this.shapes = [first_shape];
-        this.shape_in_play = first_shape;
+        //let first_shape = new I(this.width * this.edge / 2, 0);
+        //let first_shape = this.generate_new_shape();
+        this.shapes = [];
+        //this.shape_in_play = first_shape;
         this.comps_to_remove = [];
         this.flicker_cnt = 0;
         this.full_rows = [];
+        this.info = "";
+        this.lost = false;
+        this.events_bound = false;
     }
 
     init_base = () => {
@@ -453,23 +460,27 @@ class Tetris extends Component {
     }
 
     handleKeyPress = e => {
-        if (e.keyCode == 38) {  // up keydown
+        if (e.keyCode == 32) {  // space keydown
             this.shape_in_play.change_morph();
+            e.preventDefault();
         }
         else if (e.keyCode == 37) {
             this.shape_in_play.budge("left", this.ctx);
+            e.preventDefault();
         }
         else if (e.keyCode == 39) {
             this.shape_in_play.budge("right", this.ctx);
+            e.preventDefault();
         }
         else if (e.keyCode == 40) {
             this.shape_in_play.clear(this.ctx);
             this.shape_in_play.descend(this.base);
             this.shape_in_play.draw(this.ctx);
+            e.preventDefault();
         }
     }
 
-    init_new_shape = () => {
+    generate_new_shape = () => {
         let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
         //let shape_type = I;
         let new_shape;
@@ -480,7 +491,11 @@ class Tetris extends Component {
         else {
             new_shape = new shape_type(100, 0);
         }
-        
+        return new_shape;
+    }
+
+    init_new_shape = () => {
+        let new_shape = this.generate_new_shape();
         this.shapes.push(new_shape);
         this.shape_in_play = new_shape;
     }
@@ -602,6 +617,8 @@ class Tetris extends Component {
             console.log("descend cells beneath");
             for (let i=0; i<this.full_rows.length; i++) {
                 this.descend_comps_above(this.full_rows[i]);
+                let new_score = this.state.score + SINGLE_ROW_SCORE;
+                this.setState({score: new_score, "info": "Current Score: " + new_score})
             }
             this.rebuild_base();
             this.full_rows = [];
@@ -624,30 +641,57 @@ class Tetris extends Component {
             // no comps to remove
             this.init_new_shape();
         }
-
         if (this.check_lose()) {
             console.log("lost!!");
+            this.setState({lost: true});
+            document.removeEventListener("keydown", this.handleKeyPress.bind(this));
             clearInterval(this.interval);
+            this.events_bound = false;
         }
-        
-        
+    }
 
+    draw_border = () => {
+        this.ctx.strokeStyle = '#D3D3D3';
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0);
+        this.ctx.lineTo(0, this.height * this.edge);
+        this.ctx.stroke();
+        this.ctx.moveTo(this.width * this.edge, 0);
+        this.ctx.lineTo(this.width * this.edge, this.height * this.edge);
+        this.ctx.stroke();
+    }
+
+    new_game_click = e => {
+        this.base = this.init_base();
+        this.setState({tick: 0, score: 0});
+
+        //this.init_new_shape();
+        let first_shape = this.generate_new_shape();
+        this.shapes = [first_shape];
+        this.shape_in_play = first_shape;
+
+        this.comps_to_remove = [];
+        this.flicker_cnt = 0;
+        this.full_rows = [];
+        this.info = "";
+        this.lost = false;
+
+        if (this.events_bound == false) {
+            document.addEventListener("keydown", this.handleKeyPress.bind(this));
+            this.interval = setInterval(this.timer_tick, GAME_SPEED);
+            this.events_bound = true;
+        }
     }
 
     componentWillMount() {
-        document.addEventListener("keydown", this.handleKeyPress.bind(this));
+        // document.addEventListener("keydown", this.handleKeyPress.bind(this));
     }
 
     componentDidMount() {
         this.canvas = this.refs.canvas;
         this.ctx = this.canvas.getContext("2d");
         this.ctx.font = "40px Courier";
-        this.ctx.beginPath();
-
-        this.ctx.moveTo(0, this.height * this.edge);
-        this.ctx.lineTo(this.width * this.edge, this.height * this.edge);
-        this.ctx.stroke();
-        this.interval = setInterval(this.timer_tick, 500);
+        this.draw_border();
     }
 
     componentWillUnmount() {
@@ -658,8 +702,21 @@ class Tetris extends Component {
     render () {
     return (
         <div className="content" id="tetris_content">
-            tetris
-            <canvas ref="canvas" width={this.width * this.edge} height={this.height * this.edge} />
+            <div id="ttt_game_result">(press space to rotate)</div>
+            <div id="ttt_game_result">Current Score: {this.state.score}</div>
+            {
+                this.state.lost && <div id="ttt_game_result">Sorry, you've lost :-(</div>
+            }
+            
+            <div id="tetris_canvas_div">
+                <canvas id="tetris_canvas" ref="canvas" width={this.width * this.edge} height={this.height * this.edge} />
+            </div>
+            <br /><br />
+            <div id="tetris_start">
+                <Button variant="outlined" color="primary" className="tetris_start_button"
+                        onClick={e => this.new_game_click(e)} >NEW GAME
+                </Button>
+            </div>
         </div>
     )}
 }
