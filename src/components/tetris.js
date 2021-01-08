@@ -1,7 +1,4 @@
-import React, { Component, useRef, useEffect } from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 
 const L_LEFT_SHAPE = [
@@ -207,6 +204,28 @@ class Shape {
         this.components = this.components.filter(c => !id_list.includes(c.id));
         this.all_components = this.all_components.filter(c => !id_list.includes(c.id));
     }
+    check_collide = (base, morph_id=0) => {
+        let morph_comps = this.morphs["m" + morph_id.toString()];
+        console.log("morph_id:" + morph_id)
+        console.log("this.morphs:" + Object.keys(this.morphs))
+        console.log("morph_comps:" + morph_comps)
+        for (let i=0; i<morph_comps.length; i++) {
+            let _comp = morph_comps[i];
+            let x_id = _comp.loc_x / _comp.edge;
+            let y_id = _comp.loc_y / _comp.edge;
+            if (y_id < 0) continue;
+            if (base[y_id][x_id] == true) return true;  // collided
+        }
+        return false;
+    }
+    change_morph = (base) => {
+        let morph_idx = (this.current_morph + 1) % this.morph_num;
+        if (this.check_collide(base, morph_idx) == true) {
+            return;
+        }
+        this.current_morph += 1;
+        this.components = this.morphs["m" + (this.current_morph % this.morph_num).toString()];
+    }
     toString = () => {
         let str = "Shape" + this.id + ": ";
         if (this.components.length == 0) return str + "(empty)"
@@ -236,6 +255,7 @@ class T extends Shape {
         this.morphs = this.construct_morph();
         this.current_morph = 0;
         this.type = "T";
+        this.morph_num = 4;
     }
 
     construct_morph = () => {
@@ -248,10 +268,10 @@ class T extends Shape {
         return morphs;
     }
 
-    change_morph = () => {
-        this.current_morph += 1;
-        this.components = this.morphs["m" + (this.current_morph % 4).toString()];
-    }
+    // change_morph = () => {
+    //     this.current_morph += 1;
+    //     this.components = this.morphs["m" + (this.current_morph % 4).toString()];
+    // }
 }
 
 class L extends Shape {
@@ -274,6 +294,7 @@ class L extends Shape {
         this.morphs = this.construct_morph();
         this.current_morph = 0;
         this.type = "L";
+        this.morph_num = 4;
     }
 
     construct_morph = () => {
@@ -290,10 +311,10 @@ class L extends Shape {
         return morphs;
     }
 
-    change_morph = () => {
-        this.current_morph += 1;
-        this.components = this.morphs["m" + (this.current_morph % L_LEFT_SHAPE.length).toString()];
-    }
+    // change_morph = () => {
+    //     this.current_morph += 1;
+    //     this.components = this.morphs["m" + (this.current_morph % L_LEFT_SHAPE.length).toString()];
+    // }
 }
 
 class Square extends Shape {
@@ -334,6 +355,7 @@ class Z extends Shape {
         this.morphs = this.construct_morph();
         this.current_morph = 0;
         this.type = "Z";
+        this.morph_num = 2;
     }
 
     construct_morph = () => {
@@ -350,10 +372,10 @@ class Z extends Shape {
         return morphs;
     }
 
-    change_morph = () => {
-        this.current_morph += 1;
-        this.components = this.morphs["m" + (this.current_morph % Z_LEFT_SHAPE.length).toString()];
-    }
+    // change_morph = () => {
+    //     this.current_morph += 1;
+    //     this.components = this.morphs["m" + (this.current_morph % Z_LEFT_SHAPE.length).toString()];
+    // }
 }
 
 class I extends Shape {
@@ -368,28 +390,32 @@ class I extends Shape {
         let components = [c1, c2, c3, c4];
         super(components);
         this.components = components;
-        this.all_components = [c1, c2, c3, c4, c1_, c3_, c4_];
         this.morphs = {"m0": components};
         this.c1 = c1;
+        this.c2 = c2;
+        this.c3 = c3;
         this.c1_ = c1_;
         this.c3_ = c3_;
+        this.c4 = c4;
         this.c4_ = c4_;
+        this.all_components = [this.c1, this.c2, this.c3, this.c4, this.c1_, this.c3_, this.c4_];
         this.loc_x = loc_x;
         this.loc_y = loc_y;
         this.edge = edge;
         this.construct_morph();
         this.current_morph = 0;
         this.type = "I";
+        this.morph_num = 2;
     }
 
     construct_morph = () => {
         this.morphs["m1"] = [this.c1_, this.c1, this.c3_, this.c4_];
     }
 
-    change_morph = () => {
-        this.current_morph += 1;
-        this.components = this.morphs["m" + (this.current_morph % 2).toString()];
-    }
+    // change_morph = () => {
+    //     this.current_morph += 1;
+    //     this.components = this.morphs["m" + (this.current_morph % 2).toString()];
+    // }
 }
 
 const SHAPE_OPTIONS = [T, Square, L, Z, I];
@@ -422,6 +448,7 @@ class Tetris extends Component {
         this.info = "";
         this.lost = false;
         this.events_bound = false;
+        this.paused = false;
     }
 
     init_base = () => {
@@ -455,41 +482,54 @@ class Tetris extends Component {
             let y_id = comp.loc_y / comp.edge;
             this.base[y_id][x_id] = true;
         }
-        //console.log("full cnt:" + this.get_full_row_cnt())
         shape.base_updated = true;
     }
 
     handleKeyPress = e => {
-        if (e.keyCode == 38) {  // up keydown
-            this.shape_in_play.clear(this.ctx);
-            this.shape_in_play.change_morph();
-            this.shape_in_play.draw(this.ctx);
-            e.preventDefault();
+        if (this.paused == false) {
+            if (e.keyCode == 38) {  // up keydown
+                this.shape_in_play.clear(this.ctx);
+                this.shape_in_play.change_morph(this.base);
+                this.shape_in_play.draw(this.ctx);
+                e.preventDefault();
+                return;
+            }
+            if (e.keyCode == 37) {
+                this.shape_in_play.clear(this.ctx);
+                this.shape_in_play.budge("left", this.ctx);
+                this.shape_in_play.draw(this.ctx);
+                e.preventDefault();
+                return;
+            }
+            if (e.keyCode == 39) {
+                this.shape_in_play.clear(this.ctx);
+                this.shape_in_play.budge("right", this.ctx);
+                this.shape_in_play.draw(this.ctx);
+                e.preventDefault();
+                return;
+            }
+            if (e.keyCode == 40) {  // down key
+                this.shape_in_play.clear(this.ctx);
+                this.shape_in_play.descend(this.base);
+                this.shape_in_play.draw(this.ctx);
+                e.preventDefault();
+                return;
+            }
         }
-        else if (e.keyCode == 37) {
-            this.shape_in_play.clear(this.ctx);
-            this.shape_in_play.budge("left", this.ctx);
-            this.shape_in_play.draw(this.ctx);
+        
+        if (e.keyCode == 32) { // space for pause
+            if (this.paused == false)
+                this.paused = true;
+            else this.paused = false;
             e.preventDefault();
-        }
-        else if (e.keyCode == 39) {
-            this.shape_in_play.clear(this.ctx);
-            this.shape_in_play.budge("right", this.ctx);
-            this.shape_in_play.draw(this.ctx);
-            e.preventDefault();
-        }
-        else if (e.keyCode == 40) {
-            this.shape_in_play.clear(this.ctx);
-            this.shape_in_play.descend(this.base);
-            this.shape_in_play.draw(this.ctx);
-            e.preventDefault();
+            return;
         }
         e.preventDefault();
     }
 
     generate_new_shape = () => {
-        let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
-        //let shape_type = I;
+        //let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        let shape_type = I;
         let new_shape;
         if (shape_type == Z || shape_type == L) {
             let _rotation = ROTATE_OPTIONS[Math.floor(Math.random() * ROTATE_OPTIONS.length)]
@@ -557,7 +597,6 @@ class Tetris extends Component {
             for (let j=0; j<_shape.components.length; j++) {
                 let _comp = _shape.components[j];
                 if ((_comp.loc_y / _comp.edge) < y_id) {
-                    console.log("descend comp:" + _comp.toString())
                     _comp.clear(this.ctx);
                     _comp.descend();
                 }
@@ -603,6 +642,9 @@ class Tetris extends Component {
     }
 
     timer_tick = () => {
+        // skip if paused;
+        if (this.paused === true) return;
+
         let tick = this.state.tick + 1;
         this.state.tick = tick;
         
@@ -637,9 +679,6 @@ class Tetris extends Component {
         }
         
         if (tick % 5 == 0) {
-            
-            
-
             this.shape_in_play.clear(this.ctx);
 
             this.shape_in_play.descend(this.base);
@@ -663,8 +702,6 @@ class Tetris extends Component {
                 this.events_bound = false;
             }
         }
-
-        
     }
 
     draw_border = () => {
@@ -683,7 +720,6 @@ class Tetris extends Component {
         this.base = this.init_base();
         this.setState({tick: 0, score: 0});
 
-        //this.init_new_shape();
         let first_shape = this.generate_new_shape();
         this.shapes = [first_shape];
         this.shape_in_play = first_shape;
@@ -693,6 +729,7 @@ class Tetris extends Component {
         this.full_rows = [];
         this.info = "";
         this.lost = false;
+        this.paused = false;
 
         if (this.events_bound == false) {
             document.addEventListener("keydown", this.handleKeyPress.bind(this));
@@ -703,7 +740,7 @@ class Tetris extends Component {
     }
 
     componentWillMount() {
-        // document.addEventListener("keydown", this.handleKeyPress.bind(this));
+
     }
 
     componentDidMount() {
