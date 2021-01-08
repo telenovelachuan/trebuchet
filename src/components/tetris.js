@@ -454,9 +454,13 @@ class Tetris extends Component {
         super(props);
         this.canvas = null;
         this.ctx = null;
+        this.sub_ctx = null;
+        this.sub_canvas = null;
         this.edge = DEFAULT_EDGE;
         this.height = 20
         this.width = 10;
+        this.sub_height = 5;
+        this.sub_width = 5;
         this.base = this.init_base();
         
         this.state = {
@@ -728,6 +732,29 @@ class Tetris extends Component {
         this.ctx.stroke();
     }
 
+    draw_sub_border = () => {
+        this.sub_ctx.strokeStyle = '#D3D3D3';
+        this.sub_ctx.beginPath();
+        this.sub_ctx.moveTo(0, 0);
+        this.sub_ctx.lineTo(0, this.sub_canvas.width);
+        this.sub_ctx.stroke();
+
+        this.sub_ctx.beginPath();
+        this.sub_ctx.moveTo(0, 0);
+        this.sub_ctx.lineTo(this.sub_canvas.width, 0);
+        this.sub_ctx.stroke();
+
+        this.sub_ctx.beginPath();
+        this.sub_ctx.moveTo(this.sub_canvas.width, 0);
+        this.sub_ctx.lineTo(this.sub_canvas.width, this.sub_canvas.height);
+        this.sub_ctx.stroke();
+
+        this.sub_ctx.beginPath();
+        this.sub_ctx.moveTo(0, this.sub_canvas.height);
+        this.sub_ctx.lineTo(this.sub_canvas.width, this.sub_canvas.height);
+        this.sub_ctx.stroke();
+    }
+
     new_game_click = e => {
         this.clear_all_shapes();
         this.base = this.init_base();
@@ -748,8 +775,7 @@ class Tetris extends Component {
             document.addEventListener("keydown", this.handleKeyPress.bind(this));
             this.interval = setInterval(this.timer_tick, GAME_SPEED);
             this.events_bound = true;
-        }
-        
+        } 
     }
 
     componentWillMount() {
@@ -758,9 +784,12 @@ class Tetris extends Component {
 
     componentDidMount() {
         this.canvas = this.refs.canvas;
+        this.sub_canvas = this.refs.sub_canvas;
         this.ctx = this.canvas.getContext("2d");
+        this.sub_ctx = this.sub_canvas.getContext("2d");
         this.ctx.font = "40px Courier";
         this.draw_border();
+        this.draw_sub_border();
     }
 
     componentWillUnmount() {
@@ -778,7 +807,19 @@ class Tetris extends Component {
             }
             
             <div id="tetris_canvas_div">
-                <canvas id="tetris_canvas" ref="canvas" width={this.width * this.edge} height={this.height * this.edge} />
+                <div id="tetris_canvas_left"></div>
+                <div id="tetris_canvas_main">
+                    <canvas id="tetris_canvas" ref="canvas" width={this.width * this.edge} height={this.height * this.edge} />
+                </div>
+                <div id="tetris_canvas_right">
+                    <div id="tetris_canvas_right_content">
+                        <div id="tetris_sub_title">Next</div>
+                        <div id="tetris_sub_canvas">
+                            <canvas id="tetris_sub_canvas" ref="sub_canvas"
+                            width={this.sub_width * this.edge} height={this.sub_height * this.edge}/>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br /><br />
             <div id="tetris_start">
