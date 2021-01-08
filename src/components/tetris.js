@@ -57,8 +57,8 @@ class Rect {
         ctx.fillStyle = '#FFF';
         ctx.fillRect(this.loc_x, this.loc_y, this.edge, this.edge);  
     }
-    descend = () => {
-        this.set_loc(this.loc_x, this.loc_y + this.edge);
+    descend = (level=1) => {
+        this.set_loc(this.loc_x, this.loc_y + this.edge * level);
     }
     budge = (direction) => {
         if (direction == "left") {
@@ -81,6 +81,7 @@ class Shape {
         this.edge = edge;
         this.base_updated = false;
         this.id = "s" + Date.now() + Math.random();
+        this.accelerate_level = 1;
     }
     draw = (ctx) => {
         for (let i=0; i<this.components.length; i++) {
@@ -89,21 +90,55 @@ class Shape {
         ctx.stroke();
     }
     clear = (ctx) => {
-        for (let i=0; i<this.all_components.length; i++) {
-            this.all_components[i].clear(ctx);
+        for (let i=0; i<this.components.length; i++) {
+            this.components[i].clear(ctx);
         }
         ctx.stroke();
     }
-    descend = (base) => {
+    accelerate_descend = () => {
+        if (this.accelerate_level == 1) {
+            this.accelerate_level += 1;
+        }
+    }
+    get_highest_obstacle = (base) => {
+        let result = base.length + 1;
+        for (let i=0; i<this.components.length; i++) {
+            let comp = this.components[i];
+            let x_id = comp.loc_x / comp.edge;
+            let y_id = comp.loc_y / comp.edge;
+            // get the closest obstacle beneath the comp in this column
+            let _obstacle_y_id;
+            for (let j=y_id; j<base.length; j++) {
+                if (base[j][x_id] == true) {
+                    _obstacle_y_id = j;
+                    break;
+                }
+            }
+            if (_obstacle_y_id < result) {
+                result = _obstacle_y_id;
+            }
+        }
+        return result;
+    }
+    descend = (base, ctx) => {
         if (this.has_landed(base)) {
             if (this.landed) return;
             this.landed = true;
             return;
         }
+        this.clear(ctx);
+        let descend_speed = this.accelerate_level;
+        let highest_obstacle = this.get_highest_obstacle(base);
+        console.log("bot:" + this.get_bottom()/ this.edge + "descend_speed:"+descend_speed+"obs:"+highest_obstacle);
+        if (this.get_bottom() / this.edge + descend_speed >= highest_obstacle) { // check possible collision
+            descend_speed = 1;
+        }
+
         for (let i=0; i<this.all_components.length; i++) {
             let comp = this.all_components[i];  // descend all components!
-            comp.descend();
+            comp.descend(descend_speed);
         }
+        this.draw(ctx);
         if (this.has_landed(base)) {
             if (this.landed) return;
             this.landed = true;
@@ -184,13 +219,24 @@ class Shape {
         }
         return Object.values(results);
     }
-    budge = (direction, ctx) => {
+    budge = (direction, base, ctx) => {
         if (direction == "left" && this.get_left() <= 0) return;
         if (direction == "right" && this.get_right() >= ctx.canvas.width) return;
+        let pos_after_budge;
+        if (direction == "left") {
+            pos_after_budge = this.components.map(c => [c.loc_x / c.edge - 1, c.loc_y / c.edge]);
+        }
+        else {
+            pos_after_budge = this.components.map(c => [c.loc_x / c.edge + 1, c.loc_y / c.edge]);
+        }
+        if (this.check_collide(base, pos_after_budge) == true) {
+            return;
+        }
         this.clear(ctx);
         for (let i=0; i<this.all_components.length; i++) {
             this.all_components[i].budge(direction)
         }
+        this.draw(ctx);
     }
     get_comp_by_id = (id) => {
         return this.components.filter(c => c.id == id)[0];
@@ -204,27 +250,26 @@ class Shape {
         this.components = this.components.filter(c => !id_list.includes(c.id));
         this.all_components = this.all_components.filter(c => !id_list.includes(c.id));
     }
-    check_collide = (base, morph_id=0) => {
-        let morph_comps = this.morphs["m" + morph_id.toString()];
-        console.log("morph_id:" + morph_id)
-        console.log("this.morphs:" + Object.keys(this.morphs))
-        console.log("morph_comps:" + morph_comps)
-        for (let i=0; i<morph_comps.length; i++) {
-            let _comp = morph_comps[i];
-            let x_id = _comp.loc_x / _comp.edge;
-            let y_id = _comp.loc_y / _comp.edge;
+    check_collide = (base, positions) => {
+        for (let i=0; i<positions.length; i++) {
+            let x_id = positions[i][0];
+            let y_id = positions[i][1];
             if (y_id < 0) continue;
-            if (base[y_id][x_id] == true) return true;  // collided
+            if (base[y_id][x_id] == true || y_id >= base.length || x_id < 0 || x_id >= base[0].length) return true;  // collided
         }
         return false;
     }
-    change_morph = (base) => {
+    change_morph = (base, ctx) => {
         let morph_idx = (this.current_morph + 1) % this.morph_num;
-        if (this.check_collide(base, morph_idx) == true) {
+        let morph_comps = this.morphs["m" + morph_idx.toString()];
+        let morph_comps_pos = morph_comps.map(c => [c.loc_x / c.edge, c.loc_y / c.edge]);
+        if (this.check_collide(base, morph_comps_pos) == true) {
             return;
         }
+        this.clear(ctx);
         this.current_morph += 1;
         this.components = this.morphs["m" + (this.current_morph % this.morph_num).toString()];
+        this.draw(ctx);
     }
     toString = () => {
         let str = "Shape" + this.id + ": ";
@@ -488,31 +533,26 @@ class Tetris extends Component {
     handleKeyPress = e => {
         if (this.paused == false) {
             if (e.keyCode == 38) {  // up keydown
-                this.shape_in_play.clear(this.ctx);
-                this.shape_in_play.change_morph(this.base);
-                this.shape_in_play.draw(this.ctx);
+                this.shape_in_play.change_morph(this.base, this.ctx);
                 e.preventDefault();
                 return;
             }
             if (e.keyCode == 37) {
-                this.shape_in_play.clear(this.ctx);
-                this.shape_in_play.budge("left", this.ctx);
-                this.shape_in_play.draw(this.ctx);
+                this.shape_in_play.budge("left", this.base, this.ctx);
                 e.preventDefault();
                 return;
             }
             if (e.keyCode == 39) {
-                this.shape_in_play.clear(this.ctx);
-                this.shape_in_play.budge("right", this.ctx);
-                this.shape_in_play.draw(this.ctx);
+                this.shape_in_play.budge("right", this.base, this.ctx);
                 e.preventDefault();
                 return;
             }
             if (e.keyCode == 40) {  // down key
-                this.shape_in_play.clear(this.ctx);
-                this.shape_in_play.descend(this.base);
-                this.shape_in_play.draw(this.ctx);
                 e.preventDefault();
+                if (this.flicker_cnt > 0 || this.full_rows.length > 0) return;
+                this.shape_in_play.accelerate_descend();
+                this.shape_in_play.descend(this.base, this.ctx);
+                
                 return;
             }
         }
@@ -528,8 +568,8 @@ class Tetris extends Component {
     }
 
     generate_new_shape = () => {
-        //let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
-        let shape_type = I;
+        let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
+        //let shape_type = I;
         let new_shape;
         if (shape_type == Z || shape_type == L) {
             let _rotation = ROTATE_OPTIONS[Math.floor(Math.random() * ROTATE_OPTIONS.length)]
@@ -666,7 +706,6 @@ class Tetris extends Component {
         }
         // descend cells after flicker
         if (this.full_rows.length > 0) {
-            console.log("descend cells beneath");
             for (let i=0; i<this.full_rows.length; i++) {
                 this.descend_comps_above(this.full_rows[i]);
                 let new_score = this.state.score + SINGLE_ROW_SCORE;
@@ -679,9 +718,8 @@ class Tetris extends Component {
         }
         
         if (tick % 5 == 0) {
-            this.shape_in_play.clear(this.ctx);
 
-            this.shape_in_play.descend(this.base);
+            this.shape_in_play.descend(this.base, this.ctx);
             if (this.shape_in_play.landed == true && this.shape_in_play.base_updated == false) {
                 this.update_base(this.shape_in_play);
                 // this.init_new_shape();
