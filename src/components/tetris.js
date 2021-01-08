@@ -312,11 +312,6 @@ class T extends Shape {
         };
         return morphs;
     }
-
-    // change_morph = () => {
-    //     this.current_morph += 1;
-    //     this.components = this.morphs["m" + (this.current_morph % 4).toString()];
-    // }
 }
 
 class L extends Shape {
@@ -355,11 +350,6 @@ class L extends Shape {
         }
         return morphs;
     }
-
-    // change_morph = () => {
-    //     this.current_morph += 1;
-    //     this.components = this.morphs["m" + (this.current_morph % L_LEFT_SHAPE.length).toString()];
-    // }
 }
 
 class Square extends Shape {
@@ -416,11 +406,6 @@ class Z extends Shape {
         }
         return morphs;
     }
-
-    // change_morph = () => {
-    //     this.current_morph += 1;
-    //     this.components = this.morphs["m" + (this.current_morph % Z_LEFT_SHAPE.length).toString()];
-    // }
 }
 
 class I extends Shape {
@@ -456,11 +441,6 @@ class I extends Shape {
     construct_morph = () => {
         this.morphs["m1"] = [this.c1_, this.c1, this.c3_, this.c4_];
     }
-
-    // change_morph = () => {
-    //     this.current_morph += 1;
-    //     this.components = this.morphs["m" + (this.current_morph % 2).toString()];
-    // }
 }
 
 const SHAPE_OPTIONS = [T, Square, L, Z, I];
@@ -483,10 +463,7 @@ class Tetris extends Component {
             tick: 0,
             score: 0
         };
-        //let first_shape = new I(this.width * this.edge / 2, 0);
-        //let first_shape = this.generate_new_shape();
         this.shapes = [];
-        //this.shape_in_play = first_shape;
         this.comps_to_remove = [];
         this.flicker_cnt = 0;
         this.full_rows = [];
@@ -520,7 +497,6 @@ class Tetris extends Component {
 
     update_base = (shape) => {
         if (shape.base_updated) return;
-        //let shape_base = shape.get_base();
         for (let i=0; i<shape.components.length; i++) {
             let comp = shape.components[i];
             let x_id = comp.loc_x / comp.edge;
@@ -659,7 +635,6 @@ class Tetris extends Component {
             this.shapes[i].remove_components(comp_to_remove, this.ctx);
         }
         this.tidy_up_shapes();
-        //console.log("after tidy: " + this.shapes.length + " shapes")
     }
 
     remove_full_rows = () => {
