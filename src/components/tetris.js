@@ -33,29 +33,39 @@ class Rect {
         this.edge = edge;
         this.border = 1;
         this.id = "c" + Date.now() + Math.random();
+        this.sub_loc_x = loc_x;
+        this.sub_loc_y = loc_y;
     }
 
     set_loc = (x, y) => {
         this.loc_x = x;
         this.loc_y = y;
     }
+    set_sub_loc = (x, y) => {
+        this.sub_loc_x = x;
+        this.sub_loc_y = y;
+    }
     get_loc = () => {
         return [this.loc_x, this.loc_y];
     }
-    draw = (ctx) => {
+    draw = (ctx, sub=false) => {
+        let _x = sub == false ? this.loc_x : this.sub_loc_x;
+        let _y = sub == false ? this.loc_y : this.sub_loc_y;
         let grd = ctx.createLinearGradient(
-            this.loc_x + this.border, this.loc_y + this.border,
-            this.loc_x + this.edge - this.border, this.loc_y + this.edge - this.border);
+            _x + this.border, _y + this.border,
+            _x + this.edge - this.border, _y + this.edge - this.border);
         grd.addColorStop(0, CELL_COLOR1);
         grd.addColorStop(1, CELL_COLOR2);
         ctx.fillStyle = BORDER_COLOR;
-        ctx.fillRect(this.loc_x, this.loc_y, this.edge, this.edge);
+        ctx.fillRect(_x, _y, this.edge, this.edge);
         ctx.fillStyle = grd;
-        ctx.fillRect(this.loc_x + this.border, this.loc_y + this.border, this.edge - 2 * this.border, this.edge - 2 * this.border);
+        ctx.fillRect(_x + this.border, _y + this.border, this.edge - 2 * this.border, this.edge - 2 * this.border);
     }
-    clear = (ctx) => {
+    clear = (ctx, sub=false) => {
+        let _x = sub == false ? this.loc_x : this.sub_loc_x;
+        let _y = sub == false ? this.loc_y : this.sub_loc_y;
         ctx.fillStyle = '#FFF';
-        ctx.fillRect(this.loc_x, this.loc_y, this.edge, this.edge);  
+        ctx.fillRect(_x, _y, this.edge, this.edge);  
     }
     descend = (level=1) => {
         this.set_loc(this.loc_x, this.loc_y + this.edge * level);
@@ -68,8 +78,10 @@ class Rect {
             this.set_loc(this.loc_x + this.edge, this.loc_y);
         }
     }
-    toString = () => {
-        return "(" + this.loc_x / this.edge + "," + this.loc_y / this.edge + ")";
+    toString = (sub=false) => {
+        let _x = sub == false ? this.loc_x : this.sub_loc_x;
+        let _y = sub == false ? this.loc_y : this.sub_loc_y;
+        return "(" + _x / this.edge + "," + _y / this.edge + ")";
     }
 
 }
@@ -82,16 +94,17 @@ class Shape {
         this.base_updated = false;
         this.id = "s" + Date.now() + Math.random();
         this.accelerate_level = 1;
+        this.in_play = false;
     }
-    draw = (ctx) => {
+    draw = (ctx, sub=false) => {
         for (let i=0; i<this.components.length; i++) {
-            this.components[i].draw(ctx);
+            this.components[i].draw(ctx, sub);
         }
         ctx.stroke();
     }
-    clear = (ctx) => {
+    clear = (ctx, sub=false) => {
         for (let i=0; i<this.components.length; i++) {
-            this.components[i].clear(ctx);
+            this.components[i].clear(ctx, sub);
         }
         ctx.stroke();
     }
@@ -129,7 +142,6 @@ class Shape {
         this.clear(ctx);
         let descend_speed = this.accelerate_level;
         let highest_obstacle = this.get_highest_obstacle(base);
-        console.log("bot:" + this.get_bottom()/ this.edge + "descend_speed:"+descend_speed+"obs:"+highest_obstacle);
         if (this.get_bottom() / this.edge + descend_speed >= highest_obstacle) { // check possible collision
             descend_speed = 1;
         }
@@ -271,11 +283,29 @@ class Shape {
         this.components = this.morphs["m" + (this.current_morph % this.morph_num).toString()];
         this.draw(ctx);
     }
-    toString = () => {
+    set_sub_locs = (main_ctx, sub_ctx) => {
+        // locate first comp and set relative locations
+        let comp0 = this.components[0];
+        let new_x0 = ((comp0.loc_x / comp0.edge) / main_ctx.canvas.width) * sub_ctx.canvas.width * comp0.edge;
+        let new_y0 = sub_ctx.canvas.height / 2.5 + comp0.loc_y;
+        comp0.set_sub_loc(new_x0, new_y0);
+
+        let remaining_comps = this.components.slice(1);
+        for (let i=0; i<remaining_comps.length; i++) {
+            let _comp = remaining_comps[i];
+            let x_id_delta = _comp.loc_x / _comp.edge - comp0.loc_x / comp0.edge;
+            let new_x_loc = new_x0 + x_id_delta * _comp.edge;
+            let y_id_delta = _comp.loc_y / _comp.edge - comp0.loc_y / comp0.edge;
+            let new_y_loc = new_y0 + y_id_delta * _comp.edge;
+            _comp.set_sub_loc(new_x_loc, new_y_loc);
+        }
+
+    }
+    toString = (sub=false) => {
         let str = "Shape" + this.id + ": ";
         if (this.components.length == 0) return str + "(empty)"
         for (let i=0; i<this.components.length; i++) {
-            str += " " + this.components[i].toString();
+            str += " " + this.components[i].toString(sub);
         }
         return str;
     }
@@ -459,8 +489,8 @@ class Tetris extends Component {
         this.edge = DEFAULT_EDGE;
         this.height = 20
         this.width = 10;
-        this.sub_height = 5;
-        this.sub_width = 5;
+        this.sub_height = 7;
+        this.sub_width = 7;
         this.base = this.init_base();
         
         this.state = {
@@ -475,6 +505,7 @@ class Tetris extends Component {
         this.lost = false;
         this.events_bound = false;
         this.paused = false;
+        this.next_shape = null;
     }
 
     init_base = () => {
@@ -495,7 +526,10 @@ class Tetris extends Component {
     }
     draw_all_shapes = () => {
         for (let i=0; i<this.shapes.length; i++) {
-            this.shapes[i].draw(this.ctx);
+            let _shape = this.shapes[i];
+            if (_shape.in_play == true) {
+                _shape.draw(this.ctx);
+            }
         }
     }
 
@@ -547,30 +581,44 @@ class Tetris extends Component {
         e.preventDefault();
     }
 
-    generate_new_shape = () => {
+    generate_new_shape = (ctx_main, sub_ctx) => {
         let shape_type = SHAPE_OPTIONS[Math.floor(Math.random() * SHAPE_OPTIONS.length)]
         //let shape_type = I;
         let new_shape;
+        let initial_x_loc = (this.width / 2 - 1) * this.edge;
         if (shape_type == Z || shape_type == L) {
             let _rotation = ROTATE_OPTIONS[Math.floor(Math.random() * ROTATE_OPTIONS.length)]
-            new_shape = new shape_type(100, 0, {rotation: _rotation});
+            new_shape = new shape_type(initial_x_loc, this.edge, {rotation: _rotation});
         }
         else {
-            new_shape = new shape_type(100, 0);
+            new_shape = new shape_type(initial_x_loc, this.edge);
         }
+        new_shape.set_sub_locs(ctx_main, sub_ctx);
         return new_shape;
     }
 
+    draw_new_shape_preview = () => {
+
+        this.next_shape.clear(this.sub_ctx, true);
+        console.log("generating next shape!");
+        this.next_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
+        this.next_shape.draw(this.sub_ctx, true);
+        this.shapes.push(this.next_shape);
+    }
+
     init_new_shape = () => {
-        let new_shape = this.generate_new_shape();
-        this.shapes.push(new_shape);
-        this.shape_in_play = new_shape;
+        //let new_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
+        this.shape_in_play = this.next_shape;
+        this.shape_in_play.in_play = true;
+
+        // handle next shape preview
+        this.draw_new_shape_preview();
     }
 
     check_lose = () => {
         for (let i=0; i<this.shapes.length; i++) {
             let _shape = this.shapes[i];
-            if (_shape.get_top() <= 0 && _shape.base_updated == true) return true;
+            if (_shape.get_top() <= 0 && _shape.in_play == true && _shape.base_updated == true) return true;
         }
         return false;
     }
@@ -578,8 +626,10 @@ class Tetris extends Component {
     rebuild_base = () => {
         let base = this.init_base();
         for (let i=0; i<this.shapes.length; i++) {
-            for (let j=0; j<this.shapes[i].components.length; j++) {
-                let comp = this.shapes[i].components[j];
+            let _shape = this.shapes[i];
+            if (_shape.in_play == false) continue;
+            for (let j=0; j<_shape.components.length; j++) {
+                let comp = _shape.components[j];
                 let x_id = comp.loc_x / comp.edge;
                 let y_id = comp.loc_y / comp.edge;
                 base[y_id][x_id] = true;
@@ -605,9 +655,7 @@ class Tetris extends Component {
 
     tidy_up_shapes = () => {
         // remove shapes that contain empty components
-        for(let i=0;i<this.shapes.length;i++) console.log(this.shapes[i].toString())
         this.shapes = this.shapes.filter(s => s.components.length > 0);
-        for(let i=0;i<this.shapes.length;i++) console.log(this.shapes[i].toString())
     }
 
     descend_comps_above = (y_id) => {
@@ -645,7 +693,6 @@ class Tetris extends Component {
         let full_rows = this.get_full_rows().sort();
         this.full_rows = full_rows;
         this.comps_to_remove = [];
-        console.log("full_rows:" + full_rows);
         for (let i=0; i<full_rows.length; i++) {
             let y_id = full_rows[i];
             // remove the corresponding components from these shapes and descend all the above components
@@ -668,7 +715,6 @@ class Tetris extends Component {
         this.state.tick = tick;
         
         // flicker mode
-        console.log("flicker:" + this.flicker_cnt);
         if (this.flicker_cnt > 0) {
             if (this.flicker_cnt % 2 == 0) {
                 for (let i=0; i<this.comps_to_remove.length; i++) {
@@ -692,7 +738,7 @@ class Tetris extends Component {
             }
             this.rebuild_base();
             this.full_rows = [];
-            this.init_new_shape();
+            //this.init_new_shape();
             return;
         }
         
@@ -760,10 +806,15 @@ class Tetris extends Component {
         this.base = this.init_base();
         this.setState({tick: 0, score: 0});
 
-        let first_shape = this.generate_new_shape();
+        let first_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
         this.shapes = [first_shape];
         this.shape_in_play = first_shape;
-
+        if (this.next_shape !== null) this.next_shape.clear(this.sub_ctx);
+        this.next_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
+        console.log("sub loc:" + first_shape.toString(true));
+        console.log("real loc:" + first_shape.toString());
+        //first_shape.draw(this.sub_ctx, true);
+        this.draw_new_shape_preview();
         this.comps_to_remove = [];
         this.flicker_cnt = 0;
         this.full_rows = [];
