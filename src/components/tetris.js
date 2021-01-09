@@ -163,7 +163,7 @@ class Shape {
             let comp = bottom_comps[i];
             let y_id = comp.loc_y / comp.edge + 1;  // check the cell beneath the bottom comp
             let x_id = comp.loc_x / comp.edge;
-            if (y_id === base.length || base[y_id][x_id] === true) { console.log("landed"); return true;}
+            if (y_id === base.length || base[y_id][x_id] === true) { return true;}
         }
         return false;
     }
@@ -266,7 +266,7 @@ class Shape {
         for (let i=0; i<positions.length; i++) {
             let x_id = positions[i][0];
             let y_id = positions[i][1];
-            if (y_id < 0) continue;
+            if (y_id < 0 || y_id >= base.length - 1) continue;
             if (base[y_id][x_id] == true || y_id >= base.length || x_id < 0 || x_id >= base[0].length) return true;  // collided
         }
         return false;
@@ -489,8 +489,8 @@ class Tetris extends Component {
         this.edge = DEFAULT_EDGE;
         this.height = 20
         this.width = 10;
-        this.sub_height = 7;
-        this.sub_width = 7;
+        this.sub_height = 8;
+        this.sub_width = 8;
         this.base = this.init_base();
         
         this.state = {
@@ -600,7 +600,6 @@ class Tetris extends Component {
     draw_new_shape_preview = () => {
 
         this.next_shape.clear(this.sub_ctx, true);
-        console.log("generating next shape!");
         this.next_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
         this.next_shape.draw(this.sub_ctx, true);
         this.shapes.push(this.next_shape);
@@ -662,6 +661,7 @@ class Tetris extends Component {
         // descend all components above the y id
         for (let i=0; i<this.shapes.length; i++) {
             let _shape = this.shapes[i];
+            if (!_shape.in_play) continue;
             for (let j=0; j<_shape.components.length; j++) {
                 let _comp = _shape.components[j];
                 if ((_comp.loc_y / _comp.edge) < y_id) {
@@ -803,16 +803,19 @@ class Tetris extends Component {
 
     new_game_click = e => {
         this.clear_all_shapes();
+        if (this.next_shape != null) {
+            this.next_shape.clear(this.sub_ctx, true);
+        }
         this.base = this.init_base();
         this.setState({tick: 0, score: 0});
 
         let first_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
         this.shapes = [first_shape];
         this.shape_in_play = first_shape;
+        this.shape_in_play.in_play = true;
         if (this.next_shape !== null) this.next_shape.clear(this.sub_ctx);
         this.next_shape = this.generate_new_shape(this.ctx, this.sub_ctx);
-        console.log("sub loc:" + first_shape.toString(true));
-        console.log("real loc:" + first_shape.toString());
+        
         //first_shape.draw(this.sub_ctx, true);
         this.draw_new_shape_preview();
         this.comps_to_remove = [];
