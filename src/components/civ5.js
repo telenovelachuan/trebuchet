@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import {City, Tile} from "./civilization";
 import plain from "../static/images/civ5/plain.png";
+import tundra from "../static/images/civ5/tundra.png";
+import grass from "../static/images/civ5/grass.png";
+import desert from "../static/images/civ5/desert.png";
+
 
 const COS30 = Math.sqrt(3) / 2;
-const SNOW_IMG = "https://lh3.googleusercontent.com/pw/ACtC-3ftmEu5WdiXM6Fx45IaCQX-rPi0vLYNBI9PwOgfKD3prTmEhmLdL1VnGipIcjwAnSWQnNFhDt9Tpk7p50y6-dUVHDkPMyemOlrxdY5u7LaMHp1R8NOeYjRHc6hDEyslZ2QvHhiUVekHERPJsvs8sp4=w352-h344-no?.jpg";
-const TUNDRA_IMG = "https://lh3.googleusercontent.com/pw/ACtC-3d9LW_K5L-b_VifxOLl5G5twu-wf1hbJ60kNDzvTeQB3J2ok2T0BJCTxDlJEWyV_y9WLml4i4_Iy3vBEOhCGLWkcgDiLsINvc2n8NgkJvf3RlaQ0I1lnLEZg90H3Lyohb-JXU2NBzU6DQ6J4xN1hH0=w368-h356-no?.jpg";
-const PLAIN_IMG = "https://lh3.googleusercontent.com/pw/ACtC-3f5MPoUyqoHlWgkuo9aVvKBFcTcfCOudevsoOwbGtaTauZDH1pfrn81ioRkFvbRm69dNyUjTcmMFHNNk2iHiOgReRqHmUNlyipXBUgNbDvxqTTB7t3xRS3_VgFCF27i2RQ10g9fvNGztLiGe2WybPU=w292-h280-no?.jpg";
-const GRASS_IMG = "https://lh3.googleusercontent.com/pw/ACtC-3fNjOFjJfjJ_o9WUehxOlw-kpJd2WVULkId0erLocoF7AMlaNC2F0m3Uzo-0KY9R6RW4Y8x4-nXve8inCIXT0YWCRp9Vtuz-YJhsKfcGT85weyNK78SMvmDehNL-DTEpzvAU3HB5nG9OFQGLa5ELRs=w348-h340-no?.jpg";
-const DESERT_IMG = "https://lh3.googleusercontent.com/pw/ACtC-3fb4pQWK_-XpRbPwDPF5SVWKc7eHptoTEKSLUh5q0txuaqUJ7Pn-hlCOkwCxecZBDUpZh7Nzuk7v8MR9RQVUaKxGSdEGlPX2MgOBSCV6L5heY-FMv5AQZT_jO6U9QqQB5n7Azkyj70SA4okWRVVAoQ=w416-h410-no?.jpg";
 const TERRAINS = {
-    "tundra": TUNDRA_IMG,
-    "plain": PLAIN_IMG,
-    "grass": GRASS_IMG,
-    "desert": DESERT_IMG
+    "tundra": tundra,
+    "plain": plain,
+    "grass": grass,
+    "desert": desert
 };
 
 class Civ5 extends Component {
@@ -82,6 +81,9 @@ class Civ5 extends Component {
                 col_idx += 1;
             }
             this.tiles.push(_row);
+            if (row_idx == 0) {
+                console.log("first tile neighbors:" + this.tiles[0][0].neighbors);
+            }
             row_idx += 1;
         }
     }
@@ -89,45 +91,29 @@ class Civ5 extends Component {
     load_terrains = () => {
         let tiles = this.tiles;
         let _ctx = this.ctx;
-        for (let ter in TERRAINS) {
-            let _url = TERRAINS[ter];
+
+        Object.keys(TERRAINS).map(ter => {
+            let img_obj = TERRAINS[ter];
             let _img = new Image();
             _img.onload = function() {
                 // load all terrain images of this type
-                for (let i=0; i<tiles.length; i++) {
-                    let _row = tiles[i];
-                    for (let j=0; j<_row.length; j++) {
-                        let _tile = _row[j];
+                tiles.map(row => {
+                    row.map(_tile => {
                         if (_tile.terrain == ter) {
                             _tile.draw_terrain(_ctx, _img);
                         }
-                    }
-                }
+                    })
+                })
 
-                _ctx.fillStyle = '#FFF';
-                //this.ctx.fillRect(tile.loc_x, tile.loc_y, 30, 30);
-                _ctx.fillRect(50, 50, 100, 100);
+                let tile = tiles[3][5];
+                let tile2 = tiles[2][7];
+                let city = new City(tile);
+                city.tiles.push(tile2);
+                city.outline(_ctx);
             }
-            _img.src = _url;
-        }
+            _img.src = img_obj;
+        })
 
-        // Object.keys(TERRAINS).map(ter => {
-        //     let _url = TERRAINS[ter];
-        //     let _img = new Image();
-        //     _img.onload = function() {
-        //         // load all terrain images of this type
-        //         tiles.map(row => {
-        //             row.map(_tile => {
-        //                 if (_tile.terrain == ter) {
-        //                     _tile.draw_terrain(_ctx, _img);
-        //                 }
-        //             })
-        //         })
-        //     }
-        //     _img.src = _url;
-        // })
-
-        
     }
 
     terrain_hist = () => {
@@ -154,9 +140,7 @@ class Civ5 extends Component {
         this.pave_tiles();
         this.load_terrains();
         //this.terrain_hist();
-        let tile = this.tiles[3][5];
-        console.log("chosen tile:" + tile.toString());
-        //tile.fill_white(this.ctx);
+        
         
     }
 
@@ -165,6 +149,7 @@ class Civ5 extends Component {
             <div className="content" id="civ5_content">
 
                 <div id="civ5_canvas_div">
+                    <img id="test" src={plain}></img>
                     <div>CIVILIZATION V</div>
                     <canvas id="civ5_canvas" ref="civ5_canvas" width={this.width * this.edge} height={this.height * this.edge} />
 
