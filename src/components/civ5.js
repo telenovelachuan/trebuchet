@@ -19,7 +19,8 @@ class Civ5 extends Component {
     constructor(props) {
         super(props);
         this.canvas = null;
-        this.ctx = null;
+        this.ctx0 = null;
+        this.ctx1 = null;
         this.width = 50;
         this.height = 25;
         this.edge = 30;
@@ -90,7 +91,8 @@ class Civ5 extends Component {
 
     load_terrains = () => {
         let tiles = this.tiles;
-        let _ctx = this.ctx;
+        let ctx0 = this.ctx0;
+        let ctx1 = this.ctx1;
 
         Object.keys(TERRAINS).map(ter => {
             let img_obj = TERRAINS[ter];
@@ -100,16 +102,10 @@ class Civ5 extends Component {
                 tiles.map(row => {
                     row.map(_tile => {
                         if (_tile.terrain == ter) {
-                            _tile.draw_terrain(_ctx, _img);
+                            _tile.draw_terrain(ctx0, _img);
                         }
                     })
                 })
-
-                let tile = tiles[3][5];
-                let tile2 = tiles[2][7];
-                let city = new City(tile);
-                city.tiles.push(tile2);
-                city.outline(_ctx);
             }
             _img.src = img_obj;
         })
@@ -134,13 +130,19 @@ class Civ5 extends Component {
     }
 
     componentDidMount() {
-        this.canvas = this.refs.civ5_canvas;
-        this.ctx = this.canvas.getContext("2d");
-        //let tile = new Tile(50, 50, this.edge);
+        this.canvas0 = this.refs.civ5_canvas0;
+        this.canvas1 = this.refs.civ5_canvas1;
+        this.ctx0 = this.canvas0.getContext("2d");
+        this.ctx1 = this.canvas1.getContext("2d");
         this.pave_tiles();
         this.load_terrains();
         //this.terrain_hist();
-        
+
+        let tile = this.tiles[3][5];
+        let tile2 = this.tiles[2][7];
+        let city = new City(tile);
+        city.tiles.push(tile2);
+        city.outline(this.ctx1);
         
     }
 
@@ -148,11 +150,15 @@ class Civ5 extends Component {
         return (
             <div className="content" id="civ5_content">
 
-                <div id="civ5_canvas_div">
-                    <img id="test" src={plain}></img>
+                <div>
                     <div>CIVILIZATION V</div>
-                    <canvas id="civ5_canvas" ref="civ5_canvas" width={this.width * this.edge} height={this.height * this.edge} />
+                    <div id="civ5_canvas_div">
+                        <canvas id="civ5_canvas0" className="civ5_canvas" ref="civ5_canvas0" width={this.width * this.edge} height={this.height * this.edge} />
+                        <canvas id="civ5_canvas1" className="civ5_canvas" ref="civ5_canvas1" width={this.width * this.edge} height={this.height * this.edge} />
 
+                        {/* <canvas id="civ5_canvas0" className="civ5_canvas" ref="civ5_canvas0" width="1500px" height="300px" />
+                        <canvas id="civ5_canvas1" className="civ5_canvas" ref="civ5_canvas1" width="1500px" height="300px" /> */}
+                    </div>
                 </div>
                 
             </div>
