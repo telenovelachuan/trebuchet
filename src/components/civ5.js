@@ -4,7 +4,7 @@ import plain from "../static/images/civ5/plain.png";
 import tundra from "../static/images/civ5/tundra.png";
 import grass from "../static/images/civ5/grass.png";
 import desert from "../static/images/civ5/desert.png";
-
+import pikeman from "../static/images/civ5/pikeman.png";
 
 const COS30 = Math.sqrt(3) / 2;
 const TERRAINS = {
@@ -27,15 +27,6 @@ class Civ5 extends Component {
         this.tiles = [];
         this.state = {
         }
-    }
-
-    get_tiles_of_terrain_type = ter_type => {
-        let results = [];
-        this.tiles.map(row => {
-            row.map(_tile => {
-
-            })
-        })
     }
 
     pave_tiles = () => {
@@ -92,7 +83,6 @@ class Civ5 extends Component {
     load_terrains = () => {
         let tiles = this.tiles;
         let ctx0 = this.ctx0;
-        let ctx1 = this.ctx1;
 
         Object.keys(TERRAINS).map(ter => {
             let img_obj = TERRAINS[ter];
@@ -143,6 +133,13 @@ class Civ5 extends Component {
         let city = new City(tile);
         city.tiles.push(tile2);
         city.outline(this.ctx1);
+
+        let _img = new Image();
+        let ctx1 = this.ctx1;
+        _img.onload = function() {
+            tile2.draw_logo(ctx1, _img);
+        }
+        _img.src = pikeman;
         
     }
 

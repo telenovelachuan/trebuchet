@@ -123,6 +123,14 @@ class Tile {
         ctx.fill();
     }
 
+    draw_logo = (ctx, logo_obj) => {
+        this._outline(ctx);
+        ctx.drawImage(logo_obj, this.loc_x, this.loc_y  - this.edge / 3, this.edge * 1.5, this.edge * 1.5);
+        // let pattern = ctx.createPattern(logo_obj, "repeat");
+        // ctx.fillStyle = pattern;
+        // ctx.fill();
+    }
+
     fill_white = (ctx) => {
         this._outline(ctx);
         ctx.fillStyle = "#FFF";
