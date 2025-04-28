@@ -1,16 +1,17 @@
 {
 	"self_intro": [
-		"I'm a data science enthusiast in the computer science program of the University of Kansas. My domain of interest covers data science technologies, supervised/unsupervised learning, time series prediction and analysis, data engineering and software engineering.",
-		"I possess over 4 years of working experience in software engineering & data engineering industry, with hands-on experience in solving data science and machine learning problems and proficiency on big data platforms."
+		"I am an Applied Scientist specializing in data science, machine learning, deep learning, and large-scale data engineering, with over five years of industry experience.",
+		"Before transitioning into applied science, I spent four years as a software and data engineer, building robust systems and solving real-world machine learning and data science challenges on big data platforms.",
+		"My work spans the full spectrum from productionizing predictive models and scalable ML pipelines to developing high-quality software and achieving challenging engineering goals."
 	
 	],
-	"interest": ["Data Science", "Predictive Analysis", "Anomaly Detection", "Deep Learning"],	
+	"interest": ["Data Science", "Deep Learning", "Anomaly Detection", "Pipeline Engineering"],	
 	"exp": {
 		"eBay": "Conducting business analytics research and implementing automatic reporting on eBay marketing categories",
  		"IBM": "Building storage virtualization platforms and creating automated QA and analytics solution",
  		"PayPal": "Large scale data auditing, governance and engineering for risk modeling and fraud detection",
-		 "KU": "Instructing course Introduction to computing: C++",
-		 "Ripple": "Conduct data manipulation, modeling and evaluation on Ripple ODL data and cryptocurrency markets data"
+		 "KU": "Conduct deep learning research on high dimensional signal data",
+		 "Ripple": "Productionize ML models on XRP trading and metrics anomaly detection"
 	}
 
 

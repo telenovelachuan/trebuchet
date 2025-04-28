@@ -32,6 +32,7 @@ import tensorflow_logo from "../static/images/tensorflow.png";
 import matplotlib_logo from "../static/images/matplotlib.png";
 import sql_logo from "../static/images/sql.png";
 import mysql_logo from "../static/images/mysql.png";
+import dbx_logo from "../static/images/databricks.png";
 import postgresql_logo from "../static/images/postgresql.png";
 import sqlite_logo from "../static/images/sqlite.png";
 import teradata_logo from "../static/images/teradata.png";
@@ -61,6 +62,8 @@ import ripple_logo2 from "../static/images/ripple2.png";
 import bq_logo from "../static/images/bigquery.png";
 import tableau_logo from "../static/images/tableau.png";
 import cloud_composer_logo from "../static/images/cloud_composer.png";
+import jira_logo from "../static/images/jira.png";
+import overleaf_logo from "../static/images/overleaf.png";
 
 
 import LeaveReply from './leave_reply';
@@ -77,10 +80,10 @@ class About extends Component {
         this.python_libs = {'Pandas': pandas_logo, 'Numpy': numpy_logo, 'Scikit-Learn': sklearn_logo, 
                         'Tensorflow': tensorflow_logo, 'Keras': keras_logo, 'Matplotlib': matplotlib_logo}
         this.sql_pltfms = {'MySQL': mysql_logo, 'PostgreSQL': postgresql_logo, 'Google BigQuery': bq_logo,
-                        'SQLite': sqlite_logo, 'Teradata': teradata_logo}
-        this.data_engr_pltfms = {'Spark': spark_logo, 'Hadoop': hadoop_logo, 'Hive': hive_logo,
-                        'Google Cloud Composer': cloud_composer_logo, 'Jenkins': jenkins_logo, 'AWS SageMaker': sagemaker_logo}
-        this.other_tools = {'Git': git_logo, 'NodeJS': node_logo, 'Tableau': tableau_logo, 'Linux': linux_logo}
+                        'Hive': hive_logo, 'SQLite': sqlite_logo, 'Teradata': teradata_logo}
+        this.data_engr_pltfms = {'Databricks': dbx_logo, 'Spark': spark_logo, 'Hadoop': hadoop_logo,
+                        'Google Cloud Composer': cloud_composer_logo, 'Jenkins': jenkins_logo}
+        this.other_tools = {'Linux': linux_logo, 'Git': git_logo, 'NodeJS': node_logo, 'Tableau': tableau_logo, "Jira": jira_logo}
         this.card_header_style = {
             fontFamily: "\"Segoe UI\", \"Tahoma\", \"Geneva\", \"Verdana\", sans-serif",
             letterSpacing: 2,
@@ -92,8 +95,8 @@ class About extends Component {
         };
         
         this.exps = {
-            'Ripple': [ripple_logo2, "Data Science Research Intern", [bq_logo, python_logo, tableau_logo]],
-            'KU': [ku_logo, "Instructor", [cpp_logo, instructor_logo]],
+            'Ripple': [ripple_logo2, "Applied Scientist", [python_logo, dbx_logo, sklearn_logo]],
+            'KU': [ku_logo, "Graduate Research Assistant", [pandas_logo, keras_logo, overleaf_logo]],
             'PayPal': [paypal_logo, "Senior Risk Engineer", [spark_logo, python_logo, hadoop_logo , node_logo, mysql_logo]],
             'IBM': [ibm_logo, "Software Engineer", [python_logo, django_logo, postgresql_logo, linux_logo]],
             'eBay': [ebay_logo, "Marketing Analytics Intern", [teradata_logo, csharp_logo, spss_logo]],
@@ -259,7 +262,7 @@ class About extends Component {
                     data-aos-once="true" >
 
                     {/* <Card className={"exps_card"}> */}
-                        <CardHeader title="EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
+                        <CardHeader title="PROFESSIONAL EXPERIENCE" titleTypographyProps={{className:"intro_head1"}} />
                         <CardContent>
                             {
                                 Object.keys(this.exps).map((exp, idx) => (

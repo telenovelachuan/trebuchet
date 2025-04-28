@@ -279,13 +279,13 @@ class Navigation extends Component {
         <div className="avatar_panel" id="avatar_panel">
             
             <div className="avatar_panel_upper">
-                <div className="avatar_area">
+                {/* <div className="avatar_area">
                     <Avatar src={avatar_pic} className={"main_avatar"} />
-                </div>
+                </div> */}
                 <div className="main_intro">
                     <div className="main_name">Chuan Sun</div>
                     <div className="main_subintro">
-                        Data Science, <br /> Data Engineering
+                        Applied Science, <br /> Data Science, <br /> Data Engineering
                     </div>
                     <br />
                     <div id="social_ntwk_area">

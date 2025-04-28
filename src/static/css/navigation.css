@@ -80,7 +80,7 @@
 }
 .main_intro {
     width: 70%;
-    float: left;
+    float: right;
     height: 100%;
     vertical-align: middle;
 }
@@ -116,6 +116,7 @@
 }
 .main_subintro {
     font-size: 15px;
+    margin-top: 2%;
     font-family: 'PayPal Sans Big Light', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 #social_ntwk_area {
