@@ -101,8 +101,6 @@ class Footer extends Component {
  }
     
   render() {
-    console.log("anchorEL:");
-    console.log(this.state.anchorEl);
     return (
       <div id="entire_footer">
         <Popper open={this.state.expanded} anchorEl={this.state.anchorEl}
