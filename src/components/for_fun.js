@@ -11,8 +11,8 @@ import WordPuzzle from "./word_puzzle";
 import TicTacToe from "./tic_tac_toe";
 import MineSweeper from "./mine_sweeper";
 import Tetris from "./tetris";
-import Civ5 from "./civ5";
-import Restaurant from "./restaurant";
+// import Civ5 from "./civ5";
+// import Restaurant from "./restaurant";
 
 const tabs = ['Word Puzzle', 'Tic Tac Toe', 'Mine Sweeper', 'Tetris', "What to Eat?"];
 function TabPanel(props) {
@@ -87,9 +87,9 @@ class ForFun extends Component {
                 <TabPanel value={this.state.tab_value} index={3} dir={"rtl"}>
                     <Tetris />
                 </TabPanel>
-                <TabPanel value={this.state.tab_value} index={4} dir={"rtl"}>
+                {/* <TabPanel value={this.state.tab_value} index={4} dir={"rtl"}>
                     <Restaurant />
-                </TabPanel>
+                </TabPanel> */}
             </SwipeableViews>
 
         </div>
